@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-gem "health-data-standards", :path => "../health-data-standards"
+gem "health-data-standards", :git => "http://github.com/ssayer/health-data-standards.git", :branch => "develop" 
 gem "mongoid"
 gem "bson_ext"
 gem "pry"

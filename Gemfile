@@ -15,6 +15,11 @@ end
 
 gem 'jquery-rails'
 
+group :production do
+  gem "therubyracer"
+end
+
+
 group :test do
   gem 'turn', :require => false
 end

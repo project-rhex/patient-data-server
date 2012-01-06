@@ -6,6 +6,7 @@ gem "mongoid"
 gem "bson_ext"
 gem "pry"
 gem "capistrano"
+gem 'heroku'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
@@ -17,6 +18,7 @@ gem 'jquery-rails'
 
 group :production do
   gem "therubyracer"
+  gem 'thin'
 end
 
 

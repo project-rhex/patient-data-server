@@ -7,5 +7,5 @@ test:
   database: hdata_server_test
 
 production:
-  host: localhost
+  uri: <%= ENV['MONGOHQ_URL'] %>
   database: hdata_server_production

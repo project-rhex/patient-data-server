@@ -1,7 +1,10 @@
 xml.entry do
   xml.id entry.id
   if entry.updated_at
-    xml.updated entry.updated_at
+    xml.updated entry.updated_at.xmlschema
+  end
+  if entry.respond_to?(:description)
+    xml.title entry.description
   end
   xml.link :href => section_document_url(@record.medical_record_number, @section_name, entry), :type => "application/json"
   if entry.document_metadata

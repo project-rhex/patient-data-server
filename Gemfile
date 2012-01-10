@@ -7,6 +7,7 @@ gem "bson_ext"
 gem "pry"
 gem "capistrano"
 gem 'heroku'
+gem "nokogiri"
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"

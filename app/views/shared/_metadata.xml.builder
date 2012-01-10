@@ -5,11 +5,11 @@ xml.tag! "hrf-md", :DocumentMetadata, :ContentType => "application/json",  do
   end
   xml.tag! "href-md", :DocumentId, record.id
   xml.tag! "href-md", :RecordDate do
-    xml.tag! "href-md", :CreateDateTime, record.created_at
+    xml.tag! "href-md", :CreateDateTime, record.created_at.xmlschema
     xml.tag! "href-md", :Modified do
-      xml.tag! "href-md", :ModifiedDate, record.updated_at
+      xml.tag! "href-md", :ModifiedDate, record.updated_at.xmlschema
       record.versions.each do |version|
-        xml.tag! "href-md", :ModifiedDate, version.created_at 
+        xml.tag! "href-md", :ModifiedDate, version.created_at.xmlschema
       end
     end
   end

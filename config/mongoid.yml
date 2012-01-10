@@ -6,7 +6,7 @@ test:
   host: localhost
   database: hdata_server_test
 
-production:
+staging:
   host: localhost
   database: hdata_server_staging
 

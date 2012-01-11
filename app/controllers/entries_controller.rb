@@ -23,7 +23,7 @@ class EntriesController < ApplicationController
   end
   
   def find_entry
-    @entry = @record.send(@section_name)[params[:id].to_i - 1]
+    @entry = @record.send(@section_name).find(params[:id])
   end
 
 end

@@ -1,5 +1,3 @@
-xml.entry do
-  xml.id section_feed_url(@record.medical_record_number, section)
+feed.entry(section, {id: section.to_s, url: section_feed_url(@record.medical_record_number, section)}) do |entry|
   xml.title section_feed_path(@record.medical_record_number, section)
-  xml.link :href => section_feed_url(@record, section), :type => "application/atom+xml"
 end

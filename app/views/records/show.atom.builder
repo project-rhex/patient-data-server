@@ -1,6 +1,6 @@
-xml.feed :xmlns => "http://www.w3.org/2005/Atom", "xmlns:hrf-md" => "http://www.hl7.org/schemas/hdata/2009/11/metadata" do
-  xml.title "Root"
-  xml.id root_feed_url(@record.medical_record_number)
-  xml.updated @record.updated_at.xmlschema
-  xml <<  render(partial: "shared/section", :collection => [:c32] + Record::Sections)
+atom_feed(url: root_feed_url(@record.medical_record_number)) do |feed|
+  feed.title "Root"
+  feed.entry("c32", id: "c32", url: c32s_url(@record.medical_record_number)) {}
+  feed.entry("c32-json", id: "c32-json", url: c32_json_list_url(@record.medical_record_number)) {}
+  render(partial: "shared/section", :collection => Record::Sections, locals: {feed: feed})
 end

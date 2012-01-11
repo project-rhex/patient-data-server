@@ -15,13 +15,16 @@ HdataServer::Application.routes.draw do
   
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml
-  match "records/:record_id/c32" => "c32#index", :as => :c32s, :format => :atom, :method => :get
-  match "records/:record_id/c32/:id" => "c32#show", :as => :c32, :format => :xml, :method => :get  
+  match "records/:id/c32" => "c32#index", :as => :c32s, :format => :atom, :method => :get
+  match "records/:record_id/c32/:id" => "c32#show", :as => :c32, :format => :xml, :method => :get
+  match "records/:id/c32-json" => "c32_json#index", :as => :c32_json_list, :method => :get, :format => :atom
+  match "records/:record_id/c32-json/:id" => "c32_json#show", :as => :c32_json, :method => :get, :format => :json
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
   
   resources :records do
     resources :c32
+    resources :c32_json
   end
   
   # Sample resource route with options:

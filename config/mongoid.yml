@@ -3,7 +3,7 @@ development:
   database: hdata_server_development
 
 test:
-  host: localhost
+  host: <%= ENV['TEST_DB_HOST'] || 'localhost' %>
   database: hdata_server_test
 
 staging:

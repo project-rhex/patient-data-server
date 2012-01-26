@@ -8,6 +8,8 @@ gem "pry"
 gem "capistrano"
 gem 'heroku'
 gem "nokogiri"
+gem 'devise'
+gem 'omniauth'
 
 
 group :assets do

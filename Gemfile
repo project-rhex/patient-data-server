@@ -26,4 +26,5 @@ end
 
 group :test do
   gem 'turn', :require => false
+  gem 'minitest'
 end

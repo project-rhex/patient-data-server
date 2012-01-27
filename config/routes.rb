@@ -12,7 +12,13 @@ HdataServer::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  
+
+  # Test result routes
+  match "records/:id/results" => "results#index", :as => "results", :format => :atom
+  match "records/:id/results/:result_id" => "results#show", :as => "results_get", :format => :json
+  match "records/:id/results" => "results#add", :method => :post
+
+  #
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml
   match "records/:id/c32" => "c32#index", :as => :c32s, :format => :atom, :method => :get
@@ -21,10 +27,11 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/c32-json/:id" => "c32_json#show", :as => :c32_json, :method => :get, :format => :json
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
-  
+
   resources :records do
     resources :c32
     resources :c32_json
+    resources :results
   end
   
   # Sample resource route with options:

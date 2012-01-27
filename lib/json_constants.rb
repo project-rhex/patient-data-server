@@ -1,5 +1,5 @@
 # A place to create constants to avoid problems with misspelling literal strings
-module JSONConstants
+module JsonConstants
   AGE_AT_ONSET = "ageAtOnset"
   CODE = "code"
   CODES = "codes"
@@ -9,4 +9,5 @@ module JSONConstants
   PROBLEM_STATUS = "problemStatus"
   STATUS = "status"
   TIME = "time"
+  VALUE = "value"
 end

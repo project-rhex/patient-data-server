@@ -33,8 +33,6 @@ class ResultsControllerTest < ActionController::TestCase
 
   end
 
-
-
   def test_get_content
     @request.accept="application/json"
     get(:show, :id => 1, :result_id => 1)

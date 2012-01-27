@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'simple-rss'
+require 'feedzirra'
 require 'open-uri'
 require 'json_constants'
 
@@ -21,15 +21,16 @@ class ResultsControllerTest < ActionController::TestCase
   end
 
   def test_get_atom_feed
+    @request.accept="application/atom+xml"
     get(:index, :id => 1)
-    #rss = SimpleRSS.parse(@response.body)
-    #assert_not_nil(rss.items)
-    #assert_equal(1, rss.items.size)
-    #assert_equal("http://localhost:3000/records/1/results/1", rss.items[0].link)
+    rss = Feedzirra::Feed.parse(@response.body)
+    assert_not_nil(rss.entries)
+    assert_equal(1, rss.entries.size)
+    assert_equal("http://localhost:3000/records/1/results/1", rss.entries[0].links[0])
   end
 
   def test_get_routing
-    #content = open("http://localhost:3000/records/1/results/1")
+
   end
 
 

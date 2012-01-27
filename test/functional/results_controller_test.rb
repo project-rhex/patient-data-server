@@ -26,7 +26,7 @@ class ResultsControllerTest < ActionController::TestCase
     rss = Feedzirra::Feed.parse(@response.body)
     assert_not_nil(rss.entries)
     assert_equal(1, rss.entries.size)
-    assert_equal("http://localhost:3000/records/1/results/1", rss.entries[0].links[0])
+    assert rss.entries[0].links[0].include? "/records/1/results/1"
   end
 
   def test_get_routing

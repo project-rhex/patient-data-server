@@ -1,9 +1,9 @@
 GIT
   remote: http://github.com/ssayer/health-data-standards.git
-  revision: 2a5d4eca954fb2e36034c4ba42c0b6d6908ca39d
+  revision: 50144afd86540dd010edbd2a59ccda6f40b5cb14
   branch: develop
   specs:
-    health-data-standards (0.5.0)
+    health-data-standards (0.7.0)
       builder (~> 3.0.0)
       erubis (~> 2.6)
       mongoid (~> 2.3.3)

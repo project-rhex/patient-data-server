@@ -34,10 +34,13 @@ class ResultsController < ApplicationController
   #-----------------------------------------------------------------
   # POST /results/id
   #
-  # According to the HData specification there should be
+  # According to the HData specification there should be several
+  # parameters. The main parameter should be a content parameter
+  # which should have either a content type of application/json
+  # or application/xml
   def add
-    # TODO fill in this method with code that reads the JSON or GreenCDA
-    # payload and creates a new result
+    #  content = params[:content]
+
   end
 
   private

@@ -12,6 +12,7 @@ HdataServer::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  get "audit_logs/index"
 
   resources :records do
     resources :c32
@@ -29,8 +30,6 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
 
-
-  
   # Sample resource route with options:
   #   resources :products do
   #     member do

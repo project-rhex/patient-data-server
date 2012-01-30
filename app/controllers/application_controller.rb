@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  #before_filter :audit_log, :find_record
-  before_filter :find_record
+  before_filter :find_record, :audit_log
   
   private
   
@@ -12,8 +11,18 @@ class ApplicationController < ActionController::Base
     ##render file: "public/404.html", :status => :not_found unless @record
   end
 
+
+  ##
+  ## Track each controller and method (action) call
   def audit_log
-    AuditLog.create(:username => "gganley", :event => "doc read", :description => "this is a desc");
+    ## 
+    if  params[:controller] && params[:action]
+      desc = params[:controller] + "|" + params[:action]
+      desc << "|id:#{params[:id]}" if params[:id]
+
+      AuditLog.create(:username => "tsmith", :event => "USER_ACTION", :description => desc)
+    end
+
   end
 
 end

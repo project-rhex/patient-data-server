@@ -1,13 +1,15 @@
 class C32Controller < ApplicationController
   
+  respond_to :xml, :json, :atom
+  
   def index
-   
+    respond_to do |wants|
+      wants.atom {}
+    end
   end
   
   def show
-    respond_to do |wants|
-      wants.xml { render xml: HealthDataStandards::Export::C32.export(@record) }
-    end
+    respond_with(@record)
   end
   
 end

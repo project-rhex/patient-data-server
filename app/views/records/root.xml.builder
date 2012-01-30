@@ -12,8 +12,7 @@ xml.root xmlns: "http://projecthdata.org/hdata/schemas/2009/06/core", "xmlns:xsi
     
   end
   xml.sections do
-    xml.section(path: "/c32", name: "C32", extensionId: 1)
-    xml.section(path: "/c32-json", name: "C32 GreenJSON", extensionId: 2)
+    xml.section(path: record_c32_index_path(@record.medical_record_number), name: "C32", extensionId: 1)
     Record::Sections.each_with_index do |section_name, i|
       xml.section(path: "/#{section_name}", name: section_name.to_s.titleize, extensionId: i + 3)
     end

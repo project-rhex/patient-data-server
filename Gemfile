@@ -33,5 +33,5 @@ group :test do
   gem 'turn', :require => false
   gem 'minitest'
   gem 'feedzirra'
+  gem 'cover_me'
 end
-

@@ -8,6 +8,19 @@ class AuditLogsController < ApplicationController
   VALID_SORTABLE_COLUMNS = AuditLog.fields.keys.reject {|k| k[0] == '_'}
   VALID_SORT_ORDERS = ['desc', 'asc']
   
+
+  def test
+    ## test method for testing.  When called, application controller will log this method call and add an entry into the DB
+    @audit_logs = []
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @audit_logs }
+    end
+  end
+
+
+
+
   def index
     order = []
     if VALID_SORTABLE_COLUMNS.include?(params[:sort]) && VALID_SORT_ORDERS.include?(params[:order])

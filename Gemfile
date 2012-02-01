@@ -1,13 +1,18 @@
 source 'http://rubygems.org'
 
+
 gem 'rails', '3.2.1'
 gem "health-data-standards", :git => "http://github.com/projectcypress/health-data-standards.git", :branch => "develop" 
+gem 'ruby-openid', :git => 'https://github.com/rdingwell/ruby-openid.git',:branch => "master" 
 gem "mongoid"
 gem "bson_ext"
 gem "pry"
 gem "capistrano"
 gem 'heroku'
 gem "nokogiri"
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-openid'
 
 
 group :assets do
@@ -28,4 +33,5 @@ group :test do
   gem 'turn', :require => false
   gem 'minitest'
   gem 'feedzirra'
+  gem 'cover_me'
 end

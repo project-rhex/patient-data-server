@@ -2,6 +2,7 @@ require 'test_helper'
 require 'feedzirra'
 require 'open-uri'
 require 'json_constants'
+require "json"
 
 class ResultsControllerTest < ActionController::TestCase
 
@@ -20,6 +21,14 @@ class ResultsControllerTest < ActionController::TestCase
     Record.delete_all
   end
 
+  # This is really punting on the multipart-form, but we're moving to a different controller solution where this
+  # problem is being solved - so solving the issue here is duplicating effort
+  def json_post name, id, hash
+    id_part = id.to_s
+    part = hash.to_json
+    post(:add, :id => id_part.to_s, :content => {:content_data => part.to_s, :content_type => 'application/json' })
+  end
+
   def test_get_atom_feed
     @request.accept="application/atom+xml"
     get(:index, :id => 1)
@@ -27,10 +36,6 @@ class ResultsControllerTest < ActionController::TestCase
     assert_not_nil(rss.entries)
     assert_equal(1, rss.entries.size)
     assert rss.entries[0].links[0].include? "/records/1/results/1"
-  end
-
-  def test_get_routing
-
   end
 
   def test_get_content
@@ -44,4 +49,49 @@ class ResultsControllerTest < ActionController::TestCase
     assert_not_nil(json[JsonConstants::TIME])
     assert_not_nil(json[JsonConstants::DESCRIPTION])
   end
+
+  def test_get_missing_content
+    @request.accept="application/json"
+    get(:show, :id => 1, :result_id => 3)
+    content = @response.body
+  end
+
+  def test_post_content
+    now = Time.now.to_i
+    code_val = [ 19085718905 ]
+    key = "SNOMED-CT"
+    result = {
+        JsonConstants::CODES => {
+           key => code_val
+        },
+        JsonConstants::TIME => now,
+        JsonConstants::DESCRIPTION => "cbc neutrophils",
+        JsonConstants::VALUE => {
+            JsonConstants::SCALAR => 2500,
+            JsonConstants::UNITS => "count"
+        }
+    }
+    json_post :add, 1, result
+    record = Record.first(conditions: {medical_record_number: 1})
+    assert_not_nil record
+    assert_not_nil record.results
+    assert_equal 2, record.results.size
+    result_2 = record.results[1]
+
+    assert_equal now, result_2[JsonConstants::TIME]
+
+    codes = result_2[JsonConstants::CODES]
+    assert_not_nil codes
+    code = codes[key]
+    assert_not_nil code
+    assert_equal code_val, code
+
+    assert_equal "cbc neutrophils", result_2[JsonConstants::DESCRIPTION]
+
+    value = result_2[JsonConstants::VALUE]
+    assert_not_nil value
+    assert_equal 2500, value[JsonConstants::SCALAR]
+    assert_equal 'count', value[JsonConstants::UNITS]
+  end
+
 end

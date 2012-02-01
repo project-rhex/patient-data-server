@@ -7,7 +7,9 @@ module JsonConstants
   COMMENT = "comment"
   DESCRIPTION = "description"
   PROBLEM_STATUS = "problemStatus"
+  SCALAR = "scalar"
   STATUS = "status"
   TIME = "time"
+  UNITS = "units"
   VALUE = "value"
 end

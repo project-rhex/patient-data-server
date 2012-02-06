@@ -36,6 +36,8 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
 
+  root :to =>  "records#index"
+  
   # Sample resource route with options:
   #   resources :products do
   #     member do

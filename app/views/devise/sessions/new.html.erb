@@ -14,4 +14,11 @@
   <div><%= f.submit "Sign in" %></div>
 <% end %>
 
+<p><strong>Sign in through OpenID:</strong></p>
+
+<a href="/auth/open_id" class="auth_provider">
+  <%= image_tag "openid_64.png", :size => "64x64", :alt => "OpenID" %>
+  OpenID
+</a>
+
 <%= render :partial => "devise/shared/links" %>

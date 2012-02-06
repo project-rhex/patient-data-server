@@ -1,10 +1,11 @@
 class RecordsController < ApplicationController
-    #before_filter :authenticate_user!
+  
   def index
     @records = Record.all
     
     respond_to do |wants|
       wants.atom {}
+      wants.html{ render :template=>"records/index.atom", :layout=>nil}
     end
   end
   

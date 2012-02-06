@@ -34,4 +34,5 @@ group :test do
   gem 'minitest'
   gem 'feedzirra'
   gem 'cover_me'
+  gem 'factory_girl_rails'
 end

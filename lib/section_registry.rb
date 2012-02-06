@@ -12,7 +12,8 @@ class SectionRegistry
     importers = {}
     exporters = {}
     yield importers, exporters if block_given?
-    @extensions << OpenStruct.new(path: path, extension_id: extension_id, name: name)
+    @extensions << OpenStruct.new(path: path, extension_id: extension_id, name: name,
+                                  importers: importers, exporters: exporters)
   end
   
   def extension_from_path(path)

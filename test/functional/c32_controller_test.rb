@@ -3,9 +3,8 @@ require 'test_helper'
 class C32ControllerTest < ActionController::TestCase
 
   setup do
-    load_fixtures
-    @record = Record.first
-    @record.update_attribute(:medical_record_number, 1)
+    records = FactoryGirl.create_list(:record, 25)
+    @record = records.first
   end
 
   test "get c32 as xml" do

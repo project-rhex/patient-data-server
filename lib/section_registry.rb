@@ -9,6 +9,9 @@ class SectionRegistry
   end
   
   def add_section(path, extension_id, name)
+    importers = {}
+    exporters = {}
+    yield importers, exporters if block_given?
     @extensions << OpenStruct.new(path: path, extension_id: extension_id, name: name)
   end
   
@@ -17,6 +20,10 @@ class SectionRegistry
   end
 end
 
+
+##############################################################
+# Register all the sections we will use in the web application
+############################################################## 
 sr = SectionRegistry.instance
 
 sr.add_section('allergies', 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 'Allergies')
@@ -27,6 +34,9 @@ sr.add_section('immunizations', 'http://projecthdata.org/hdata/schemas/2009/06/i
 sr.add_section('medical_equipment', 'http://projecthdata.org/hdata/schemas/2009/06/medical_equipment', 'Medical Equipment')
 sr.add_section('medications', 'http://projecthdata.org/hdata/schemas/2009/06/medication', 'Medications')
 sr.add_section('procedures', 'http://projecthdata.org/hdata/schemas/2009/06/procedure', 'Procedures')
-sr.add_section('results', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Lab Results')
+sr.add_section('results', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Lab Results') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenCda::ResultImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenCda::ExportGenerator.create_exporter_for(:result)
+end
 sr.add_section('social_history', 'http://projecthdata.org/hdata/schemas/2009/06/social_history', 'Social History')
 sr.add_section('vital_signs', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Vital Signs')

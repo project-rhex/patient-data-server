@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'section_registry'
 
 class SectionRegistryTest < ActiveSupport::TestCase
   test 'finding an extension by path' do

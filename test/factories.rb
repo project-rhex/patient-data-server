@@ -16,6 +16,6 @@ FactoryGirl.define do
     time 1285387200
     codes({'CPT' => ['83721'], 'LOINC' => ['2089-1']})
     value({'scalar' => 127, 'units' => 'mg/dL'})
-    #reference_range '70 mg/dL - 160 mg/dL'
+    reference_range '70 mg/dL - 160 mg/dL'
   end
 end

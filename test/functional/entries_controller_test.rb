@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class EntriesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+  
   setup do
     @record = FactoryGirl.create(:record, :with_lab_results)
+    @user = FactoryGirl.create(:user)
+    sign_in @user
   end
   
   test "get a result as xml" do

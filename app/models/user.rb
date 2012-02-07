@@ -21,4 +21,9 @@ class User
    end
    
    
+   def username
+     email
+   end
+   
+   
 end

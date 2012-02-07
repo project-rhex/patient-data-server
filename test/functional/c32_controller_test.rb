@@ -1,10 +1,15 @@
 require 'test_helper'
 
 class C32ControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   setup do
     records = FactoryGirl.create_list(:record, 25)
     @record = records.first
+    @request.env["devise.mapping"] = Devise.mappings
+    @user = FactoryGirl.create(:user)
+    sign_in @user
+   
   end
 
   test "get c32 as xml" do

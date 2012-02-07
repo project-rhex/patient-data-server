@@ -8,8 +8,8 @@ class AuthenticationsController < ActionController::Base
   def create
     
     omniauth = request.env["omniauth.auth"]
-    puts omniauth.inspect
     authentication = Authentication.first(conditions: { provider: omniauth['provider'], uid: omniauth['uid']})
+    binding.pry
     if authentication
       flash[:notice] = "Signed in successfully."
       sign_in_and_redirect(:user, authentication.user)
@@ -21,6 +21,7 @@ class AuthenticationsController < ActionController::Base
       user = User.new
       user.apply_omniauth(omniauth)
       if user.save
+        user.authentications[0].save
         flash[:notice] = "Signed in successfully."
         sign_in_and_redirect(:user, user)
       else

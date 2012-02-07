@@ -7,6 +7,7 @@ gem 'ruby-openid', :git => 'https://github.com/rdingwell/ruby-openid.git',:branc
 gem "mongoid"
 gem "bson_ext"
 gem "pry"
+gem 'pry-nav'
 gem "capistrano"
 gem 'heroku'
 gem "nokogiri"

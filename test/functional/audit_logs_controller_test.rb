@@ -2,13 +2,17 @@ require 'test_helper'
 include Devise::TestHelpers
 
 class AuditLogsControllerTest < ActionController::TestCase
-
+  include Devise::TestHelpers
   setup do
+    @request.env["devise.mapping"] = Devise.mappings
+    @user = FactoryGirl.create(:user)
+    sign_in @user
     ## clean out auditlog table
     AuditLog.all.each {|x| x.destroy}
   end
 
   test "audit log GET 'index'" do
+    
     get :index
     assert_response :success
   end

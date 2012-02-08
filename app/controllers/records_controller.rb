@@ -20,8 +20,13 @@ class RecordsController < ApplicationController
     patient_data = HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
     ## GG commented out, thows a Array.reject no method error; patient_data.save works
     #Record.create!(patient_data)
-    patient_data.save
 
+    # TODO: need to add unique medical_record_number to patient obj before save
+    patient_data.save
+    
+    # TODO: need to confirm save is ok or not and return appropriate response
+
+    ## TODO: need to return patient ID with URI
     render :text => 'success', :status => 201
   end
   

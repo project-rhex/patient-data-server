@@ -8,4 +8,9 @@ module ApplicationHelper
     end
     breadcrumbs.html_safe
   end
+
+  # Create a field/value combination that can be styled
+  def labeled_field label, value
+    "<div class='labeled_field'><span class='label'>#{label}:</span><span class='value'>#{value}</span></div>".html_safe
+  end
 end

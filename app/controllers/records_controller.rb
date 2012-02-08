@@ -45,7 +45,7 @@ class RecordsController < ApplicationController
   end
 
   def breadcrumbs
-    super << breadcrumb('Patient Index', records_path("."))
+    super << breadcrumb('Patient Index', records_path())
   end
 
   private

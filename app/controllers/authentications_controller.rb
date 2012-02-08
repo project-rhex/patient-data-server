@@ -9,7 +9,7 @@ class AuthenticationsController < ActionController::Base
     
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.first(conditions: { provider: omniauth['provider'], uid: omniauth['uid']})
-    binding.pry
+    #binding.pry
     if authentication
       flash[:notice] = "Signed in successfully."
       sign_in_and_redirect(:user, authentication.user)

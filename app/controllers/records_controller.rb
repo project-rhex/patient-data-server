@@ -28,7 +28,11 @@ class RecordsController < ApplicationController
   def show
     respond_to do |wants|
       wants.atom {}
+      wants.html {}
     end
   end
 
+  def breadcrumbs
+    super << breadcrumb('Patient Index', records_path("."))
+  end
 end

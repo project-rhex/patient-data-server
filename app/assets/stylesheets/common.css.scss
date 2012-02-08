@@ -3,10 +3,11 @@
  */
 $title-color: #4a2527;
 $link-fg: #404040;
-$bg: #4B7399;
+$link-hover: darken($link-fg, 30%);
+$bg: white;
 
 $basic-font-size: 14px;
 $basic-font-family-list: Verdana, Helvetica, Arial;
 
-
+$left-indent: 5mm;
 

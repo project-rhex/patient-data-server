@@ -4,3 +4,50 @@ $header-fg: white;
 $logo-font-family-list: Times, Serif;
 $logo-size: 24px;
 
+#page_header {
+    width: 100%;
+    height: 25px;
+    background-color: $header-bg;
+    color: $header-fg;
+    margin: 0px;
+    padding: 2px;
+}
+
+#page_header a {
+    color:  $header-fg;
+    float: right;
+    margin: 2px;
+    margin-right: 3mm;
+    margin-left: 6mm;
+}
+
+#page_header #logo {
+    float: left;
+    margin: 2px;
+    font-family: $logo-font-family-list;
+    font-size: $logo-size;
+    margin-left: $left-indent;
+}
+
+#page_header #user {
+    float: left;
+    margin: 2px;
+    padding-left: 1in;
+}
+
+#breadcrumbs {
+    margin: 2mm;
+    margin-left: $left-indent;
+}
+
+#breadcrumbs a:link {
+    color:  $link-fg;
+}
+
+#breadcrumbs a:hover {
+    color:  $link-hover;
+}
+
+#breadcrumbs a:visited {
+    color:  $link-fg;
+}

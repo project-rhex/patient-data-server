@@ -3,6 +3,19 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
   before_filter :find_record, :audit_log
+
+  # Return a list of breadcrumbs appropriate for the particular controller. This method can be overridden by
+  # any specific subclass to introduce sublinks into the breadcrumb path. A leaf path can then be introduced by
+  # the local controller by convention using local code
+  def breadcrumbs
+    [ breadcrumb("Home", root_path) ]
+  end
+
+  # Hold a single link's data in a hash
+  def breadcrumb title, link
+    { :title => title, :link => link }
+  end
+
   private
   
   def find_record

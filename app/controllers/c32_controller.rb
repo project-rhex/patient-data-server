@@ -1,3 +1,5 @@
+require 'audit_doc'
+
 class C32Controller < ApplicationController
   
   respond_to :xml, :json, :atom
@@ -9,6 +11,9 @@ class C32Controller < ApplicationController
   end
   
   def show
+    desc = "id:#{params[:id]}" if params[:id]
+    AuditDoc.log("NONE", "USER_ACTION", desc, @record)
+
     respond_with(@record)
   end
   

@@ -38,9 +38,9 @@ class ApplicationController < ActionController::Base
       ## log user email for now
       ## TODO: change to larger requester info set
       if current_user
-        AuditLog.create(:requester_info => current_user.email, :event => "USER_ACTION", :description => desc)
+        AuditLog.create(:requester_info => current_user.email, :event => "USER_ACTION", :description => desc, :checksum => "")
       else
-        AuditLog.create(:requester_info => "NONE", :event => "USER_ACTION", :description => desc)
+        AuditLog.create(:requester_info => "NONE", :event => "USER_ACTION", :description => desc, :checksum => "")
       end
 
     end

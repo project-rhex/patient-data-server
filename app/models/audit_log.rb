@@ -1,3 +1,4 @@
+require 'digest/sha1'
 
 class AuditLog
   include Mongoid::Document
@@ -13,5 +14,21 @@ class AuditLog
   
   ## file SHA1 HASH
   field :checksum, :type => String
+
+  ## file record id
+  field :record_id, :type => Integer
+  field :version,   :type => Integer
+  
+  ## capture a sha1 hash of record and save it as a water mark
+  def self.doc(requester_info, event, description, record, record_id, vers)
+    #puts "======"
+    serialized = record.to_yaml
+    #puts serialized.inspect
+    sig = ""
+    sig = Digest::SHA1.hexdigest serialized
+    ##puts "GG" + sig.inspect
+    AuditLog.create(requester_info: requester_info, event: event, 
+                    description: description, checksum: sig, record_id: record_id, version: vers)
+  end
 
 end

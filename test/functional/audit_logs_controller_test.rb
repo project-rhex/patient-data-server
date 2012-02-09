@@ -12,7 +12,7 @@ class AuditLogsControllerTest < ActionController::TestCase
   end
 
   test "audit log GET 'index'" do
-    
+    request.env['HTTP_ACCEPT'] = Mime::XML
     get :index
     assert_response :success
   end

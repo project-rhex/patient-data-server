@@ -4,6 +4,9 @@ class RecordsController < ApplicationController
   def index
     @records = Record.all
 
+    if current_user
+      AuditLog.create(requester_info: current_user.email, event: "record_list_access", description: desc)
+    end
     respond_to do |wants|
       wants.atom {}
       wants.html{}
@@ -33,9 +36,8 @@ class RecordsController < ApplicationController
   end
   
   def show
-    desc = "id:#{params[:id]}" if params[:id]
     if current_user
-      AuditLog.create(:requester_info => current_user.email, :event => "record_access", :description => desc)
+      AuditLog.create(requester_info: current_user.email, event: "record_access", description: desc)
     end
 
     respond_to do |wants|

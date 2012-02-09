@@ -24,6 +24,8 @@ $logo-size: 24px;
 #page_header #logo {
     float: left;
     margin: 2px;
+    position: relative;
+    top: -5px;
     font-family: $logo-font-family-list;
     font-size: $logo-size;
     margin-left: $gutter;

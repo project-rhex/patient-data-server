@@ -18,7 +18,7 @@ HdataServer::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  get "audit_logs/index"
+  match "audit_logs" => "audit_logs#index", :as => "audit_logs"
 
   resources :records do
     resources :c32

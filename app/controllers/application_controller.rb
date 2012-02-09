@@ -12,8 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   # Hold a single link's data in a hash
-  def breadcrumb title, link
-    { :title => title, :link => link }
+  def breadcrumb title, link = nil
+    if link.nil?
+      { :title => title }
+    else
+      { :title => title, :link => link }
+    end
   end
 
   private

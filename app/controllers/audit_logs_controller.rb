@@ -56,6 +56,10 @@ class AuditLogsController < ApplicationController
     end
     
   end
+
+  def breadcrumbs
+    super << breadcrumb('Audit Log' )
+  end
   
   private
   

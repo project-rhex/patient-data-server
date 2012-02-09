@@ -1,0 +1,19 @@
+@import 'common';
+
+h1 {
+    font-size: 20px;
+}
+
+.log_shell {
+    padding-left: $gutter;
+    padding-right: $gutter;
+}
+
+#log_table td {
+    padding-right: $gutter;
+}
+
+#log_table th {
+    text-align: left;
+}
+

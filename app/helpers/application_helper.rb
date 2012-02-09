@@ -4,7 +4,11 @@ module ApplicationHelper
     breadcrumbs = ""
     controller.breadcrumbs.each do |x|
       breadcrumbs += "&nbsp;|&nbsp;" if breadcrumbs.length > 0
-      breadcrumbs += "<a href='#{x[:link]}'>#{x[:title]}</a>"
+      if x[:link].nil?
+        breadcrumbs += x[:title]
+      else
+        breadcrumbs += "<a href='#{x[:link]}'>#{x[:title]}</a>"
+      end
     end
     breadcrumbs.html_safe
   end

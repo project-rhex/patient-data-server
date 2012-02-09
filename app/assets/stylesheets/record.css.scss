@@ -1,7 +1,7 @@
 @import 'common';
 
 .patient {
-  margin-left: $left-indent;
+  margin-left: $gutter;
 }
 
 .labeled_field .label {
@@ -19,10 +19,16 @@
   color: $value-fg;
 }
 
+#vitals_display {
+    width: 100%;
+    padding-left: 0;
+    padding-right: $gutter;
+}
+
 #vitals_display td {
     text-align: left;
     padding-left: 0px;
-    padding-right: 30px;
+    padding-right: $gutter;
     vertical-align: top;
 }
 
@@ -31,9 +37,26 @@
     font-size: smaller;
 }
 
-#record_display td {
+#record_display {
+    width: 100%;
+    height: 500px;
+    padding-left: 0;
+    padding-right: $gutter;
+}
+
+#record_display tr {
+    min-height: 500px;
+}
+
+#record_display td:first-child {
     padding-left: 0px;
-    padding-right: 20px;
+    padding-right: 0px;
+    vertical-align: top;
+}
+
+#record_display td {
+    padding-left: $gutter;
+    padding-right: 0px;
     vertical-align: top;
 }
 
@@ -42,14 +65,53 @@
     text-align: center;
 }
 
-#record_display .section {
+/*
+ * Margin top eats the overflow from the columns since the columns overrun the bottom
+ * of the table due to the headers pushing the 100% sized divs below the bottom.
+ */
+.footer {
+    margin-top: 40px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.record {
+    margin-left: $gutter;
+    margin-top: 5px;
+}
+
+.record a:link {
+    color:  $link-fg;
+}
+
+.record a:hover {
+    color:  $link-hover;
+}
+
+.record a:visited {
+    color:  $link-fg;
+}
+
+.section {
     border: 1px solid gray;
     background-color: #EEE;
     width: 100%;
     height: 100%;
+    padding: 4px;
+    margin: 0px;
 }
 
-.footer {
+.section h2 {
     font-size: 12px;
-    text-align: center;
+    font-weight: bold;
+    color: $field-fg;
+    margin-above: 3px;
+    margin-below: 3px;
+}
+
+$section-value-fg: lighten($value-fg, 30%);
+
+.section .simple_value {
+    font-size: 12px;
+    color: $section-value-fg;
 }

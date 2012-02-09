@@ -26,7 +26,7 @@ $logo-size: 24px;
     margin: 2px;
     font-family: $logo-font-family-list;
     font-size: $logo-size;
-    margin-left: $left-indent;
+    margin-left: $gutter;
 }
 
 #page_header #user {
@@ -37,7 +37,7 @@ $logo-size: 24px;
 
 #breadcrumbs {
     margin: 2mm;
-    margin-left: $left-indent;
+    margin-left: $gutter;
 }
 
 #breadcrumbs a:link {

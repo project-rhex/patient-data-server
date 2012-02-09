@@ -1,30 +1,35 @@
 <%= stylesheet_link_tag :record %>
 <div class="patient">
-  <%= labeled_field 'Patient Name', patient_name %>
+  <%= labeled_field 'Patient Name:', patient_name %>
 
-  <table id="vitals_display" border='0' height='15%' width='95%'>
+  <table id="vitals_display" border='0'>
     <tr><td>Height: xxxx</td><td>Weight: xxxx</td><td>Heart Rate: xxxx</td><td>S BP<br>D BP xxxxx</td></tr>
   </table>
   <div id="vitals">Physical Exam findings last updated ......</div>
 
-  <table id="record_display" border="0" height="75%" width="95%">
+  <table id="record_display" border="0">
     <tr>
       <td>
         <h1>Patient Information</h1>
         <div class="section">
-          <br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <h2>Demographic Information</h2>
+          <%= record_simple_value(date(@record.birthdate) + "(" + calculate_age(@record.birthdate) + " yrs old)") %>
+          <%= record_simple_value('white') %>
+          <h2>Allergies</h2>
+
         </div>
       </td>
       <td>
         <h1>Doctor Visits</h1>
         <div class="section">
-          <br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <h2>Consultation Orders</h2>
+
         </div>
       </td>
       <td>
         <h1>Health Record Activity</h1>
         <div class="section">
-          <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
         </div>
       </td>
     </tr>

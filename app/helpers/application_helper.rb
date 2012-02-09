@@ -11,6 +11,12 @@ module ApplicationHelper
 
   # Create a field/value combination that can be styled
   def labeled_field label, value
-    "<div class='labeled_field'><span class='label'>#{label}:</span><span class='value'>#{value}</span></div>".html_safe
+    "<div class='labeled_field'><span class='label'>#{label}</span><span class='value'>#{value}</span></div>".html_safe
+  end
+
+  # Show the date, formatted
+  def date date_value
+    date_value = Time.at(date_value) if date_value.class == Fixnum
+    date_value.strftime("%m/%d/%Y")
   end
 end

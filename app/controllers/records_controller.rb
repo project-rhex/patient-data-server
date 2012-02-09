@@ -6,7 +6,7 @@ class RecordsController < ApplicationController
 
     respond_to do |wants|
       wants.atom {}
-      wants.html{ render :template=>"records/index.atom", :layout=>nil}
+      wants.html{}
     end
   end
   

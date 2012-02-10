@@ -4,32 +4,41 @@
   margin-left: $gutter;
 }
 
+.labeled_field {
+    display: inline-block;
+    margin-right: 60px;
+}
+
 .labeled_field .label {
-  color: $field-fg;
-  font-weight: bold;
+    display: inline-block;
+    color: $field-fg;
+    font-weight: bold;
 }
 
 #patient_name {
-  font-size: 16px;
-  font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .labeled_field .value {
-  margin-left: 20px;
-  color: $value-fg;
+    margin-left: 20px;
+    color: $value-fg;
 }
 
 #vitals_display {
-    width: 100%;
+    margin-top: 20px;
+    width: 95%;
     padding-left: 0;
-    padding-right: $gutter;
+    margin-right: 100px;
 }
 
 #vitals_display td {
+    width: 33%;
     text-align: left;
     padding-left: 0px;
     padding-right: $gutter;
     vertical-align: top;
+    background-color: #F5F5F5;
 }
 
 #vitals {
@@ -58,11 +67,34 @@
     padding-left: $gutter;
     padding-right: 0px;
     vertical-align: top;
+    width: 33%;
 }
 
 #record_display h1 {
     font-size: 13px;
     text-align: center;
+}
+
+#record_display .labeled_field {
+    display: block;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 100%;
+}
+
+#record_display .labeled_field .label {
+    display: inline-block;
+    color: $link-fg;
+    font-weight: bold;
+    text-align: left;
+    width: 3in;
+}
+
+#record_display .labeled_field .value {
+    margin-left: 20px;
+    color: $value-fg;
+    text-align: right;
+    width: 2in;
 }
 
 /*

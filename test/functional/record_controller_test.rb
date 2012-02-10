@@ -28,7 +28,27 @@ class RecordControllerTest < ActionController::TestCase
 
   test "calculate_age" do
     ApplicationHelper::controller = @controller
-    assert_equal "0", calculate_age(Time.now)
+    day_in_seconds = 24 * 3600
+    today = Time.now
+    assert_equal "less than a day", calculate_age(today)
+
+    yesterday = today - day_in_seconds
+    assert_equal "1 day", calculate_age(yesterday)
+
+    two_days = today - (2 * day_in_seconds)
+    assert_equal "2 days", calculate_age(two_days)
+
+    last_month = today - (32 * day_in_seconds)
+    assert_equal "1 month", calculate_age(last_month)
+
+    two_months = today - (64 * day_in_seconds)
+    assert_equal "2 months", calculate_age(two_months)
+
+    one_year = today - (366 * day_in_seconds)
+    assert_equal "1 year", calculate_age(one_year)
+
+    two_years = today - (740 * day_in_seconds)
+    assert_equal "2 years", calculate_age(two_year)
   end
 
   test "record_simple_value" do

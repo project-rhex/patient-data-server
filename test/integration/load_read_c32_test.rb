@@ -3,20 +3,6 @@ include Devise::TestHelpers
 
 class LoadReadC32Test < ActionController::TestCase
 
-#require 'rubygems'
-#require 'bundler'
-#require 'mongo'
-#require 'nokogiri'
-#require 'health-data-standards'
-
-=begin
-@conn = Mongo::Connection.new
-@db   = @conn['hds-test']
-@coll = @db['records']
-
-puts "There are #{@coll.count} records. Here they are:"
-@coll.find.each { |doc| puts doc.inspect }
-=end
 
   setup do
     @request.env["devise.mapping"] = Devise.mappings
@@ -28,7 +14,7 @@ puts "There are #{@coll.count} records. Here they are:"
   end
 
 
-  test "C32 read" do
+  test "c32_read" do
     ## precondition - need audit log table empty
     record = Record.all.first
     assert_nil record, "Record precondition FAIL - record table is NOT empty!"
@@ -98,6 +84,7 @@ puts "There are #{@coll.count} records. Here they are:"
     assert_equal record.last, "Smith"
 
   end
+
 
 end
 

@@ -22,8 +22,11 @@ class AuditLog
   ## capture a sha1 hash of record and save it as a water mark
   def self.doc(requester_info, event, description, record, record_id, vers)
     #puts "======"
-    serialized = record.to_yaml
+    ## to_yaml ... sometime bombs out with -  can't dump anonymous class Class, replace with inspect
+    #serialized = record.to_yaml
+    serialized = record.inspect
     #puts serialized.inspect
+
     sig = ""
     sig = Digest::SHA1.hexdigest serialized
     ##puts "GG" + sig.inspect

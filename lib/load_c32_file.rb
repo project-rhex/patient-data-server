@@ -18,11 +18,17 @@ def next_med_rec_num
   highest_med_rec_num += 1
 end
 
-
-@conn = Mongo::Connection.new
-#@db   = @conn['hds-atest']
-@db   = @conn['hdata_server_development']
-@coll = @db['records']
+if ENV['MONGOHQ_URL']
+  uri = URI.parse(ENV['MONGOHQ_URL'])
+  @conn = Mongo::Connection.from_uri(uri)
+  @db   = @conn['hdata_server_production']
+  @coll = @db['records']
+else
+  @conn = Mongo::Connection.new
+  #@db   = @conn['hds-atest']
+  @db   = @conn['hdata_server_development']
+  @coll = @db['records']
+end
 
 #puts "There are #{@coll.count} records. Here they are:"
 #@coll.find.each { |doc| puts doc.inspect }

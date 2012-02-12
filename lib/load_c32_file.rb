@@ -19,8 +19,8 @@ def next_med_rec_num
 end
 
 if ENV['MONGOHQ_URL']
-  uri = URI.parse(ENV['MONGOHQ_URL'])
-  @conn = Mongo::Connection.from_uri(uri)
+  uri = URI.parse(# ENV['MONGOHQ_URL'])
+  @conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
   @db   = @conn['hdata_server_production']
   @coll = @db['records']
 else

@@ -72,10 +72,14 @@ puts patient.vital_signs.inspect
 =end
 
   ##@db.@coll.insert(patient)
-  Mongoid.load!("#{Rails.root}/config/mongoid.yml")
-  # Mongoid.configure do |config|
-  #   config.master = Mongo::Connection.new.db("hdata_server_development")
-  # end
+  # Mongoid.load!("#{File.dirname(__FILE__)}/../config/mongoid.yml")
+  Mongoid.configure do |config|
+    if ENV['MONGOHQ_URL']
+      config.master = Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db("hdata_server_production")
+    else
+      config.master = Mongo::Connection.new.db("hdata_server_development")
+    end
+  end
   
   #Record.create!(patient)p
   patient.medical_record_number = next_med_rec_num

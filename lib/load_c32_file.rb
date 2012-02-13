@@ -18,11 +18,17 @@ def next_med_rec_num
   highest_med_rec_num += 1
 end
 
-
-@conn = Mongo::Connection.new
-#@db   = @conn['hds-atest']
-@db   = @conn['hdata_server_development']
-@coll = @db['records']
+if ENV['MONGOHQ_URL']
+  # uri = URI.parse(ENV['MONGOHQ_URL'])
+  @conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+  @db   = @conn['hdata_server_production']
+  @coll = @db['records']
+else
+  @conn = Mongo::Connection.new
+  #@db   = @conn['hds-atest']
+  @db   = @conn['hdata_server_development']
+  @coll = @db['records']
+end
 
 #puts "There are #{@coll.count} records. Here they are:"
 #@coll.find.each { |doc| puts doc.inspect }
@@ -66,8 +72,13 @@ puts patient.vital_signs.inspect
 =end
 
   ##@db.@coll.insert(patient)
+  # Mongoid.load!("#{File.dirname(__FILE__)}/../config/mongoid.yml")
   Mongoid.configure do |config|
-    config.master = Mongo::Connection.new.db("hdata_server_development")
+    if ENV['MONGOHQ_URL']
+      config.master = Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db("hdata_server_production")
+    else
+      config.master = Mongo::Connection.new.db("hdata_server_development")
+    end
   end
   
   #Record.create!(patient)p

@@ -7,3 +7,4 @@ tmp/
 .rvmrc*
 coverage*
 .DS_Store
+.rake_tasks

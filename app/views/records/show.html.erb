@@ -1,17 +1,18 @@
 <%= stylesheet_link_tag :record %>
 <div class="patient">
-  <%= labeled_field 'Patient Name:', patient_name %>
-  <%= labeled_field 'Sex:', sex %>
-  <%= labeled_field 'Birthdate:', date(@record.birthdate) + "(" + calculate_age(@record.birthdate) + " old)" %>
+  <%= labeled_field 'Patient Name:', patient_name(@record) %>
+  <%= labeled_field 'Sex:', sex(@record) %>
+  <% bdate = Time.at(@record.birthdate) if @record.birthdate.class == Fixnum  %>
+  <%= labeled_field 'Birthdate:', date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)" %>
 
   <table id="vitals_display" border='0'>
     <tr>
-      <td>BMI: <%= latest_matching_vital 'BMI' %></td>
-      <td>Heart Rate: <%= latest_matching_vital 'Heart Rate' %></td>
-      <td>S BP: <%= latest_matching_vital 'Systolic' %><br>D BP: <%= latest_matching_vital 'Diastolic' %></td>
+      <td>BMI: <%= latest_matching_vital @record, 'BMI' %></td>
+      <td>Heart Rate: <%= latest_matching_vital @record, 'Heart Rate' %></td>
+      <td>S BP: <%= latest_matching_vital @record, 'Systolic' %><br>D BP: <%= latest_matching_vital @record, 'Diastolic' %></td>
     </tr>
   </table>
-  <div id="vitals">Physical Exam findings last updated <%= date(most_recent_vital_date) %></div>
+  <div id="vitals">Physical Exam findings last updated <%= date(most_recent_vital_date @record) %></div>
 
   <table id="record_display" border="0">
     <tr>

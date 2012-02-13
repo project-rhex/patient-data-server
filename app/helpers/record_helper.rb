@@ -1,6 +1,6 @@
 module RecordHelper
-  def patient_name
-    ("<span id='patient_name'>" + @record.last + ',&nbsp;' + @record.first + "</span>").html_safe
+  def patient_name record
+    ("<span id='patient_name'>" + record.last + ',&nbsp;' + record.first + "</span>").html_safe
   end
 
   def record_simple_value string
@@ -24,35 +24,17 @@ module RecordHelper
     end
   end
 
-  def sex
-    @record.gender
-  end
-
-  def calculate_age date_value
-    date_value = Time.at(date_value) if date_value.class == Fixnum
-    now = Time.now
-    year_delta = now.year - date_value.year
-    return year_delta.to_s + " years" if year_delta >= 2
-    return "1 year" if year_delta == 1
-
-    month_delta = now.mon - date_value.mon
-    return month_delta.to_s + " months" if month_delta >= 2
-    return "1 month" if month_delta if month_delta == 1
-
-    day_delta = now.yday - date_value.yday
-
-    return day_delta.to_s + " days" if day_delta >= 2
-    return "1 day" if day_delta == 1
-    return "less than a day"
+  def sex record
+    record.gender
   end
 
   # Returns the most recent vital sign that matches formatted
-  def latest_matching_vital name
+  def latest_matching_vital record, name
     name.downcase!
     match = nil
     mdelta = nil
     today = Time.now
-    @record.vital_signs.each do |result|
+    record.vital_signs.each do |result|
        if result.description.downcase.start_with?(name)
          if match
            delta = today.to_i - result.time.to_i
@@ -69,6 +51,7 @@ module RecordHelper
     if match
       value = match.value
       rval = value['scalar']
+      rval = rval.to_s
       rval += " " + value['units'] if value['units']
       rval
     else
@@ -77,10 +60,10 @@ module RecordHelper
   end
 
   # Returns the most recent date associated with a vital sign
-  def most_recent_vital_date
+  def most_recent_vital_date record
     today = Time.now
     mdelta = nil
-    @record.vital_signs.each do |result|
+    record.vital_signs.each do |result|
       desc = result.description.downcase
        if desc.start_with?('bmi') || desc.start_with?('systolic') || desc.start_with?('diastolic')
          if mdelta

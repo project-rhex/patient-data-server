@@ -1,0 +1,12 @@
+<result xmlns="urn:hl7-org:greencda:c32">
+    <resultID nullFlavor="NI"/>
+    <resultDateTime nullFlavor="NI"/>
+    <resultType code="14647-2" codeSystem="2.16.840.1.113883.6.1">
+        <originalText>Total cholesterol</originalText>
+        <!--NEED? resultName, to capture "Cholesterol" and become a text/reference to the narrative block -->
+    </resultType>
+    <resultStatus code="completed"/>
+    <resultValue><physicalQuantity unit="mg/dl" value="135"></physicalQuantity></resultValue>
+    <resultInterpretation code="N" codeSystem="2.16.840.1.113883.5.83"/>
+    <resultReferenceRange>&lt;200 mg/dl</resultReferenceRange>
+</result>

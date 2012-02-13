@@ -41,6 +41,14 @@ class EntriesControllerTest < ActionController::TestCase
     assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
   end
   
+  test "post a new result section document" do
+    result_file = File.read(Rails.root.join('test/fixtures/result.xml'))
+    request.env['RAW_POST_DATA'] = result_file
+    request.env['CONTENT_TYPE'] = 'application/xml'
+    post :create, {record_id: @record.medical_record_number, section: 'results'}
+    assert_response 201
+  end
+  
   test "get a document that doesn't exist" do
     request.env['HTTP_ACCEPT'] = Mime::XML
     get :show, {record_id: @record.medical_record_number, section: 'results', id: 'bacon'}

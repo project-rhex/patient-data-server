@@ -18,6 +18,19 @@ class EntriesController < ApplicationController
       end
     end
   end
+  
+  def create
+    content_type = request.content_type
+    if content_type == "multipart/form-data"
+      render text: 'Metadata POSTing not yet implemented', status: 400
+    else
+      importer = @extension.importers[content_type]
+      section_document = importer.import(request.body.read)
+      @record.send(@section_name).push(section_document)
+      response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
+      render text: 'Section document created', status: 201
+    end
+  end
 
   private
   

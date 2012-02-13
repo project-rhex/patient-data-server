@@ -23,22 +23,17 @@
           <h2>Allergies</h2>
           <b>....</b>
           <h2>Immunizations</h2>
-          <% if @record.immunizations %>
-          <% @record.immunizations.each do |i| %>
-              <%= labeled_field i.description, date(i.time) %>
-          <% end %>
+          <% earliest = Time.now - (2 * 365 * 24 * 3600) %>
+          <% section_enumerator(@record, :immunizations, earliest) do |i| %>
+              <%= labeled_field i['description'], date(i['time']) %>
           <% end %>
           <h2>Conditions</h2>
-          <% if @record.conditions %>
-          <% @record.conditions.each do |c| %>
-              <%= labeled_field c.description, date(c.start_time) %>
-          <% end %>
+          <% section_enumerator(@record, :conditions, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['start_time']) %>
           <% end %>
           <h2>Medications</h2>
-          <% if @record.medications %>
-          <% @record.medications.each do |m| %>
-              <%= labeled_field m.description, date(m.start_time) %>
-          <% end %>
+          <% section_enumerator(@record, :medications, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present'), 'med_field'  %>
           <% end %>
         </div>
       </td>
@@ -46,22 +41,16 @@
         <h1>Doctor Visits</h1>
         <div class="section">
           <h2>Consults</h2>
-          <% if @record.encounters %>
-          <% @record.encounters.each do |e| %>
-              <%= labeled_field e.description, date(e.time) %>
-          <% end %>
+          <% section_enumerator(@record, :encounters, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['time']) %>
           <% end %>
           <h2>Procedures</h2>
-          <% if @record.procedures %>
-          <% @record.procedures.each do |p| %>
-              <%= labeled_field p.description, date(p.time) %>
-          <% end %>
+          <% section_enumerator(@record, :procedures, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['time']) %>
           <% end %>
           <h2>Lab Results</h2>
-          <% if @record.results %>
-          <% @record.results.each do |r| %>
-              <%= labeled_field r.description, date(r.time) %>
-          <% end %>
+          <% section_enumerator(@record, :results, earliest) do |x| %>
+              <%= labeled_field(x['description'] + lab_result_value(x['value']), date(x['time'])) %>
           <% end %>
         </div>
 

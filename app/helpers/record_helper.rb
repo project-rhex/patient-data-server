@@ -7,6 +7,23 @@ module RecordHelper
     "<div class='simple_value'>#{string}</div>".html_safe
   end
 
+  # Enumerate the entries in a section, formatting each one in a passed block
+  # if the section doesn't exist render nothing.
+  #
+  # @param record the record which is assumed to not be nil
+  # @param section the name of the section
+  # @param earliest the earliest time to render an entry
+  def section_enumerator record, section, earliest
+    entries = record[section]
+    earliest = earliest.to_i if earliest.class == Time
+    return unless entries
+    entries.each do |e|
+      rtime = e['time'] || e['start_time']
+      next if rtime <= earliest
+      yield e
+    end
+  end
+
   def sex
     @record.gender
   end
@@ -81,5 +98,15 @@ module RecordHelper
     else
       nil
     end
+  end
+
+  # Takes the value portion of a record and formats it
+  def lab_result_value value
+    return "" unless value
+    scalar = value['scalar']
+    units = value['units']
+    return "" unless scalar
+    return "<span class='lab_value'>" + scalar + "</span>".html_safe unless units
+    return "<span class='lab_value'>" + scalar + "(" + units + ")</span>".html_safe unless units
   end
 end

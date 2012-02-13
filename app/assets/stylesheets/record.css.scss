@@ -87,14 +87,36 @@
     color: $link-fg;
     font-weight: bold;
     text-align: left;
-    width: 3in;
+    width: 60%;
 }
 
 #record_display .labeled_field .value {
     margin-left: 20px;
     color: $value-fg;
     text-align: right;
-    width: 2in;
+    width: 40%;
+}
+
+#record_display .med_field {
+    display: block;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 100%;
+}
+
+#record_display .med_field .label {
+    display: inline-block;
+    color: $link-fg;
+    font-weight: bold;
+    text-align: left;
+    width: 60%;
+}
+
+#record_display .med_field .value {
+    margin-left: 20px;
+    color: $value-fg;
+    text-align: right;
+    width: 40%;
 }
 
 /*
@@ -146,4 +168,20 @@ $section-value-fg: lighten($value-fg, 30%);
 .section .simple_value {
     font-size: 12px;
     color: $section-value-fg;
+}
+
+.section .label {
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.section .lab_value {
+    color: $section-value-color;
+    font-size: 10px;
+    font-weight: normal;
+    margin-left: 20px;
+}
+
+.section .value {
+    font-size: 10px;
 }

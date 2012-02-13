@@ -14,17 +14,17 @@ module ApplicationHelper
   end
 
   # Create a field/value combination that can be styled
-  def labeled_field label, value
-    "<div class='labeled_field'><span class='label'>#{label}</span><span class='value'>#{value}</span></div>".html_safe
+  def labeled_field label, value, field_class = 'labeled_field'
+    ("<div class='" + field_class + "'><span class='label'>#{label}</span><span class='value'>#{value}</span></div>").html_safe
   end
 
   # Show the date, formatted
-  def date date_value
+  def date date_value, default = 'never'
     if date_value
       date_value = Time.at(date_value) if date_value.class == Fixnum
       date_value.strftime("%m/%d/%Y")
     else
-      "never"
+      default
     end
   end
 end

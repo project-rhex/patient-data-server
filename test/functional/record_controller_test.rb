@@ -26,6 +26,10 @@ class RecordControllerTest < ActionController::TestCase
     Record.create(data)
   end
 
+  test "breadcrumbs" do
+    assert_equal([{ :title => "Home", :link => "/"}, { :title => 'Patient Index'}], @controller.breadcrumbs)
+  end
+
   test "calculate_age" do
     ApplicationHelper::controller = @controller
     day_in_seconds = 24 * 3600

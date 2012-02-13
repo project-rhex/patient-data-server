@@ -25,7 +25,11 @@ class EntriesController < ApplicationController
       render text: 'Metadata POSTing not yet implemented', status: 400
     else
       importer = @extension.importers[content_type]
-      section_document = importer.import(request.body.read)
+      raw_content = nil
+      if content_type = 'application/xml'
+        raw_content = Nokogiri::XML(request.body.read)
+      end
+      section_document = importer.import(raw_content)
       @record.send(@section_name).push(section_document)
       response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
       render text: 'Section document created', status: 201

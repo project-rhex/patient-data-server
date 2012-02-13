@@ -51,7 +51,7 @@
           <% end %>
           <h2>Lab Results</h2>
           <% section_enumerator(@record, :results, earliest) do |x| %>
-              <%= labeled_field(x['description'] + lab_result_value(x['value']), date(x['time'])) %>
+              <%= labeled_field(x['description'] + show_value(x['value']), date(x['time'])) %>
           <% end %>
         </div>
 

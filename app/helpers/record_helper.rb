@@ -24,6 +24,7 @@ module RecordHelper
     end
   end
 
+  # Return the sex character from the "gender" field
   def sex record
     record.gender
   end
@@ -49,11 +50,7 @@ module RecordHelper
        end
     end
     if match
-      value = match.value
-      rval = value['scalar']
-      rval = rval.to_s
-      rval += " " + value['units'] if value['units']
-      rval
+      show_value match.value
     else
       ""
     end
@@ -84,12 +81,13 @@ module RecordHelper
   end
 
   # Takes the value portion of a record and formats it
-  def lab_result_value value
+  def show_value value
     return "" unless value
     scalar = value['scalar']
     units = value['units']
+    scalar = scalar.to_s
     return "" unless scalar
-    return "<span class='lab_value'>" + scalar + "</span>".html_safe unless units
-    return "<span class='lab_value'>" + scalar + "(" + units + ")</span>".html_safe unless units
+    return ("<span class='lab_value'>" + scalar + "</span>").html_safe unless units
+    return ("<span class='lab_value'>" + scalar + "&nbps;(" + units + ")</span>").html_safe
   end
 end

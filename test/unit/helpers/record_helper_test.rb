@@ -46,6 +46,16 @@ class RecordHelperTest < ActionView::TestCase
     vs3 = FactoryGirl.create(:lab_result)
     rec.vital_signs.concat([ vs1, vs2, vs3 ])
     v = latest_matching_vital rec, 'ldl'
-    assert_equal "127 mg/dL", v
+    assert_equal "<span class='lab_value'>127&nbps;(mg/dL)</span>", v
+  end
+
+  test "sex method" do
+    rec = FactoryGirl.create(:record)
+    assert_equal "M", sex(rec)
+  end
+
+  test "format a value" do
+    r = FactoryGirl.create(:lab_result)
+    assert_equal "<span class='lab_value'>127&nbps;(mg/dL)</span>", show_value(r.value)
   end
 end

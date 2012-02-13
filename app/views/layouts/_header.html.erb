@@ -1,3 +1,8 @@
+<%
+   def breadcrumbs
+       controller.breadcrumbs
+   end
+ %>
 <div id="page_header">
   <% unless current_user.nil? || current_user.username.nil? %>
   <a href="#">Logout</a>

@@ -1,6 +1,6 @@
 namespace :hdata do
   
-  desc "Loads local C32 files"
+  desc "Loads local C32 files from test/fixtures/*.xml"
   task :load_c32_files => :environment do
     def next_med_rec_num
       records = Record.all

@@ -14,8 +14,8 @@ sr.add_section('medical_equipment', 'http://projecthdata.org/hdata/schemas/2009/
 sr.add_section('medications', 'http://projecthdata.org/hdata/schemas/2009/06/medication', 'Medications')
 sr.add_section('procedures', 'http://projecthdata.org/hdata/schemas/2009/06/procedure', 'Procedures')
 sr.add_section('results', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Lab Results') do |importers, exporters|
-  importers['application/xml'] = HealthDataStandards::Import::GreenCda::ResultImporter.instance
-  exporters['application/xml'] = HealthDataStandards::Export::GreenCda::ExportGenerator.create_exporter_for(:result)
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::ResultImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:result)
 end
 sr.add_section('social_history', 'http://projecthdata.org/hdata/schemas/2009/06/social_history', 'Social History')
 sr.add_section('vital_signs', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Vital Signs')

@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
   before_filter :set_up_section
-  before_filter :find_entry, only: "show"
+  before_filter :find_entry, only: ["show", "update"]
   
   def index
     @entries = @record.send(@section_name)
@@ -24,19 +24,30 @@ class EntriesController < ApplicationController
     if content_type == "multipart/form-data"
       render text: 'Metadata POSTing not yet implemented', status: 400
     else
-      importer = @extension.importers[content_type]
-      raw_content = nil
-      if content_type = 'application/xml'
-        raw_content = Nokogiri::XML(request.body.read)
-      end
-      section_document = importer.import(raw_content)
+      section_document = import_document(content_type)
       @record.send(@section_name).push(section_document)
       response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
       render text: 'Section document created', status: 201
     end
   end
+  
+  def update
+    content_type = request.content_type
+    section_document = import_document(content_type)
+    @entry.update_attributes!(section_document.attributes)
+    render text: 'Document updated', status: 200
+  end
 
   private
+  
+  def import_document(content_type)
+    importer = @extension.importers[content_type]
+    raw_content = nil
+    if content_type = 'application/xml'
+      raw_content = Nokogiri::XML(request.body.read)
+    end
+    importer.import(raw_content)
+  end
   
   def set_up_section
     @section_name = params[:section]

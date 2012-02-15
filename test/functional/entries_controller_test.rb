@@ -42,11 +42,28 @@ class EntriesControllerTest < ActionController::TestCase
   end
   
   test "post a new result section document" do
+    assert_equal 1, @record.results.count
     result_file = File.read(Rails.root.join('test/fixtures/result.xml'))
     request.env['RAW_POST_DATA'] = result_file
     request.env['CONTENT_TYPE'] = 'application/xml'
     post :create, {record_id: @record.medical_record_number, section: 'results'}
     assert_response 201
+    assert response['Location'].present?
+    @record.reload
+    assert_equal 2, @record.results.count
+    result = @record.results[1]
+    assert_equal 135, result.value['scalar']
+  end
+  
+  test "update a lab result" do
+    result_file = File.read(Rails.root.join('test/fixtures/result.xml'))
+    result = @record.results.first
+    request.env['RAW_POST_DATA'] = result_file
+    request.env['CONTENT_TYPE'] = 'application/xml'
+    put :update, {record_id: @record.medical_record_number, section: 'results', id: result.id}
+    assert_response :success
+    result.reload
+    assert_equal 135, result.value['scalar']
   end
   
   test "get a document that doesn't exist" do

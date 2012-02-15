@@ -1,5 +1,10 @@
 HdataServer::Application.routes.draw do
   
+
+  get "audit_review/index"
+
+  get "audit_review/show"
+
   match '/auth/:provider/callback' => 'authentications#create'
   devise_for :users, :controllers => {:registrations => 'registrations'}
   

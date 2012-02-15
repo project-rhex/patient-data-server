@@ -1,5 +1,4 @@
 require 'test_helper'
-include Devise::TestHelpers
 
 class AuditLogsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -64,7 +63,7 @@ class AuditLogsControllerTest < ActionController::TestCase
     checksum1 = audit_log.checksum
     assert_not_nil checksum1, "checksum1 is nil!"
     assert_equal audit_log.version, 1, "version is not 1"
-    assert_equal audit_log.record_id, 1, "record_id is not 1"
+    assert_equal audit_log.record_id, "1", "record_id is not 1"
 
     ## update record
     @record.first = "Gregg"
@@ -76,7 +75,7 @@ class AuditLogsControllerTest < ActionController::TestCase
     assert_not_nil audit_log.checksum, "checksum is nil!"
     assert_not_equal audit_log.checksum, checksum1, "checksums are the same - should be different"
     assert_equal audit_log.version, 2, "version is not 2"
-    assert_equal audit_log.record_id, 1, "record_id is not 1"
+    assert_equal audit_log.record_id, "1", "record_id is not 1"
     
 
   end

@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/projectcypress/health-data-standards.git
-  revision: 0e0f09e7fab371be24396b00e4ca5f7cb1cc8c47
+  revision: 713b60620203bdb0f1d53a54c88cf34c356f6e90
   branch: develop
   specs:
     health-data-standards (0.7.1)
@@ -76,7 +76,7 @@ GEM
       hashie
     curb (0.7.18)
     daemons (1.1.8)
-    devise (2.0.1)
+    devise (2.0.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       railties (~> 3.1)
@@ -127,7 +127,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.7.0)
     mime-types (1.17.2)
-    minitest (2.11.1)
+    minitest (2.11.2)
     mongo (1.5.2)
       bson (= 1.5.2)
     mongoid (2.4.4)

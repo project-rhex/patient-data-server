@@ -1,0 +1,30 @@
+<%= stylesheet_link_tag :audit_reiew %>
+<div class="log_shell">
+<h1>Audit Doc Review</h1>
+
+<table id="log_table">
+  <tr>
+    <th><%= link_to 'Timestamp', time_range_params_plus(:sort => 'created_at', :order => 'desc') %></th>
+    <th><%= link_to 'Requester Info', time_range_params_plus(:sort => 'requester_info', :order => 'desc') %></th>
+    <th><%= link_to 'Event', time_range_params_plus(:sort => 'event', :order => 'desc') %></th>
+    <th><%= link_to 'Description' %></th>
+    <th><%= link_to 'checksum' %></th>
+    <th><%= link_to 'record_id' %></th>
+    <th><%= link_to 'version' %></th>
+ </tr>
+  <% @audit_docs.each do |log| -%>
+  <tr>
+    <td><%= log.created_at %></td>
+    <td><%= log.requester_info %></td>
+    <td><%= log.event %></td>
+    <td><%= log.description %></td>
+    <td><%= log.checksum %></td>
+    <td><%= log.record_id %></td>
+    <td><%= log.version %></td>
+ </tr>
+  <% end -%>
+</table>
+</div>
+<%#= will_paginate @audit_docs %>
+
+

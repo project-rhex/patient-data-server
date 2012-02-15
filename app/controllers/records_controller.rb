@@ -41,7 +41,8 @@ class RecordsController < ApplicationController
     desc = ""
     desc = "id:#{params[:id]}" if params[:id]
     if current_user
-      AuditLog.create(requester_info: current_user.email, event: "record_access", description: desc)
+      AuditLog.create(requester_info: current_user.email, event: "c32_access", description: desc)
+      AuditLog.doc(current_user.email, "c32_access", desc, @record, @record.medical_record_number, @record.version)
     end
 
     respond_to do |wants|

@@ -11,7 +11,7 @@
   <a href="#">Messages [1]</a>
   <% end %>
   <span id="logo">REST+</span>
-  <% unless current_user.nil? || current_user.username.nil? %>
+ <% unless current_user.nil? || current_user.username.nil? %>
   <span id="user">Welcome, <%= current_user.username %></span>
   <% end %>
 </div>

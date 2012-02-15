@@ -1,3 +1,8 @@
+<%
+   def breadcrumbs
+       controller.breadcrumbs
+   end
+ %>
 <div id="page_header">
   <% unless current_user.nil? || current_user.username.nil? %>
   <a href="#">Logout</a>
@@ -10,4 +15,4 @@
   <span id="user">Welcome, <%= current_user.username %></span>
   <% end %>
 </div>
-<div id='breadcrumbs'><%= breadcrumbs %></div>
+<div id='breadcrumbs'><%= show_breadcrumbs %></div>

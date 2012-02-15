@@ -1,11 +1,18 @@
 <%= stylesheet_link_tag :record %>
 <div class="patient">
-  <%= labeled_field 'Patient Name:', patient_name %>
+  <%= labeled_field 'Patient Name:', patient_name(@record) %>
+  <%= labeled_field 'Sex:', sex(@record) %>
+  <% bdate = Time.at(@record.birthdate) if @record.birthdate.class == Fixnum  %>
+  <%= labeled_field 'Birthdate:', date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)" %>
 
   <table id="vitals_display" border='0'>
-    <tr><td>Height: xxxx</td><td>Weight: xxxx</td><td>Heart Rate: xxxx</td><td>S BP<br>D BP xxxxx</td></tr>
+    <tr>
+      <td>BMI: <%= latest_matching_vital @record, 'BMI' %></td>
+      <td>Heart Rate: <%= latest_matching_vital @record, 'Heart Rate' %></td>
+      <td>S BP: <%= latest_matching_vital @record, 'Systolic' %><br>D BP: <%= latest_matching_vital @record, 'Diastolic' %></td>
+    </tr>
   </table>
-  <div id="vitals">Physical Exam findings last updated ......</div>
+  <div id="vitals">Physical Exam findings last updated <%= date(most_recent_vital_date @record) %></div>
 
   <table id="record_display" border="0">
     <tr>
@@ -13,18 +20,41 @@
         <h1>Patient Information</h1>
         <div class="section">
           <h2>Demographic Information</h2>
-          <%= record_simple_value(date(@record.birthdate) + "(" + calculate_age(@record.birthdate) + " yrs old)") %>
-          <%= record_simple_value('white') %>
+          <b>....</b>
           <h2>Allergies</h2>
-
+          <b>....</b>
+          <h2>Immunizations</h2>
+          <% earliest = Time.now - (2 * 365 * 24 * 3600) %>
+          <% section_enumerator(@record, :immunizations, earliest) do |i| %>
+              <%= labeled_field i['description'], date(i['time']) %>
+          <% end %>
+          <h2>Conditions</h2>
+          <% section_enumerator(@record, :conditions, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['start_time']) %>
+          <% end %>
+          <h2>Medications</h2>
+          <% section_enumerator(@record, :medications, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present'), 'med_field'  %>
+          <% end %>
         </div>
       </td>
       <td>
         <h1>Doctor Visits</h1>
         <div class="section">
-          <h2>Consultation Orders</h2>
-
+          <h2>Consults</h2>
+          <% section_enumerator(@record, :encounters, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['time']) %>
+          <% end %>
+          <h2>Procedures</h2>
+          <% section_enumerator(@record, :procedures, earliest) do |x| %>
+              <%= labeled_field x['description'], date(x['time']) %>
+          <% end %>
+          <h2>Lab Results</h2>
+          <% section_enumerator(@record, :results, earliest) do |x| %>
+              <%= labeled_field(x['description'] + show_value(x['value']), date(x['time'])) %>
+          <% end %>
         </div>
+
       </td>
       <td>
         <h1>Health Record Activity</h1>

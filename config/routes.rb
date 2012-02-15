@@ -40,6 +40,7 @@ HdataServer::Application.routes.draw do
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
+  match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :method => :post
 
   root :to =>  "records#index"
   

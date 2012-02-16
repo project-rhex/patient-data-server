@@ -22,19 +22,20 @@ class AuditLog
 
   ## get list of all audited docs
   def self.review_docs() 
-    AuditLog.all( conditions: { event: /_access$/i } )
+    ## return all log events that end in _access
+    AuditLog.all( conditions: { event: /_access$/i } ).to_a
   end
 
 
   ## get list of audited docs with this record number
   def self.review_doc(medical_record_number) 
-    ## query and return array (to_a) of data
+    ## query and return array of data
     AuditLog.all( conditions: { event: /_access$/i, record_id: medical_record_number } ).to_a
   end
 
 
   ## get actual document based on version number
-  def self.review_doc_content(medical_record_number, version) 
+  def self.review_doc_snapshot(medical_record_number, version) 
 
     return nil if version <= 0
 

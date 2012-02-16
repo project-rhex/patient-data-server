@@ -18,6 +18,16 @@ FactoryGirl.define do
     value({'scalar' => 127, 'units' => 'mg/dL'})
     reference_range '70 mg/dL - 160 mg/dL'
   end
+
+
+  factory :audit_log do
+    requester_info "NONE"
+    event "c32_access"
+    description "id:1"
+    checksum "b544cb97491048f4bbe7875bdf69a7cd48d75f41"
+    sequence(:record_id) {|n| n}
+    version 0
+  end
   
   
   factory :user do |u| 

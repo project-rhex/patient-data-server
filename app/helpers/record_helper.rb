@@ -13,13 +13,12 @@ module RecordHelper
   # @param record the record which is assumed to not be nil
   # @param section the name of the section
   # @param earliest the earliest time to render an entry
-  def section_enumerator record, section, earliest
-    entries = record[section]
-    earliest = earliest.to_i if earliest.class == Time
-    return unless entries
+  # @param field that holds the time value
+  # @param limit the maximum number of results to return
+  def section_enumerator record, section, earliest, field = :time, limit = 6
+    entries = record.send(section).all_of(field.gt => earliest.to_i).asc(field).limit(limit)
+    count = entries.count
     entries.each do |e|
-      rtime = e['time'] || e['start_time']
-      next if rtime <= earliest
       yield e
     end
   end

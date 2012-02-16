@@ -11,10 +11,9 @@ class RecordHelperTest < ActionView::TestCase
   end
 
   test "section_enumerator" do
-    rec = FactoryGirl.create(:record)
-    rec[:results] = [ FactoryGirl.create(:lab_result) ]
+    rec = FactoryGirl.create(:record, :with_lab_results)
     i = 0
-    section_enumerator(rec, :results, (Time.now - 3000000000)) do |x|
+    section_enumerator(rec, :results, (Time.now - 3000000000), :time) do |x|
       i += 1
     end
     assert i > 0

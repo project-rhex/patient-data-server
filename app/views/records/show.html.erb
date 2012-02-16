@@ -26,14 +26,15 @@
           <h2>Immunizations</h2>
           <% earliest = Time.now - (2 * 365 * 24 * 3600) %>
           <% section_enumerator(@record, :immunizations, earliest) do |i| %>
-              <%= labeled_field i['description'], date(i['time']) %>
+              <% refused = i['refusalInd'] ? 'Refused ' : '' %>
+              <%= labeled_field refused + i['description'], date(i['time']) %>
           <% end %>
           <h2>Conditions</h2>
-          <% section_enumerator(@record, :conditions, earliest) do |x| %>
+          <% section_enumerator(@record, :conditions, earliest, :start_time) do |x| %>
               <%= labeled_field x['description'], date(x['start_time']) %>
           <% end %>
           <h2>Medications</h2>
-          <% section_enumerator(@record, :medications, earliest) do |x| %>
+          <% section_enumerator(@record, :medications, earliest, :start_time) do |x| %>
               <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present'), 'med_field'  %>
           <% end %>
         </div>

@@ -30,11 +30,6 @@ HdataServer::Application.routes.draw do
     resources :results
   end
 
-  # Test result routes
-  match "records/:id/results" => "results#index", :as => "results", :format => :atom
-  match "records/:id/results/:result_id" => "results#show", :as => "results_get", :format => :json
-  match "records/:id/results/:content" => "results#add", :method => :post
-
   #
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml

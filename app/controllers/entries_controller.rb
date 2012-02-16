@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
   before_filter :set_up_section
-  before_filter :find_entry, only: ["show", "update"]
+  before_filter :find_entry, only: ["show", "update", "delete"]
   
   def index
     @entries = @record.send(@section_name)
@@ -36,6 +36,11 @@ class EntriesController < ApplicationController
     section_document = import_document(content_type)
     @entry.update_attributes!(section_document.attributes)
     render text: 'Document updated', status: 200
+  end
+
+  def delete
+    @entry.destroy
+    render nothing: true, status: 204
   end
 
   private

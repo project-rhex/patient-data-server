@@ -65,6 +65,14 @@ class EntriesControllerTest < ActionController::TestCase
     result.reload
     assert_equal 135, result.value['scalar']
   end
+
+  test "delete a result" do
+    assert_equal 1, @record.results.count
+    delete :delete, {record_id: @record.medical_record_number, section: 'results', id: @record.results.first.id}
+    assert_response 204
+    @record.reload
+    assert_equal 0, @record.results.count
+  end
   
   test "get a document that doesn't exist" do
     request.env['HTTP_ACCEPT'] = Mime::XML

@@ -27,7 +27,6 @@ HdataServer::Application.routes.draw do
 
   resources :records do
     resources :c32
-    resources :results
   end
 
   #

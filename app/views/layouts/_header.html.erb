@@ -1,6 +1,10 @@
 <%
    def breadcrumbs
+     if controller.respond_to?(:breadcrumbs)
        controller.breadcrumbs
+     else
+       []
+     end
    end
  %>
 <div id="page_header">

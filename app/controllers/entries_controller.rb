@@ -3,6 +3,12 @@ class EntriesController < ApplicationController
   before_filter :find_entry, only: ["show", "update", "delete"]
   
   def index
+    if current_user
+      desc = ""
+      desc = "id:#{params[:id]}" if params[:id]
+      AuditLog.create(requester_info: current_user.email, event: "event_list", description: desc)
+    end
+
     @entries = @record.send(@section_name)
     respond_to do |wants|
       wants.atom {}
@@ -10,6 +16,12 @@ class EntriesController < ApplicationController
   end
   
   def show
+    if current_user
+      desc = ""
+      desc = "id:#{params[:id]}" if params[:id]
+      AuditLog.create(requester_info: current_user.email, event: "event_show", description: desc)
+    end
+
     respond_to do |wants|
       wants.json {render :json => @entry.attributes}
       wants.xml do

@@ -10,12 +10,12 @@ class AuthenticationsController < ActionController::Base
     authentication = Authentication.first(conditions: { provider: omniauth['provider'], uid: omniauth['uid']})
     #binding.pry
     if authentication
-      ##AuditLog.create(requester_info: authentication.user, event: "user_auth", description: "successful sign in")
+      AuditLog.create(requester_info: authentication.user, event: "user_auth", description: "successful sign in")
       flash[:notice] = "Signed in successfully."
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      #AuditLog.create(requester_info: current_user.email, event: "user_auth2", description: "successful sign in")
+      AuditLog.create(requester_info: current_user.email, event: "user_auth2", description: "successful sign in")
       flash[:notice] = "Authentication successful."
       redirect_to authentications_url
     else
@@ -23,7 +23,7 @@ class AuthenticationsController < ActionController::Base
       user.apply_omniauth(omniauth)
       if user.save
         user.authentications[0].save
-        #AuditLog.create(requester_info: current_user.email, event: "user_auth3", description: "successful account create and sign in")
+        AuditLog.create(requester_info: current_user.email, event: "user_auth3", description: "successful account create and sign in")
         flash[:notice] = "Signed in successfully."
         sign_in_and_redirect(:user, user)
       else

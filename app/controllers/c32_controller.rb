@@ -11,7 +11,7 @@ class C32Controller < ApplicationController
   
   def show
     desc = "id:#{params[:id]}" if params[:id]
-    AuditLog.doc("NONE", "c32_access", desc, @record, @record.medical_record_number, @record.version)
+    AuditLog.doc("NONE", "c32_access", desc, @record, @record.version)
 
     respond_with(@record)
   end

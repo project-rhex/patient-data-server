@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   before_filter :find_record, :audit_log
 
   # Return a list of breadcrumbs appropriate for the particular controller. This method can be overridden by

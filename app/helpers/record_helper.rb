@@ -31,62 +31,54 @@ module RecordHelper
   # Returns the most recent vital sign that matches formatted
   def latest_matching_vital record, name
     name.downcase!
-    match = nil
-    mdelta = nil
-    today = Time.now
+    vitals = get_recent_vitals record
     record.vital_signs.each do |result|
        if result.description.downcase.start_with?(name)
-         if match
-           delta = today.to_i - result.time.to_i
-           if delta < mdelta
-             match = result
-             mdelta = delta
-           end
-         else
-           match = result
-           mdelta = today.to_i - match.time.to_i
-         end
+         return show_value result.value
        end
     end
-    if match
-      show_value match.value
-    else
-      ""
-    end
+    ""
   end
 
   # Returns the most recent date associated with a vital sign
   def most_recent_vital_date record
-    today = Time.now
-    mdelta = nil
-    record.vital_signs.each do |result|
-      desc = result.description.downcase
-       if desc.start_with?('bmi') || desc.start_with?('systolic') || desc.start_with?('diastolic')
-         if mdelta
-           delta = today.to_i - result.time.to_i
-           if delta < mdelta
-             mdelta = delta
-           end
-         else
-           mdelta = today.to_i - result.time.to_i
-         end
-       end
-    end
-    if mdelta
-      update = today - mdelta
+    vitals = get_recent_vitals record
+    if vitals.count > 0
+      vital = vitals.first
+      vital.time
     else
       nil
     end
   end
 
   # Takes the value portion of a record and formats it
-  def show_value value
+  def show_value value, low = -1E99, high = 1E99
     return "" unless value
-    scalar = value['scalar']
+    s = value['scalar']
     units = value['units']
-    scalar = scalar.to_s
-    return "" unless scalar
-    return ("<span class='lab_value'>" + scalar + "</span>").html_safe unless units
-    return ("<span class='lab_value'>" + scalar + "&nbps;(" + units + ")</span>").html_safe
+    if s.class == Fixnum || s.class == Float
+      n = s;
+      n = n.round(2) if n.class == Float
+      s = n.to_s;
+    elsif s =~ /[+-]?[[:digit:]]+\.?[[:digit:]]*/
+      n = s.to_f.round(2)
+      s = n.to_s
+    else
+      n = 0
+    end
+    return "" unless s
+    oor = ""
+    oor = " out-of-range-value" if n < low || n > high
+    u = ""
+    u = "&nbps;(" + units + ")" if units
+    return ("<span class='lab_value" + oor + "'>" + s + u + "</span>").html_safe
+  end
+
+  private
+
+  # Return recent vitals for use in helper methods, presorted by time descending
+  def get_recent_vitals record
+    earliest = Time.now - (2 * 365 * 24 * 3600) # About 2 years
+    record.vital_signs.all_of(:time.gt => earliest.to_i).desc(:time)
   end
 end

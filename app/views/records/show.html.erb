@@ -1,7 +1,6 @@
 <%= stylesheet_link_tag :record %>
 <div class="patient">
-  <%= labeled_field 'Patient Name:', patient_name(@record) %>
-
+  <%= labeled_field 'Patient Name', patient_name(@record) %>
   <table class="record" border="0">
     <tr>
       <td>
@@ -18,7 +17,7 @@
               <% refused = i['refusalInd'] ? 'Refused ' : '' %>
               <%= labeled_field refused + i['description'], date(i['time']) %>
           <% end %>
-
+          <%= section_history_link @record, :immunizations %>
       </td>
       <td>
           <%= section_title :allergies %>
@@ -27,7 +26,7 @@
           <% section_enumerator(@record, :medications, earliest) do |x| %>
               <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present'), 'med_field'  %>
           <% end %>
-
+          <%= section_history_link @record, :medications %>
       </td>
     </tr>
     <tr>
@@ -36,26 +35,30 @@
           <% section_enumerator(@record, :conditions, earliest) do |x| %>
             <%= labeled_field x['description'], date(x['start_time']) %>
           <% end %>
+          <%= section_history_link @record, :conditions %>
       </td>
       <td>
           <%= section_title :results %>
           <% section_enumerator(@record, :results, earliest) do |x| %>
               <%= labeled_field(x['description'] + show_value(x['value']), date(x['time'])) %>
           <% end %>
+          <%= section_history_link @record, :results %>
       </td>
-    >r>
+    </tr>
     <tr>
       <td>
         <%= section_title :encounters %>
         <% section_enumerator(@record, :encounters, earliest) do |x| %>
             <%= labeled_field x['description'], date(x['time']) %>
         <% end %>
+        <%= section_history_link @record, :encounters %>
       </td>
       <td>
         <%= section_title :procedures %>
         <% section_enumerator(@record, :procedures, earliest) do |x| %>
             <%= labeled_field x['description'], date(x['time']) %>
         <% end %>
+        <%= section_history_link @record, :procedures %>
       </td>
     </tr>
     <tr>
@@ -65,6 +68,7 @@
         <%= labeled_field 'Heart Rate',  latest_matching_vital(@record, 'Heart Rate')%>
         <%= labeled_field 'Systolic BP',  latest_matching_vital(@record, 'Systolic')%>
         <%= labeled_field 'Diastolic BP',  latest_matching_vital(@record, 'Diastolic')%>
+        <%= section_history_link @record, :vital_signs %>
       </td>
       <td>
 

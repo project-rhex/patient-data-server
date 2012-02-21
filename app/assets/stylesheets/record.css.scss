@@ -152,6 +152,8 @@ $section-value-fg: lighten($value-fg, 30%);
     color: $section-value-fg;
 }
 
+$section-fs: 10px;
+
 .record .label {
     font-weight: normal;
     font-size: 11px;
@@ -159,7 +161,7 @@ $section-value-fg: lighten($value-fg, 30%);
 
 .record .lab_value {
     color: $fg;
-    font-size: 10px;
+    font-size: $section-fs;
     font-weight: normal;
     margin-left: 20px;
 }
@@ -169,5 +171,10 @@ $section-value-fg: lighten($value-fg, 30%);
 }
 
 .record .value {
-    font-size: 10px;
+    font-size: $section-fs;
+}
+
+.record .history_link a {
+    color: darken($header-logo-color, 15%);
+    font-size: larger($section-fs);
 }

@@ -1,6 +1,6 @@
 module RecordHelper
   def patient_name record
-    ("<span id='patient_name'>" + record.last + ',&nbsp;' + record.first + "</span>").html_safe
+    ("<span id='patient_name'>" + record.last.upcase + ',&nbsp;' + record.first + "</span>").html_safe
   end
 
   def record_simple_value string
@@ -37,9 +37,9 @@ module RecordHelper
 
   # Link to history display for the section
   def section_history_link record, section
-    id = record.id
-
-    "<a href='/records/#{id}/#{section.to_s}'><<&nbsp;Past #{section_title}</a>".html_safe
+    id = record.medical_record_number
+    section_title = I18n.t("section." + section.to_s)
+    "<div class='history_link'><a href='/records/#{id}/#{section.to_s}'><<&nbsp;Past #{section_title}</a></div>".html_safe
   end
 
   # Return the sex character from the "gender" field

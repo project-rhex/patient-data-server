@@ -7,7 +7,7 @@ class RecordHelperTest < ActionView::TestCase
 
   test "patient_name" do
     rec = FactoryGirl.create(:record)
-    assert_equal "<span id='patient_name'>Doe,&nbsp;John</span>",  patient_name(rec)
+    assert_equal "<span id='patient_name'>DOE,&nbsp;John</span>",  patient_name(rec)
   end
 
   test "section_enumerator" do

@@ -8,7 +8,7 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test "date_formatter" do
     time = Time.new(2001, 1, 1)
-    assert_equal "01/01/2001", date(time)
+    assert_equal "01-Jan-2001", date(time)
     # Check defaulting behavior with optional parameter
     assert_equal 'present', date(nil, 'present')
     # Check defaulting behavior with default value

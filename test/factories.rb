@@ -25,9 +25,13 @@ FactoryGirl.define do
     event "c32_access"
     description "id:1"
     checksum "b544cb97491048f4bbe7875bdf69a7cd48d75f41"
-    sequence(:record_id) {|n| n}
+    obj_name "Record"
+    sequence :obj_id do |n| 
+      "4f3437f5069d45038f00000#{n}"
+    end
     version 0
   end
+
   
   
   factory :user do |u| 

@@ -8,7 +8,7 @@
   <templateId root="2.16.840.1.113883.3.88.11.32.1" assigningAuthorityName="HITSP/C32"/>
   <id root="2.16.840.1.113883.3.72" extension="HITSP_C32v2.5_Rev6_16Sections_Entries_MinimalErrors" assigningAuthorityName="NIST Healthcare Project"/>
   <code code="34133-9" displayName="Summarization of episode note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-  <title>Cypress C32 Patient Test Record: Molly Smith</title>
+  <title>Cypress C32 Patient Test Record: Molly Smith169</title>
   <effectiveTime value="20111116182107"/>
   <confidentialityCode code="N"/>
   <languageCode code="nn-CC"/>
@@ -25,7 +25,7 @@
       <patient>
         <name>
           <given>Molly</given>
-          <family>Smith</family>
+          <family>Smith169</family>
         </name>
         <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1" codeSystemName="HL7 AdministrativeGender"/>
         <birthTime value="19960506040000"/>

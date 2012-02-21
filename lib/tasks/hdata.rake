@@ -1,6 +1,6 @@
 namespace :hdata do
   
-  desc "Loads local C32 files from test/fixtures/*.xml"
+  desc "Loads local C32 files from test/fixtures/*Smith*.xml"
   task :load_c32_files => :environment do
     def next_med_rec_num
       records = Record.all
@@ -32,9 +32,9 @@ namespace :hdata do
 
 
     ## read XML files and load into DB
-    files = Dir.glob("#{Rails.root}/test/fixtures/*.xml")
+    files = Dir.glob("#{Rails.root}/test/fixtures/*Smith*.xml")
     puts "Files #{files}"
-    # files = Dir.glob(File.dirname(__FILE__) + "/../test/fixtures/*.xml")
+    # files = Dir.glob(File.dirname(__FILE__) + "/../test/fixtures/*Smith*.xml")
     files.each do |file|
       doc = Nokogiri::XML(File.read(file))
 

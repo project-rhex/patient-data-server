@@ -15,8 +15,13 @@ class AuditLog
   ## file SHA1 HASH
   field :checksum, :type => String
 
-  ## file record id
-  field :record_id, :type => String
+  ## model class name as a string
+  field :obj_name,  :type => String
+
+  ## mongo _id value for object
+  field :obj_id,    :type => String
+
+  ## mongoid version number field
   field :version,   :type => Integer
   
 
@@ -27,51 +32,88 @@ class AuditLog
   end
 
 
-  ## get list of audited docs with this record number
-  def self.review_doc(medical_record_number) 
+  ## get list of audited docs with this id
+  def self.review_doc(id) 
     ## query and return array of data
-    AuditLog.all( conditions: { event: /_access$/i, record_id: medical_record_number } ).to_a
+    AuditLog.all( conditions: { event: /_access$/i, obj_id: id } ).to_a
   end
 
 
   ## get actual document based on version number
-  def self.review_doc_snapshot(medical_record_number, version) 
+  def self.review_doc_snapshot(obj_name, obj_id, version) 
 
     return nil if version <= 0
+    return nil if obj_name == nil
 
-    ## first test if this record exists at all
-    record = Record.where( medical_record_number: medical_record_number ).first
-    return nil if record == nil
+    begin
+      if obj_id.class.to_s != "String"
+        id = obj_id.to_s
+      end
 
-    ## return the latest record if the version is 1 greater than the array size
-    ## return the only and latest record if there are no newer versions
-    return record if record.versions.size + 1 == version
+      ## convert obj_name to a string for lookup
+      if obj_name.class.to_s == "Class"
+        # case where record.class is passed in
+        classname = obj_name.to_s
+      elsif obj_name.class.to_s == "String"
+        # case where "Record" is passed in
+        classname = obj_name
+      else
+        # case where Record is passed in
+        classname = obj_name.class.to_s
+      end
+      
+      ## first test if this med_record exists at all
+      ## classes are constants that can be looked up via Kernel
+      
+      med_record = Kernel.const_get(classname).where( _id: id ).first
+      return nil if med_record == nil
+
+    rescue Exception => e
+      ## catch a NoMethodError for the case where the wrong class (e.g. Array) is passed in
+      ## catch a wrong constant name error for the case where the garbage class (e.g. "foo") is passed in
+      ## catch undefined method `[]' for nil:NilClass 
+      puts "\n**** AUDIT_LOG Review doc snapshot"     
+      #puts e.message  
+      #puts e.backtrace.inspect 
+      return nil
+    end
+    ## return the latest med_record if the version is 1 greater than the array size
+    ## return the only and latest med_record if there are no newer versions
+    return med_record if med_record.versions.size + 1 == version
  
-    ## record.versions is an array of past records
+    ## med_record.versions is an array of past med_records
 
-    ## number of versions = 0, record.versions.size = 0
-    ## number of versions = 1, record.versions.size = 1, array index of 0
-    ## number of versions = 2, record.versions.size = 2, array index of 0 and 1 
+    ## number of versions = 0, med_record.versions.size = 0
+    ## number of versions = 1, med_record.versions.size = 1, array index of 0
+    ## number of versions = 2, med_record.versions.size = 2, array index of 0 and 1 
     ## etc
     ## ex. if passed in version == 2, versions.size must be at least 1 in size (or 1 less)
 
-    record.versions[version - 1]
+    med_record.versions[version - 1]
   end
 
 
-  ## capture a sha1 hash of record and save it as a water mark
-  def self.doc(requester_info, event, description, record, record_id, vers)
+  ## capture a sha1 hash of med_record and save it as a water mark
+  ##
+  ## obj = Record, or Results etc
+  ## obj_id - is _id from mongo
+  def self.doc(requester_info, event, description, obj, vers)
     #puts "======"
     ## to_yaml ... sometime bombs out with -  can't dump anonymous class Class, replace with inspect
-    #serialized = record.to_yaml
-    serialized = record.inspect
+    #serialized = med_record.to_yaml
+    serialized = obj.inspect
     #puts serialized.inspect
 
     sig = ""
     sig = Digest::SHA1.hexdigest serialized
     ##puts "GG" + sig.inspect
-    AuditLog.create(requester_info: requester_info, event: event, 
-                    description: description, checksum: sig, record_id: record_id, version: vers)
+    AuditLog.create(requester_info: requester_info, 
+                    event:          event, 
+                    description:    description, 
+                    checksum:       sig, 
+                    obj_name:       obj.class,
+                    obj_id:         obj._id, 
+                    version:        vers)
   end
 
 end

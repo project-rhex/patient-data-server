@@ -9,8 +9,9 @@
     <th><%= link_to 'Event', time_range_params_plus(:sort => 'event', :order => 'desc') %></th>
     <th><%= link_to 'Description' %></th>
     <th><%= link_to 'checksum' %></th>
-    <th><%= link_to 'record_id' %></th>
-    <th><%= link_to 'version' %></th>
+    <th><%= link_to 'obj_name' %></th>
+    <th><%= link_to 'obj_id' %></th>
+   <th><%= link_to 'version' %></th>
  </tr>
   <% @audit_docs.each do |log| -%>
   <tr>
@@ -19,8 +20,9 @@
     <td><%= log.event %></td>
     <td><%= log.description %></td>
     <td><%= log.checksum %></td>
-    <td><%= log.record_id %></td>
-    <td><%= log.version %></td>
+    <td><%= log.obj_name %></td>
+    <td><%= log.obj_id %></td>
+   <td><%= log.version %></td>
  </tr>
   <% end -%>
 </table>

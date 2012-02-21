@@ -23,7 +23,7 @@ class AuthenticationsController < ActionController::Base
       user.apply_omniauth(omniauth)
       if user.save
         user.authentications[0].save
-        AuditLog.create(requester_info: current_user.email, event: "user_auth3", description: "successful account create and sign in")
+        AuditLog.create(requester_info: user.email, event: "user_auth3", description: "successful account create and sign in")
         flash[:notice] = "Signed in successfully."
         sign_in_and_redirect(:user, user)
       else

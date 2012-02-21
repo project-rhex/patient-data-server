@@ -12,9 +12,9 @@
   <a href="#">Logout</a>
   <a href="#">Settings</a>
   <a href="/audit_logs">Audit Log</a>
-  <a href="#">Messages [1]</a>
+  <a href="#">Alerts [1]</a>
   <% end %>
-  <span id="logo">REST+</span>
+  <span id="logo">REST<span id="sublogo"><B>+</B> Pilot</span></span>
  <% unless current_user.nil? || current_user.username.nil? %>
   <span id="user">Welcome, <%= current_user.username %></span>
   <% end %>

@@ -3,3 +3,15 @@
 
 en:
   hello: "Hello world"
+
+  # Section titles
+  section:
+    allergies: "Allergies"
+    results: "Lab Results"
+    immunizations: "Immunizations"
+    medications: "Medicines"
+    conditions: "Diagnoses"
+    encounters: "Consultation Orders"
+    social_history: "History"
+    vital_signs: "Physical Exam Findings"
+    procedures: "Procedures"

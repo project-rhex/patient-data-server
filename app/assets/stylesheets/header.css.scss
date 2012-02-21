@@ -1,7 +1,9 @@
 $header-bg: $title-color;
 $header-fg: white;
+$header-logo-color: #2AE;
 
-$logo-font-family-list: Times, Serif;
+$logo-font-family-list: Courier, Serif;
+$logo-font-family-list2: Tahoma, Sans-Serif;
 $logo-size: 24px;
 
 #page_header {
@@ -11,6 +13,7 @@ $logo-size: 24px;
     color: $header-fg;
     margin: 0px;
     padding: 2px;
+    border-bottom: 3px solid $header-logo-color;
 }
 
 #page_header a {
@@ -28,7 +31,16 @@ $logo-size: 24px;
     top: -5px;
     font-family: $logo-font-family-list;
     font-size: $logo-size;
+    font-weight: bold;
     margin-left: $gutter;
+    color: $header-logo-color;
+}
+
+#page_header #sublogo {
+    font-family: $logo-font-family-list2;
+    color: $header-fg;
+    font-weight: normal;
+    font-size: smaller;
 }
 
 #page_header #user {

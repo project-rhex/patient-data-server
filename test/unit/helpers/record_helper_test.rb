@@ -13,7 +13,7 @@ class RecordHelperTest < ActionView::TestCase
   test "section_enumerator" do
     rec = FactoryGirl.create(:record, :with_lab_results)
     i = 0
-    section_enumerator(rec, :results, (Time.now - 3000000000), :time) do |x|
+    section_enumerator(rec, :results, (Time.now - 3000000000)) do |x|
       i += 1
     end
     assert i > 0
@@ -50,7 +50,7 @@ class RecordHelperTest < ActionView::TestCase
 
   test "sex method" do
     rec = FactoryGirl.create(:record)
-    assert_equal "M", sex(rec)
+    assert_equal "Male", sex(rec)
   end
 
   test "format a value" do

@@ -22,7 +22,7 @@ module ApplicationHelper
   def date date_value, default = 'never'
     if date_value
       date_value = Time.at(date_value) if date_value.class == Fixnum
-      date_value.strftime("%m/%d/%Y")
+      date_value.strftime("%d-%b-%Y")
     else
       default
     end

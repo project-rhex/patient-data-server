@@ -13,19 +13,38 @@ module RecordHelper
   # @param record the record which is assumed to not be nil
   # @param section the name of the section
   # @param earliest the earliest time to render an entry
-  # @param field that holds the time value
   # @param limit the maximum number of results to return
-  def section_enumerator record, section, earliest, field = :time, limit = 6
-    entries = record.send(section).all_of(field.gt => earliest.to_i).asc(field).limit(limit)
-    count = entries.count
-    entries.each do |e|
+  def section_enumerator record, section, earliest, limit = 6
+    e = earliest.to_i
+    entries = record.send(section).any_of([:time.gt => e], [:start_time.gt => e]).limit(limit)
+    now = Time.now
+    recs = entries.to_a
+    recs.sort! do |x, y|
+      t1 = x.time || x.start_time || now.to_i
+      t2 = y.time || y.start_time || now.to_i
+      t2 <=> t1
+    end
+    recs.each do |e|
       yield e
     end
   end
 
+  # Translate a section title to it's localized value '
+  def section_title section
+    title = I18n.t("section." + section.to_s)
+    "<h2>#{title}</h2>".html_safe
+  end
+
+  # Link to history display for the section
+  def section_history_link record, section
+    id = record.id
+
+    "<a href='/records/#{id}/#{section.to_s}'><<&nbsp;Past #{section_title}</a>".html_safe
+  end
+
   # Return the sex character from the "gender" field
   def sex record
-    record.gender
+    record.gender =~ /[Mm]/ ? "Male" : "Female"
   end
 
   # Returns the most recent vital sign that matches formatted

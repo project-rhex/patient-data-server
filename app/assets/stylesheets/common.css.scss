@@ -1,7 +1,7 @@
 /**
  * Commmon color, font and macro definitions for use in the UI
  */
-$title-color: #4a2527;
+$title-color: #006;
 $link-fg: #404040;
 $link-hover: darken($link-fg, 30%);
 $bg: white;
@@ -11,7 +11,9 @@ $basic-font-family-list: Verdana, Helvetica, Arial;
 
 $gutter: 5mm;
 
-$field-fg: #804040;
+$field-fg: #448;
 $value-fg: black;
 
-$section-value-color: red;
+$fg: black;
+
+$out-of-range-value: red;

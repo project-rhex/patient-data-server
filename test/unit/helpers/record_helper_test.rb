@@ -45,6 +45,12 @@ class RecordHelperTest < ActionView::TestCase
     assert_equal "", v
   end
 
+  test "most recent vital date with none" do
+    rec = FactoryGirl.create(:record)
+    time = most_recent_vital_date rec
+    assert_nil time
+  end
+
   test "sex method" do
     rec = FactoryGirl.create(:record)
     assert_equal "Male", sex(rec)

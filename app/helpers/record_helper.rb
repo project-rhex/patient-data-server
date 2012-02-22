@@ -1,12 +1,4 @@
 module RecordHelper
-  def patient_name(record)
-    ("<span id='patient_name'>" + record.last.upcase + ',&nbsp;' + record.first + "</span>").html_safe
-  end
-
-  def record_simple_value(string)
-    "<div class='simple_value'>#{string}</div>".html_safe
-  end
-
   # Enumerate the entries in a section, formatting each one in a passed block
   # if the section doesn't exist render nothing.
   #
@@ -20,19 +12,6 @@ module RecordHelper
     end
   end
 
-  # Translate a section title to it's localized value '
-  def section_title section
-    title = I18n.t("section." + section.to_s)
-    "<h2>#{title}</h2>".html_safe
-  end
-
-  # Link to history display for the section
-  def section_history_link record, section
-    id = record.medical_record_number
-    section_title = I18n.t("section." + section.to_s)
-    "<div class='history_link'><a href='/records/#{id}/#{section.to_s}'><<&nbsp;Past #{section_title}</a></div>".html_safe
-  end
-
   # Return the sex character from the "gender" field
   def sex(record)
     record.gender =~ /[Mm]/ ? "Male" : "Female"
@@ -41,7 +20,7 @@ module RecordHelper
   # Returns the most recent vital sign that matches formatted
   def latest_matching_vital(record, name)
     name.downcase!
-    vitals = get_recent_vitals record
+    vitals = record.get_recent_vitals
     record.vital_signs.each do |result|
        if result.description.downcase.start_with?(name)
          return show_value result.value
@@ -52,7 +31,7 @@ module RecordHelper
 
   # Returns the most recent date associated with a vital sign
   def most_recent_vital_date(record)
-    vitals = get_recent_vitals record
+    vitals = record.get_recent_vitals
     if vitals.count > 0
       vital = vitals.first
       vital.time
@@ -84,11 +63,5 @@ module RecordHelper
     return ("<span class='lab_value" + oor + "'>" + s + u + "</span>").html_safe
   end
 
-  private
 
-  # Return recent vitals for use in helper methods, presorted by time descending
-  def get_recent_vitals(record)
-    earliest = Time.now - (2 * 365 * 24 * 3600) # About 2 years
-    record.vital_signs.all_of(:time.gt => earliest.to_i).desc(:time)
-  end
 end

@@ -18,6 +18,12 @@ class Record
     recs
   end
 
+  # Return recent vitals for use in helper methods, presorted by time descending
+  def get_recent_vitals
+    earliest = 2.years.ago
+    vital_signs.timelimit(earliest).desc(:time)
+  end
+
   def to_xml(args)
     HealthDataStandards::Export::C32.export(self)
   end

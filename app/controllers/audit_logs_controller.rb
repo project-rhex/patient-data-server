@@ -46,7 +46,7 @@ class AuditLogsController < ApplicationController
       where[:created_at].merge!('$lt' => end_date.next_day) # becomes less than midnight the next day
     end
     
-    @audit_logs = AuditLog.where(where).order_by(order)  ##.paginate(:page => params[:page], :per_page => 20)
+    @audit_logs = AuditLog.where(where).order_by(order).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

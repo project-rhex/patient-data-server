@@ -14,6 +14,7 @@ gem "nokogiri"
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-openid'
+gem 'kaminari'
 
 
 group :assets do

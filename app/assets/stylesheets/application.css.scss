@@ -15,6 +15,8 @@ body {
   font-size: $basic-font-size;
   margin: 0px;
   padding: 0px;
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
 a img {

@@ -6,11 +6,12 @@ $logo-font-family-list2: Tahoma, Sans-Serif;
 $logo-size: 24px;
 
 #page_header {
-    width: 100%;
     height: 25px;
     background-color: $header-bg;
     color: $header-fg;
     margin: 0px;
+    margin-left: -$gutter;
+    margin-right: -$gutter;
     padding: 2px;
     border-bottom: 3px solid $header-logo-color;
 }
@@ -50,7 +51,7 @@ $logo-size: 24px;
 
 #breadcrumbs {
     margin: 2mm;
-    margin-left: $gutter;
+    margin-left: 0;
 }
 
 #breadcrumbs a:link {

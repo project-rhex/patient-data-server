@@ -1,0 +1,107 @@
+@import "common";
+
+#userpass {
+  display: block;
+  float: left;
+}
+
+#openconnectemail {
+  display: none;
+  float: left;
+}
+
+input[type="text"] {
+  font-size: 12px;
+  width: 24em;
+}
+
+input[type="email"] {
+  font-size: 12px;
+  width: 24em;
+}
+
+input[type="password"] {
+  font-size: 12px;
+  width: 24em;
+}
+
+.login h2 {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.login h3 {
+  font-size: 12pt;
+  font-weight: bold;
+  color: lighten($title-color, 15%);
+  text-align: center;
+}
+
+#flow {
+  margin-top: 2cm;
+}
+
+#user_email {
+  margin-bottom: 15px;
+}
+
+#sep {
+  float: left;
+  height: 200px;
+  text-align: center;
+  margin-left: 1.5cm;
+  margin-right: 1.5cm;
+}
+
+#or {
+  margin-top: 25px;
+  font-size: 13pt;
+  font-weight: bold;
+  color: #333;
+}
+
+#bar {
+  height: 80%;
+  width: 20px;
+  margin-top: 10px;
+  margin-left: 3px;
+  background-image: url("vert-gray-bar.png");
+  background-repeat: repeat-y;
+}
+
+#openid {
+  float: left;
+}
+
+#openid .tag {
+  height: 80px;
+  width: 200px;
+  border: 2px solid none;
+  color: transparent;
+}
+
+#openid table {
+  border-collapse: collapse;
+  border: 0px;
+  border-spacing: 0px;
+}
+
+#openid table td {
+  margin: 2px;
+  padding: 2px;
+  border: none;
+}
+
+#openid table tr {
+  margin: 0px;
+} 
+
+#openid a {
+  margin: 1px;
+  border: 2px solid #AAA;
+  border-radius: $field-radius;
+}
+
+#openid a:hover {
+  border: 2px solid #AAF;
+}

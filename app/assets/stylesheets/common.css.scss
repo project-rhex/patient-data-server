@@ -18,3 +18,17 @@ $fg: black;
 
 $out-of-range-value: red;
 $header-logo-color: #2AE;
+
+$field-radius: 5px;
+
+input[type="email"] {
+  border-radius: $field-radius;
+}
+
+input[type="password"] {
+  border-radius: $field-radius;
+}
+
+input[type="text"] {
+  border-radius: $field-radius;
+}

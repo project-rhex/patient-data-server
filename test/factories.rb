@@ -40,5 +40,12 @@ FactoryGirl.define do
     u.password_confirmation 'password'
     u.sequence(:name) { |n| "testuser#{n}"}
   end
+  
+  
+  factory :client, :class => 'Devise::Oauth2Providable::Client' do |f|
+    f.name 'test'
+    f.website 'http://localhost'
+    f.redirect_uri 'http://localhost:3000'
+  end
 
 end

@@ -7,7 +7,7 @@ HdataServer::Application.routes.draw do
 
   match '/auth/:provider/callback' => 'authentications#create'
   devise_for :users, :controllers => {:registrations => 'registrations'}
-  
+  mount Devise::Oauth2Providable::Engine => '/oauth2'
   resources :authentications
 
   # The priority is based upon order of creation:
@@ -38,6 +38,10 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :method => :put
 
   root :to =>  "records#index"
+  
+  #mount the oauth2 devise provider
+
+  
   
   # Sample resource route with options:
   #   resources :products do

@@ -7,6 +7,7 @@ require 'ostruct'
 class SectionRegistry
   include Singleton
   
+  attr_reader :extensions
   def initialize
     @extensions = []
   end

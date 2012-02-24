@@ -12,6 +12,8 @@ gem "capistrano"
 gem 'heroku'
 gem "nokogiri"
 gem 'devise'
+gem 'devise_oauth2_providable', :git => 'https://github.com/rdingwell/devise_oauth2_providable.git',:branch => "master" 
+
 gem 'omniauth'
 gem 'omniauth-openid'
 gem 'kaminari'

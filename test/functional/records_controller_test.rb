@@ -27,4 +27,39 @@ class RecordsControllerTest < ActionController::TestCase
   test "breadcrumbs" do
     assert_equal([{ :title => "Home", :link => "/"}, { :title => 'Patient Index'}], @controller.breadcrumbs)
   end
+  
+  test "should generate a root.xml document based off the section mappings " do 
+    @record = Factory.create(:record)
+    get "root.xml", {record_id: @record.medical_record_number, id: @record.medical_record_number}
+    assert_response :success
+    
+    doc = Nokogiri::XML::Document.parse(response.body)
+    doc.root.add_namespace_definition('hrf', 'http://projecthdata.org/hdata/schemas/2009/06/core')
+    
+
+    root = doc.root
+    assert_equal "root", root.name
+    
+    sr = SectionRegistry.instance
+
+    sr.extensions.each do |e|
+     ex_id = e.extension_id
+     doc_ex = root.xpath("./hrf:extensions/hrf:extension[./text() = '#{ex_id}']")
+     assert !doc_ex.empty?
+     assert doc_ex.length == 1
+
+     section = root.xpath("./hrf:sections/hrf:section[./@path='#{e.path}']")
+     assert !section.empty?
+     assert section.length == 1
+
+     assert_equal doc_ex.first["./@id"], section.first["./@extensionId"]
+    end
+    
+    
+  end
+  
+  
+  def assert_not_nodeset(node)
+    assert_not_equal node.class, Nokogiri::XML::NodeSet, "Nodeset not expected"
+  end
 end

@@ -88,4 +88,46 @@ puts patient.vital_signs.inspect
     
   end
   
+
+##############
+##############
+  desc "Loads local C32 providers from test/fixtures/*Smith*.xml"
+  task :load_c32_providers => :environment do
+
+    if ENV['MONGOHQ_URL']
+      # uri = URI.parse(ENV['MONGOHQ_URL'])
+      @conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+      @db   = @conn['hdata_server_production']
+      @coll = @db['records']
+    else
+      @conn = Mongo::Connection.new
+      #@db   = @conn['hds-atest']
+      @db   = @conn['hdata_server_development']
+      @coll = @db['records']
+    end
+
+    ## read XML files and load into DB
+    files = Dir.glob("#{Rails.root}/test/fixtures/*Smith*.xml")
+    puts "Files #{files}"
+    # files = Dir.glob(File.dirname(__FILE__) + "/../test/fixtures/*Smith*.xml")
+    files.each do |file|
+       nist_doc = Nokogiri::XML(File.new(file))
+       nist_doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
+       importer = HealthDataStandards::Import::C32::ProviderImporter.instance
+
+       providers = importer.extract_providers(nist_doc)
+
+       puts "****** providers"
+       puts providers.inspect
+
+       providers.each do |provider|
+         p = Provider.new provider
+         puts "ERR" if p.save! == false
+         puts "Saved a provider! #{p.title} #{p.family_name} of #{p.organization}"
+       end
+    end
+    
+  end
+
+
 end

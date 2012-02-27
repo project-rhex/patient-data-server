@@ -63,6 +63,159 @@
       </representedCustodianOrganization>
     </assignedCustodian>
   </custodian>
+	<documentationOf>
+    <serviceEvent classCode="PCPR"> 
+      <effectiveTime>
+        <low value="19650120"/>
+        <high value="20070209"/>
+      </effectiveTime>
+
+      <performer typeCode="PRF">
+           <templateId root="2.16.840.1.113883.3.88.11.83.4" assigningAuthorityName="HITSP C83"/>
+           <templateId root="1.3.6.1.4.1.19376.1.5.3.1.2.3" assigningAuthorityName="IHE PCC"/>
+           <functionCode code="PP" displayName="Primary Care Provider" codeSystem="2.16.840.1.113883.12.443" codeSystemName="Provider Role">
+             <originalText>Primary Care Provider</originalText>
+           </functionCode>
+           <time>
+             <low value="20020716"/>
+             <high value="20070915"/>
+           </time>
+           <assignedEntity>
+             <id root="2.16.840.1.113883.4.6" extension="808401234567893"/>
+             <code code="Cardilogist" displayName="Allopathic and Osteopathic Physicians" codeSystemName="Provider Codes" codeSystem="2.16.840.1.113883.6.101"/>
+             <addr/>
+             <telecom value="tel:+1-301-975-3251" use="HP"/>
+             <assignedPerson>
+               <name>
+                 <prefix>Dr.</prefix>
+                 <given>Henry</given>
+                 <family>Frost</family>
+               </name>
+               <sdtc:birthTime nullFlavor="ASKU"/>
+             </assignedPerson>
+             <representedOrganization>
+               <id root="2.16.840.1.113883.3.72.5"/>
+               <name>Greater Heart Care</name>
+               <telecom value="tel:+1-781-456-1800"/>
+               <addr>
+                 <street>750 Washington St.</street>
+                 <city>Boston</city>
+                 <state>MA</state>
+               </addr>
+             </representedOrganization>
+             <sdtc:patient>
+               <sdtc:id/>
+             </sdtc:patient>
+           </assignedEntity>
+         </performer>
+
+      <performer typeCode="PRF">
+        <templateId root="2.16.840.1.113883.3.88.11.83.4" assigningAuthorityName="HITSP C83"/>
+        <templateId root="1.3.6.1.4.1.19376.1.5.3.1.2.3" assigningAuthorityName="IHE PCC"/>
+        <functionCode code="CP" displayName="Consulting Provider" codeSystem="2.16.840.1.113883.12.443" codeSystemName="Provider Role"/>
+        <originalText>Consulting Provider</originalText> 
+        <time>
+          <low value=""/>
+          <high value=""/> 
+        </time>
+        <assignedEntity> 
+          <id extension="1234567893" root="2.16.840.1.113883.3.72.5.2"/>
+          <code code="Oncologist" displayName="Speech, Language and Hearing Providers" codeSystem="2.16.840.1.113883.6.101" codeSystemName="ProviderCodes"/>
+          <assignedPerson> 
+            <name>
+              <prefix>Dr.</prefix>
+              <given>Cornelius</given>
+              <family>Fields</family>
+            </name>
+          </assignedPerson> 
+          <representedOrganization>
+            <id root="2.16.840.1.113883.3.72.5"/>
+            <name>Oncology Med.</name>
+            <telecom value="tel:+1-781-453-2000"/>
+            <addr>
+              <street>750 Washington St.</street>
+              <city>Boston</city>
+              <state>MA</state>
+            </addr>
+          </representedOrganization>
+          <sdtc:patient>
+            <sdtc:id root="78A150ED-B890-49dc-B716-5EC0027B3983" extension="MedicalRecordNumber"/>
+          </sdtc:patient> 
+        </assignedEntity>
+      </performer> 
+
+      <performer typeCode="PRF">
+        <templateId root="2.16.840.1.113883.3.88.11.83.4" assigningAuthorityName="HITSP C83"/>
+        <templateId root="1.3.6.1.4.1.19376.1.5.3.1.2.3" assigningAuthorityName="IHE PCC"/>
+        <functionCode code="CP" displayName="Consulting Provider" codeSystem="2.16.840.1.113883.12.443" codeSystemName="Provider Role"/>
+        <originalText>Consulting Provider</originalText> 
+        <time>
+          <low value=""/>
+          <high value=""/> 
+        </time>
+        <assignedEntity> 
+          <id extension="1184627374" root="2.16.840.1.113883.3.72.5.2"/>
+          <code code="Dermatologist" displayName="Dermatology" codeSystem="2.16.840.1.113883.6.101" codeSystemName="ProviderCodes"/>
+          <assignedPerson> 
+            <name>
+              <prefix>Dr.</prefix>
+              <given>Thomas</given>
+              <family>Dorms</family>
+            </name>
+          </assignedPerson> 
+          <representedOrganization>
+            <id root="2.16.840.1.113883.3.72.5"/>
+            <name>Dermatology Assoc.</name>
+            <telecom value="tel:+1-301-555-5555"/>
+            <addr>
+              <street>44 Binney St.</street>
+              <city>Boston</city>
+              <state>MA</state>
+            </addr>
+          </representedOrganization>
+          <sdtc:patient>
+            <sdtc:id root="78A150ED-B890-49dc-B716-5EC0027B3983" extension="MedicalRecordNumber"/>
+          </sdtc:patient> 
+        </assignedEntity>
+      </performer> 
+
+      <performer typeCode="PRF">
+        <templateId root="2.16.840.1.113883.3.88.11.83.4" assigningAuthorityName="HITSP C83"/>
+        <templateId root="1.3.6.1.4.1.19376.1.5.3.1.2.3" assigningAuthorityName="IHE PCC"/>
+        <functionCode code="CP" displayName="Consulting Provider" codeSystem="2.16.840.1.113883.12.443" codeSystemName="Provider Role"/>
+        <originalText>Consulting Provider</originalText> 
+        <time>
+          <low value=""/>
+          <high value=""/> 
+        </time>
+        <assignedEntity> 
+          <id extension="1538165659" root="2.16.840.1.113883.3.72.5.2"/>
+          <code code="Radiologist" displayName="Dermatology" codeSystem="2.16.840.1.113883.6.101" codeSystemName="ProviderCodes"/>
+          <assignedPerson> 
+            <name>
+              <prefix>Dr.</prefix>
+              <given>Caldwell</given>
+              <family>Jones</family>
+            </name>
+          </assignedPerson> 
+          <representedOrganization>
+            <id root="2.16.840.1.113883.3.72.5"/>
+            <name>Radiology Assoc.</name>
+            <telecom value="tel:+1-301-555-5555"/>
+            <addr>
+              <street>23 Peidmont St.</street>
+              <city>Boston</city>
+              <state>MA</state>
+            </addr>
+          </representedOrganization>
+          <sdtc:patient>
+            <sdtc:id root="78A150ED-B890-49dc-B716-5EC0027B3983" extension="MedicalRecordNumber"/>
+          </sdtc:patient> 
+        </assignedEntity>
+      </performer> 
+
+    </serviceEvent>
+  </documentationOf>
   <component>
     <structuredBody>
         <component>

@@ -35,6 +35,7 @@ class EntriesControllerTest < ActionController::TestCase
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
     get :index, {record_id: @record.medical_record_number, section: 'results'}
     assert_response :success
+    assert_equal "application/atom+xml", response.content_type
     rss = Feedzirra::Feed.parse(@response.body)
     assert_not_nil(rss.entries)
     assert_equal(1, rss.entries.size)

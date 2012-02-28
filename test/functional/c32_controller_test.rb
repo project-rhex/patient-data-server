@@ -30,4 +30,15 @@ class C32ControllerTest < ActionController::TestCase
     
     assert_equal @record.medical_record_number, result['medical_record_number']
   end
+
+  test "get c32 index Atom feed" do
+    request.env['HTTP_ACCEPT'] = 'application/atom+xml'
+    get :index, :record_id => @record.medical_record_number
+    assert_response :success
+    assert_equal "application/atom+xml", response.content_type
+    rss = Feedzirra::Feed.parse(@response.body)
+    assert_not_nil(rss.entries)
+    assert_equal(1, rss.entries.size)
+    assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/c32/#{@record.medical_record_number}"
+  end
 end

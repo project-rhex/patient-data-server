@@ -83,4 +83,24 @@ class EntriesControllerTest < ActionController::TestCase
     get :show, {record_id: @record.medical_record_number, section: 'results', id: ('0' * 24)}
     assert_response :missing
   end
+
+  test "check for 404 on non-existent record on index" do
+    get :index, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on show" do
+    get :show, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on update" do
+    get :update, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on delete" do
+    get :delete, :record_id => "AAAA"
+    assert_response :missing
+  end
 end

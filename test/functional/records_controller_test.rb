@@ -75,6 +75,16 @@ class RecordsControllerTest < ActionController::TestCase
     assert_not_nil(rss.entries)
     assert_equal(12, rss.entries.size)
   end
+
+  test "check for 404 on non-existent record on show" do
+    get :show, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on root" do
+    get :root, :record_id => "BBBB"
+    assert_response :missing
+  end
   
   def assert_not_nodeset(node)
     assert_not_equal node.class, Nokogiri::XML::NodeSet, "Nodeset not expected"

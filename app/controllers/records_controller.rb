@@ -12,7 +12,7 @@ class RecordsController < ApplicationController
   end
   
   def root
-    
+    return if missing_record?
   end
   
   def create
@@ -30,6 +30,8 @@ class RecordsController < ApplicationController
   end
   
   def show
+    return if missing_record?
+
     desc = audit_log "record_access", nil
 
     if current_user

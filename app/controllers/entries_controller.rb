@@ -3,6 +3,8 @@ class EntriesController < ApplicationController
   before_filter :find_entry, only: ["show", "update", "delete"]
   
   def index
+    return if missing_record?
+
     audit_log "event_index"
 
     @entries = @record.send(@section_name)
@@ -12,6 +14,8 @@ class EntriesController < ApplicationController
   end
   
   def show
+    return if missing_record?
+
     audit_log "event_show"
     ## TODO need to auditlog the actual record content
 
@@ -40,6 +44,8 @@ class EntriesController < ApplicationController
   end
   
   def update
+    return if missing_record?
+
     audit_log "event_update"
 
     content_type = request.content_type
@@ -49,6 +55,8 @@ class EntriesController < ApplicationController
   end
 
   def delete
+    return if missing_record?
+
     audit_log "event_delete"
 
     @entry.destroy
@@ -76,6 +84,8 @@ class EntriesController < ApplicationController
   end
   
   def find_entry
+    return if @record.nil?
+
     if BSON::ObjectId.legal?(params[:id])
       @entry = @record.send(@section_name).find(:first, conditions: {id: params[:id]})
       unless @entry

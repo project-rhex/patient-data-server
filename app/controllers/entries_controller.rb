@@ -3,11 +3,7 @@ class EntriesController < ApplicationController
   before_filter :find_entry, only: ["show", "update", "delete"]
   
   def index
-    if current_user
-      desc = ""
-      desc = "id:#{params[:id]}" if params[:id]
-      AuditLog.create(requester_info: current_user.email, event: "event_list", description: desc)
-    end
+    audit_log "event_index"
 
     @entries = @record.send(@section_name)
     respond_to do |wants|
@@ -16,11 +12,8 @@ class EntriesController < ApplicationController
   end
   
   def show
-    if current_user
-      desc = ""
-      desc = "id:#{params[:id]}" if params[:id]
-      AuditLog.create(requester_info: current_user.email, event: "event_show", description: desc)
-    end
+    audit_log "event_show"
+    ## TODO need to auditlog the actual record content
 
     respond_to do |wants|
       wants.json {render :json => @entry.attributes}
@@ -34,8 +27,11 @@ class EntriesController < ApplicationController
   def create
     content_type = request.content_type
     if content_type == "multipart/form-data"
+      audit_log "event_create_multipart"
       render text: 'Metadata POSTing not yet implemented', status: 400
     else
+      audit_log "event_create"
+
       section_document = import_document(content_type)
       @record.send(@section_name).push(section_document)
       response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
@@ -44,6 +40,8 @@ class EntriesController < ApplicationController
   end
   
   def update
+    audit_log "event_update"
+
     content_type = request.content_type
     section_document = import_document(content_type)
     @entry.update_attributes!(section_document.attributes)
@@ -51,6 +49,8 @@ class EntriesController < ApplicationController
   end
 
   def delete
+    audit_log "event_delete"
+
     @entry.destroy
     render nothing: true, status: 204
   end
@@ -84,6 +84,16 @@ class EntriesController < ApplicationController
     else
       render text: 'Not a valid identifier for a section document', status: 400
     end
+  end
+
+  def audit_log(action)
+    return if current_user.nil?
+
+    desc = ""
+    desc = "record_id:#{params[:record_id]}" if params[:record_id]
+    desc += "|section:#{params[:section]}" if params[:section]
+    desc += "|id:#{params[:id]}" if params[:id]
+    AuditLog.create(requester_info: current_user.email, event: action, description: desc)
   end
 
 end

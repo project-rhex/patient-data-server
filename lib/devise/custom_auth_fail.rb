@@ -7,6 +7,9 @@ class CustomAuthFail < Devise::FailureApp
 
     return if params.nil?
 
+    #puts "====="
+    #puts params.inspect
+
     login_email = ""
     user = params[:user]
     if !user.nil?

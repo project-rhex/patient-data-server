@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate_user!
-  before_filter :find_record, :audit_log
+  before_filter :find_record, :audit_log_all
 
   # Return a list of breadcrumbs appropriate for the particular controller. This method can be overridden by
   # any specific subclass to introduce sublinks into the breadcrumb path. A leaf path can then be introduced by
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   ##
   ## Track each controller and method (action) call
-  def audit_log
+  def audit_log_all
     ## 
     #puts current_user.inspect
 
@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
       ## log user email for now
       ## TODO: change to larger requester info set
       if current_user
+        if desc =~ /sessions\|destroy/
+          desc << "|LOGOUT"
+        end
+
         AuditLog.create(requester_info: current_user.email, event: "USER_ACTION", description: desc)
       else
         AuditLog.create(requester_info: "NONE", event: "USER_ACTION", description: desc)

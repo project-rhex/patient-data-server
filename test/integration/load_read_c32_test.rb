@@ -20,7 +20,7 @@ class LoadReadC32Test < ActionController::TestCase
     assert_nil record, "Record precondition FAIL - record table is NOT empty!"
 
     ## read C32 from XML file
-    doc = Nokogiri::XML(File.read(File.dirname(__FILE__) + "/../fixtures/Henry_Smith_44.xml")) #Johnny_Smith_96.xml'))
+    doc = Nokogiri::XML(File.read(File.dirname(__FILE__) + "/../fixtures/Henry_Smith44.xml")) #Johnny_Smith_96.xml'))
     doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
     pi = HealthDataStandards::Import::C32::PatientImporter.instance
 

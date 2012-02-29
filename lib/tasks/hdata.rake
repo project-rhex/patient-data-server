@@ -108,9 +108,10 @@ puts patient.vital_signs.inspect
 
     ## read XML files and load into DB
     files = Dir.glob("#{Rails.root}/test/fixtures/*Smith*.xml")
-    puts "Files #{files}"
+    #    puts "Files #{files}"
     # files = Dir.glob(File.dirname(__FILE__) + "/../test/fixtures/*Smith*.xml")
     files.each do |file|
+       puts "file: #{file}"
        nist_doc = Nokogiri::XML(File.new(file))
        nist_doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
        importer = HealthDataStandards::Import::C32::ProviderImporter.instance

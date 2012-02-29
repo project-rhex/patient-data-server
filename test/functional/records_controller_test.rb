@@ -12,7 +12,7 @@ class RecordsControllerTest < ActionController::TestCase
 
   test 'create' do
     start_record_count = Record.count
-    c32_file = File.read(Rails.root.join('test/fixtures/Henry_Smith_44.xml'))
+    c32_file = File.read(Rails.root.join('test/fixtures/Henry_Smith44.xml'))
     request.env['RAW_POST_DATA'] = c32_file
     request.env['CONTENT_TYPE'] = 'application/xml'
 
@@ -20,6 +20,7 @@ class RecordsControllerTest < ActionController::TestCase
 
     assert_response 201
     assert_equal (start_record_count + 1), Record.count
+    STDOUT << Record.inspect
     assert response['Location'].present?
     assert response['Location'].include? "4ebbd2717042f97ce200006c" # ID for Henry declared in the C32
   end

@@ -1,5 +1,6 @@
 class RecordsController < ApplicationController
   #before_filter :authenticate_user!
+  before_filter :find_record, only: ["root.xml", :show]
 
   def index
     @records = Record.all
@@ -9,10 +10,6 @@ class RecordsController < ApplicationController
       wants.atom {}
       wants.html{}
     end
-  end
-  
-  def root
-    
   end
   
   def create

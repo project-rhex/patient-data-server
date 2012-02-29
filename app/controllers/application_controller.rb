@@ -1,8 +1,18 @@
+require 'request_error'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate_user!
-  before_filter :find_record, :audit_log_all
+  before_filter :audit_log_all
+
+  rescue_from RequestError do |e|
+    if e.message.nil?
+      render file: "public/#{e.status}.html", :status => e.status
+    else
+      render text: e.message, :status => e.status
+    end
+  end
 
   # Return a list of breadcrumbs appropriate for the particular controller. This method can be overridden by
   # any specific subclass to introduce sublinks into the breadcrumb path. A leaf path can then be introduced by
@@ -21,13 +31,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
+  # Only call find_record in a before_filter for methods that should have an id or record_id
+  # parameter. Make sure to add exceptions for methods that don't.
   def find_record
     record_id = params[:record_id] || params[:id]
     @record = Record.first(conditions: {medical_record_number: record_id})
-    ##render file: "public/404.html", :status => :not_found unless @record
+    raise RequestError.new(404) if @record.nil?
   end
-
 
   ##
   ## Track each controller and method (action) call

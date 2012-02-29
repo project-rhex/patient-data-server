@@ -1,7 +1,10 @@
+require "request_error"
+
 class EntriesController < ApplicationController
   before_filter :set_up_section
-  before_filter :find_entry, only: ["show", "update", "delete"]
-  
+  before_filter :find_record, only: [:show, :update, :delete, :index, :create]
+  before_filter :find_entry, only: [:show, :update, :delete]
+
   def index
     audit_log "event_index"
 
@@ -60,7 +63,7 @@ class EntriesController < ApplicationController
   def import_document(content_type)
     importer = @extension.importers[content_type]
     raw_content = nil
-    if content_type = 'application/xml'
+    if content_type == 'application/xml'
       raw_content = Nokogiri::XML(request.body.read)
     end
     importer.import(raw_content)
@@ -78,11 +81,9 @@ class EntriesController < ApplicationController
   def find_entry
     if BSON::ObjectId.legal?(params[:id])
       @entry = @record.send(@section_name).find(:first, conditions: {id: params[:id]})
-      unless @entry
-        render text: 'Entry Not Found', status: 404
-      end
+      raise RequestError.new(404, 'Entry Not Found') unless @entry
     else
-      render text: 'Not a valid identifier for a section document', status: 400
+      raise RequestError.new(400, 'Not a valid identifier for a section document')
     end
   end
 

@@ -55,10 +55,37 @@ class RecordsControllerTest < ActionController::TestCase
 
      assert_equal doc_ex.first["./@id"], section.first["./@extensionId"]
     end
-    
-    
   end
-  
+
+  test "get records index Atom feed" do
+    request.env['HTTP_ACCEPT'] = 'application/atom+xml'
+    get :index
+    assert_response :success
+    assert_equal "application/atom+xml", response.content_type
+    rss = Feedzirra::Feed.parse(@response.body)
+    assert_not_nil(rss.entries)
+    assert rss.entries.size > 0
+  end
+
+  test "get records show Atom feed" do
+    request.env['HTTP_ACCEPT'] = 'application/atom+xml'
+    get :show, :record_id => "4ebbd2717042f97ce200006c"
+    assert_response :success
+    assert_equal "application/atom+xml", response.content_type
+    rss = Feedzirra::Feed.parse(@response.body)
+    assert_not_nil(rss.entries)
+    assert_equal(12, rss.entries.size)
+  end
+
+  test "check for 404 on non-existent record on show" do
+    get :show, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on root.xml" do
+    get "root.xml", :record_id => "BBBB"
+    assert_response :missing
+  end
   
   def assert_not_nodeset(node)
     assert_not_equal node.class, Nokogiri::XML::NodeSet, "Nodeset not expected"

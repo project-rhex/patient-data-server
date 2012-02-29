@@ -35,6 +35,7 @@ class EntriesControllerTest < ActionController::TestCase
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
     get :index, {record_id: @record.medical_record_number, section: 'results'}
     assert_response :success
+    assert_equal "application/atom+xml", response.content_type
     rss = Feedzirra::Feed.parse(@response.body)
     assert_not_nil(rss.entries)
     assert_equal(1, rss.entries.size)
@@ -80,6 +81,26 @@ class EntriesControllerTest < ActionController::TestCase
     assert_response 400
     
     get :show, {record_id: @record.medical_record_number, section: 'results', id: ('0' * 24)}
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on index" do
+    get :index, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on show" do
+    get :show, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on update" do
+    get :update, :record_id => "AAAA"
+    assert_response :missing
+  end
+
+  test "check for 404 on non-existent record on delete" do
+    get :delete, :record_id => "AAAA"
     assert_response :missing
   end
 end

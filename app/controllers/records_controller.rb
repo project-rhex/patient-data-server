@@ -1,5 +1,6 @@
 class RecordsController < ApplicationController
   #before_filter :authenticate_user!
+  before_filter :find_record, only: ["root.xml", :show]
 
   def index
     @records = Record.all
@@ -9,10 +10,6 @@ class RecordsController < ApplicationController
       wants.atom {}
       wants.html{}
     end
-  end
-  
-  def root
-    return if missing_record?
   end
   
   def create
@@ -30,8 +27,6 @@ class RecordsController < ApplicationController
   end
   
   def show
-    return if missing_record?
-
     desc = audit_log "record_access", nil
 
     if current_user

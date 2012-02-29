@@ -81,8 +81,8 @@ class RecordsControllerTest < ActionController::TestCase
     assert_response :missing
   end
 
-  test "check for 404 on non-existent record on root" do
-    get :root, :record_id => "BBBB"
+  test "check for 404 on non-existent record on root.xml" do
+    get "root.xml", :record_id => "BBBB"
     assert_response :missing
   end
   

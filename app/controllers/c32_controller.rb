@@ -1,5 +1,6 @@
 class C32Controller < ApplicationController
-  
+  before_filter :find_record, only: [:index, :show]
+
   respond_to :xml, :json, :atom
   
   def index

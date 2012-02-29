@@ -1,6 +1,8 @@
 HdataServer::Application.routes.draw do
   
 
+  resources :notify_configs
+
   get "audit_review/index"
 
   get "audit_review/show"

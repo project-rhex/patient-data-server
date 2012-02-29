@@ -1,0 +1,29 @@
+<h1>Listing notify_configs</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Interval</th>
+    <th>Type</th>
+    <th>Alert flags</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @notify_configs.each do |notify_config| %>
+  <tr>
+    <td><%= notify_config.user %></td>
+    <td><%= notify_config.interval %></td>
+    <td><%= notify_config.type %></td>
+    <td><%= notify_config.alert_flags %></td>
+    <td><%= link_to 'Show', notify_config %></td>
+    <td><%= link_to 'Edit', edit_notify_config_path(notify_config) %></td>
+    <td><%= link_to 'Destroy', notify_config, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Notify config', new_notify_config_path %>

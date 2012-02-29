@@ -48,4 +48,11 @@ FactoryGirl.define do
     f.redirect_uri 'http://localhost:3000'
   end
 
+  factory :notify_config do
+    user  'gganley@mitre.org'
+    interval 'INSTANT'
+    type 'RECORD_UPDATE'
+    alert_flags 'WEB'
+  end
+
 end

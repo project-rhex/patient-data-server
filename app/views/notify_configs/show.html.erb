@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @notify_config.user %>
+</p>
+
+<p>
+  <b>Interval:</b>
+  <%= @notify_config.interval %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @notify_config.type %>
+</p>
+
+<p>
+  <b>Alert flags:</b>
+  <%= @notify_config.alert_flags %>
+</p>
+
+
+<%= link_to 'Edit', edit_notify_config_path(@notify_config) %> |
+<%= link_to 'Back', notify_configs_path %>

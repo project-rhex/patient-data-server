@@ -1,0 +1,33 @@
+<%= form_for(@notify_config) do |f| %>
+  <% if @notify_config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@notify_config.errors.count, "error") %> prohibited this notify_config from being saved:</h2>
+
+      <ul>
+      <% @notify_config.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :interval %>
+   <%= f.select :interval, NotifyInterval.items, :prompt => 'Select...'  %><br>
+</div>
+  <div class="field">
+    <%= f.label :type %>
+    <%= f.select :type, NotifyType.items, :prompt => 'Select...'  %><br>
+ </div>
+  <div class="field">
+    <%= f.label :alert_flags %>
+   <%= f.select :alert_flags, AlertFlag.items, :prompt => 'Select...'  %><br>
+ </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

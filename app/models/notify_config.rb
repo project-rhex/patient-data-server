@@ -10,7 +10,7 @@ class NotifyConfig
   field :interval, :type => String
 
   # RECORD_UPDATE | CONSULT_REQUEST | CONSULT_COMPLETE
-  field :type, :type => String
+  field :action, :type => String
 
   # one or more of these 
   # default WEB | EMAIL | TEXT | DIRECT_EMAIL
@@ -52,11 +52,11 @@ class NotifyInterval < NotifyEnum
 end
 
 
-class NotifyType < NotifyEnum
+class NotifyAction < NotifyEnum
 
-  NotifyType.add_item :RECORD_UPDATE   , 1
-  NotifyType.add_item :CONSULT_REQUEST , 2
-  NotifyType.add_item :CONSULT_COMPLETE, 3
+  NotifyAction.add_item :RECORD_UPDATE   , 1
+  NotifyAction.add_item :CONSULT_REQUEST , 2
+  NotifyAction.add_item :CONSULT_COMPLETE, 3
 end
 
 

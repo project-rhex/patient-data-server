@@ -12,22 +12,34 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
+    <%= f.label :user %>
+    <%= f.text_field :user, :value => @current_user.email %>
+ </div>
   <div class="field">
     <%= f.label :interval %>
-   <%= f.select :interval, NotifyInterval.items, :prompt => 'Select...'  %><br>
+   <%= f.select :interval, NotifyConfig.get_interval_values, :prompt => 'Select...'  %>
 </div>
   <div class="field">
     <%= f.label :action %>
-    <%= f.select :action, NotifyAction.items, :prompt => 'Select...'  %><br>
+    <%= f.select :action, NotifyConfig.get_action_values, :prompt => 'Select...'  %>
  </div>
   <div class="field">
-    <%= f.label :alert_flags %>
-   <%= f.select :alert_flags, AlertFlag.items, :prompt => 'Select...'  %><br>
- </div>
-  <div class="actions">
+   <%= f.label :alert_out1 %>
+  <%= f.select :alert_out1, NotifyConfig.get_alert_out1_values, :prompt => 'Select...'  %>
+</div>
+  <div class="field">
+   <%= f.label :alert_out2 %>
+  <%= f.select :alert_out2, NotifyConfig.get_alert_out2_values, :prompt => 'Select...'  %>
+</div>
+  <div class="field">
+   <%= f.label :alert_out3 %>
+  <%= f.select :alert_out3, NotifyConfig.get_alert_out3_values, :prompt => 'Select...'  %>
+</div>
+  <div class="field">
+   <%= f.label :alert_out4 %>
+  <%= f.select :alert_out4, NotifyConfig.get_alert_out4_values, :prompt => 'Select...'  %>
+</div>
+ <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

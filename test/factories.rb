@@ -50,9 +50,19 @@ FactoryGirl.define do
 
   factory :notify_config do
     user  'gganley@mitre.org'
-    interval 'INSTANT'
-    action 'RECORD_UPDATE'
-    alert_flags 'WEB'
+    interval :instant
+    action :record_update
+    alert_out1 :web
+    alert_out2 :email
+    alert_out3 :direct_email
+    alert_out4 :text
+  end
+
+  factory :notification do
+    user  'gganley@mitre.org'
+    action :record_update
+    record_id '1'
+    status :unread
   end
 
 end

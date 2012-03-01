@@ -5,8 +5,11 @@
     <th>User</th>
     <th>Interval</th>
     <th>Action</th>
-    <th>Alert flags</th>
-    <th></th>
+    <th>Alert out1</th>
+    <th>Alert out2</th>
+    <th>Alert out3</th>
+    <th>Alert out4</th>
+   <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -16,8 +19,11 @@
     <td><%= notify_config.user %></td>
     <td><%= notify_config.interval %></td>
     <td><%= notify_config.action %></td>
-    <td><%= notify_config.alert_flags %></td>
-    <td><%= link_to 'Show', notify_config %></td>
+    <td><%= notify_config.alert_out1 %></td>
+    <td><%= notify_config.alert_out2 %></td>
+    <td><%= notify_config.alert_out3 %></td>
+    <td><%= notify_config.alert_out4 %></td>
+   <td><%= link_to 'Show', notify_config %></td>
     <td><%= link_to 'Edit', edit_notify_config_path(notify_config) %></td>
     <td><%= link_to 'Destroy', notify_config, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

@@ -2,69 +2,54 @@
 
 class NotifyConfig
   include Mongoid::Document
+  include Mongoid::Symbolize
 
   # email or username etc
   field :user, :type => String
 
   # INSTANT | DAILY | WEEKLY
-  field :interval, :type => String
-
+  symbolize :interval, :in => {
+    instant: "Instant", 
+    daily:   "Daily", 
+    weekly:  "Weekly"}, :default => :instant, :scopes => true
+  
   # RECORD_UPDATE | CONSULT_REQUEST | CONSULT_COMPLETE
-  field :action, :type => String
+  symbolize :action, :in => {
+    record_update:   "Record Update", 
+    consult_request:  "Consult Request",
+    consult_complete: "Consult Complete" }, :scopes => true
 
   # one or more of these 
   # default WEB | EMAIL | TEXT | DIRECT_EMAIL
-  field :alert_flags, :type => String
-end
+  ## TODO - note the best implementation of this, good for now 
+  symbolize :alert_out1, :in => {
+    web:   "Web",
+    email: "Email",
+    text:  "Text",
+    direct_email: "Direct Email",
+    none: "None"}, :default => :web, :scopes => true
+
+  symbolize :alert_out2, :in => {
+    web:   "Web",
+    email: "Email",
+    text:  "Text",
+    direct_email: "Direct Email",
+    none: "None"}, :default => :none, :scopes => true
+
+  symbolize :alert_out3, :in => {
+    web:   "Web",
+    email: "Email",
+    text:  "Text",
+    direct_email: "Direct Email",
+    none: "None"}, :default => :none, :scopes => true
+
+  symbolize :alert_out4, :in => {
+    web:   "Web",
+    email: "Email",
+    text:  "Text",
+    direct_email: "Direct Email",
+    none: "None"}, :default => :none, :scopes => true
 
 
-
-class NotifyEnum
-  def NotifyEnum.add_item(key,value)
-    @hash ||= {}
-    @hash[key]=value
-  end
-  
-  def NotifyEnum.const_missing(key)
-    @hash[key]
-  end    
-  
-  def NotifyEnum.each
-    @hash.each {|key,value| yield(key,value)}
-  end
-  
-  def NotifyEnum.items
-    key_array = []
-    @hash.each { |key,value| 
-      key_array << key
-    }
-    key_array
-  end    
-    
-end
-
-
-class NotifyInterval < NotifyEnum
-
-  NotifyInterval.add_item :INSTANT, 1
-  NotifyInterval.add_item :DAILY  , 2
-  NotifyInterval.add_item :WEEKLY , 3
-end
-
-
-class NotifyAction < NotifyEnum
-
-  NotifyAction.add_item :RECORD_UPDATE   , 1
-  NotifyAction.add_item :CONSULT_REQUEST , 2
-  NotifyAction.add_item :CONSULT_COMPLETE, 3
-end
-
-
-class AlertFlag < NotifyEnum
-
-  AlertFlag.add_item :WEB         , 0x1
-  AlertFlag.add_item :EMAIL       , 0x2
-  AlertFlag.add_item :TEXT        , 0x4
-  AlertFlag.add_item :DIRECT_EMAIL, 0x8
 end
 

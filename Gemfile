@@ -17,7 +17,7 @@ gem 'devise_oauth2_providable', :git => 'https://github.com/rdingwell/devise_oau
 gem 'omniauth'
 gem 'omniauth-openid'
 gem 'kaminari'
-
+gem "symbolize", :require => "symbolize/mongoid"
 
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"

@@ -20,7 +20,6 @@ class RecordsControllerTest < ActionController::TestCase
 
     assert_response 201
     assert_equal (start_record_count + 1), Record.count
-    STDOUT << Record.inspect
     assert response['Location'].present?
     assert response['Location'].include? "4f4e6eb7069d454d16000001" # ID for Henry declared in the C32
   end

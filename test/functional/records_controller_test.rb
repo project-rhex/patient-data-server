@@ -22,7 +22,7 @@ class RecordsControllerTest < ActionController::TestCase
     assert_equal (start_record_count + 1), Record.count
     STDOUT << Record.inspect
     assert response['Location'].present?
-    assert response['Location'].include? "4ebbd2717042f97ce200006c" # ID for Henry declared in the C32
+    assert response['Location'].include? "4f4e6eb7069d454d16000001" # ID for Henry declared in the C32
   end
 
   test "breadcrumbs" do
@@ -69,7 +69,7 @@ class RecordsControllerTest < ActionController::TestCase
 
   test "get records show Atom feed" do
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
-    get :show, :record_id => "4ebbd2717042f97ce200006c"
+    get :show, :record_id => "4f4e6eb7069d454d16000001"
     assert_response :success
     assert_equal "application/atom+xml", response.content_type
     rss = Feedzirra::Feed.parse(@response.body)

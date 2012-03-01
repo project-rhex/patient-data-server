@@ -14,8 +14,12 @@ class NotifyEvent
       n.action = action
       n.record_id = 1  ## TODO change this
       n.status = :unread
-      n.save!
-
+      if n.save!
+        ## log it
+        AuditLog.create(requester_info: user, event: "notification_set", description: "action:#{action}|record_id:1|#{:unread}")
+      end
+      
+      #TODO wire this up
       #if nconfigs.interval
       # if instant then notify now
         # daily and weekly not implemented

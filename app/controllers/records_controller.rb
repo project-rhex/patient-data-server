@@ -23,7 +23,14 @@ class RecordsController < ApplicationController
     response['Location'] = record_url(id: patient_data.medical_record_number)
     render :text => 'success', :status => 201
   end
-  
+
+  def options
+    sr = SectionRegistry.instance
+    response['X-hdata-extensions'] = sr.extensions.map(&:extension_id).join(' ')
+    response['X-hdata-security'] = 'http://openid.net/connect/'
+    render :nothing => true
+  end
+
   def show
     desc = audit_log "record_access", nil
 

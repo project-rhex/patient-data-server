@@ -25,6 +25,14 @@ class RecordsControllerTest < AtomTest
     assert response['Location'].include? "4f4e6eb7069d454d16000001" # ID for Henry declared in the C32
   end
 
+  test "options" do
+    process(:options, {:record_id => "4f4e6eb7069d454d16000001"}, nil, nil, 'OPTIONS')
+    assert_response :success
+    assert response.body.blank?
+    assert response['X-hdata-security'] = 'http://openid.net/connect/'
+    assert_equal SectionRegistry.instance.extensions.size, response['X-hdata-extensions'].split(' ').size
+  end
+
   test "breadcrumbs" do
     assert_equal([{ :title => "Home", :link => "/"}, { :title => 'Patient Index'}], @controller.breadcrumbs)
   end

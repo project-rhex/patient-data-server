@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'atom_test'
 
-class RecordsControllerTest < ActionController::TestCase
+class RecordsControllerTest < AtomTest
   include Devise::TestHelpers
 
   # Called before every test method runs. Can be used
@@ -59,21 +60,18 @@ class RecordsControllerTest < ActionController::TestCase
   test "get records index Atom feed" do
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
     get :index
-    assert_response :success
-    assert_equal "application/atom+xml", response.content_type
-    rss = Feedzirra::Feed.parse(@response.body)
-    assert_not_nil(rss.entries)
-    assert rss.entries.size > 0
+    assert_atom_success
+    rss = atom_results
+    assert_atom_results rss
   end
 
   test "get records show Atom feed" do
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
-    get :show, :record_id => "4f4e6eb7069d454d16000001"
-    assert_response :success
-    assert_equal "application/atom+xml", response.content_type
-    rss = Feedzirra::Feed.parse(@response.body)
-    assert_not_nil(rss.entries)
-    assert_equal(12, rss.entries.size)
+    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
+  end
+
+  test "get records show Atom feed (no accepts header)" do
+    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
   end
 
   test "check for 404 on non-existent record on show" do
@@ -85,7 +83,14 @@ class RecordsControllerTest < ActionController::TestCase
     get "root.xml", :record_id => "BBBB"
     assert_response :missing
   end
-  
+
+  def do_show_atom_feed id, count
+    get :show, :record_id => id
+    assert_atom_success
+    rss = atom_results
+    assert_atom_result_count rss, count
+  end
+
   def assert_not_nodeset(node)
     assert_not_equal node.class, Nokogiri::XML::NodeSet, "Nodeset not expected"
   end

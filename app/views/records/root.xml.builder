@@ -1,8 +1,8 @@
 xml.root xmlns: "http://projecthdata.org/hdata/schemas/2009/06/core", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance" do
   xml.id @record.medical_record_number
   xml.version @record.version
-  xml.created @record.created_at
-  xml.lastModified @record.updated_at
+  xml.created @record.created_at.to_s(:xsd)
+  xml.lastModified @record.updated_at.to_s(:xsd)
   
   extensions = SectionRegistry.instance.extensions
   ids = extensions.collect{|x| x.extension_id }.uniq

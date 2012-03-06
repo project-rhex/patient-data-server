@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RecordsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
-
+  ROOT_SCHEMA = File.expand_path("../../xsd/root.xsd",__FILE__)
   # Called before every test method runs. Can be used
   # to set up fixture information.
   def setup
@@ -35,6 +35,12 @@ class RecordsControllerTest < ActionController::TestCase
     assert_response :success
     
     doc = Nokogiri::XML::Document.parse(response.body)
+    
+
+    
+    xsd = Nokogiri::XML::Schema(open(ROOT_SCHEMA))
+    assert_equal [], xsd.validate(doc)
+    
     doc.root.add_namespace_definition('hrf', 'http://projecthdata.org/hdata/schemas/2009/06/core')
     
 

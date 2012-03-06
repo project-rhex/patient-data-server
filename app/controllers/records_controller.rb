@@ -27,6 +27,8 @@ class RecordsController < ApplicationController
   end
 
   def options
+    sr = SectionRegistry.instance
+    response['X-hdata-extensions'] = sr.extensions.map(&:extension_id).join(' ')
     response['X-hdata-security'] = 'http://openid.net/connect/'
     render :nothing => true
   end

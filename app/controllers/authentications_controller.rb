@@ -6,6 +6,7 @@ class AuthenticationsController < ActionController::Base
 
   
   def create
+
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.first(conditions: { provider: omniauth['provider'], uid: omniauth['uid']})
     #binding.pry

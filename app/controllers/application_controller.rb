@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   ##
   ## Track each controller and method (action) call
   def audit_log_all
-    ## 
+    ##
     #puts current_user.inspect
 
     if  params[:controller] && params[:action]
@@ -64,6 +64,15 @@ class ApplicationController < ActionController::Base
 
     end
 
+  end
+
+  # Check the accepts header and defaults the format to request an atom feed
+  # apply to a controller using a before filter
+  def default_format_to_atom
+    # Default the type we are sending out
+    if request.accept.nil?
+      request.format = :atom
+    end
   end
 
 end

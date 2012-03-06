@@ -1,15 +1,13 @@
 class RecordsController < ApplicationController
   #before_filter :authenticate_user!
+  before_filter :default_format_to_atom, only: [:show]
   before_filter :find_record, only: ["root.xml", :show]
 
   def index
     @records = Record.all
     audit_log "record_index", nil
 
-    respond_to do |wants|
-      wants.atom {}
-      wants.html{}
-    end
+    respond_to(:atom, :html)
   end
   
   def create
@@ -43,16 +41,12 @@ class RecordsController < ApplicationController
       AuditLog.doc(current_user.email, "record_access", desc, @record, @record.version)
     end
 
-    respond_to do |wants|
-      wants.atom {}
-      wants.html {}
-    end
+    respond_to(:atom, :html)
   end
 
   def breadcrumbs
     super << breadcrumb('Patient Index')
   end
-
 
  def audit_log(action, id)
    return if current_user.nil?
@@ -66,6 +60,4 @@ class RecordsController < ApplicationController
    
    desc
   end
-
-
 end

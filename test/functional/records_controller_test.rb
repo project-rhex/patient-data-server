@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'atom_test'
 
-class RecordsControllerTest < ActionController::TestCase
+class RecordsControllerTest < AtomTest
   include Devise::TestHelpers
   ROOT_SCHEMA = File.expand_path("../../xsd/root.xsd",__FILE__)
   # Called before every test method runs. Can be used
@@ -20,9 +21,16 @@ class RecordsControllerTest < ActionController::TestCase
 
     assert_response 201
     assert_equal (start_record_count + 1), Record.count
-    STDOUT << Record.inspect
     assert response['Location'].present?
     assert response['Location'].include? "4f4e6eb7069d454d16000001" # ID for Henry declared in the C32
+  end
+
+  test "options" do
+    process(:options, {:record_id => "4f4e6eb7069d454d16000001"}, nil, nil, 'OPTIONS')
+    assert_response :success
+    assert response.body.blank?
+    assert response['X-hdata-security'] = 'http://openid.net/connect/'
+    assert_equal SectionRegistry.instance.extensions.size, response['X-hdata-extensions'].split(' ').size
   end
 
   test "breadcrumbs" do
@@ -66,21 +74,18 @@ class RecordsControllerTest < ActionController::TestCase
   test "get records index Atom feed" do
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
     get :index
-    assert_response :success
-    assert_equal "application/atom+xml", response.content_type
-    rss = Feedzirra::Feed.parse(@response.body)
-    assert_not_nil(rss.entries)
-    assert rss.entries.size > 0
+    assert_atom_success
+    rss = atom_results
+    assert_atom_results rss
   end
 
   test "get records show Atom feed" do
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
-    get :show, :record_id => "4f4e6eb7069d454d16000001"
-    assert_response :success
-    assert_equal "application/atom+xml", response.content_type
-    rss = Feedzirra::Feed.parse(@response.body)
-    assert_not_nil(rss.entries)
-    assert_equal(12, rss.entries.size)
+    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
+  end
+
+  test "get records show Atom feed (no accepts header)" do
+    do_show_atom_feed "4f4e6eb7069d454d16000001", 12
   end
 
   test "check for 404 on non-existent record on show" do
@@ -92,7 +97,14 @@ class RecordsControllerTest < ActionController::TestCase
     get "root.xml", :record_id => "BBBB"
     assert_response :missing
   end
-  
+
+  def do_show_atom_feed id, count
+    get :show, :record_id => id
+    assert_atom_success
+    rss = atom_results
+    assert_atom_result_count rss, count
+  end
+
   def assert_not_nodeset(node)
     assert_not_equal node.class, Nokogiri::XML::NodeSet, "Nodeset not expected"
   end

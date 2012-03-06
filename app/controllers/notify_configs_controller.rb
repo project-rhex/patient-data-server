@@ -2,8 +2,9 @@ class NotifyConfigsController < ApplicationController
   # GET /notify_configs
   # GET /notify_configs.json
   def index
-    @notify_configs = NotifyConfig.all
-
+    puts ".." + @current_user.email + ".."
+    @notify_configs = NotifyConfig.all( conditions: { user: /#{@current_user.email}/i } ).to_a
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @notify_configs }

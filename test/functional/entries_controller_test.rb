@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'atom_test'
 
-class EntriesControllerTest < ActionController::TestCase
+class EntriesControllerTest < AtomTest
   include Devise::TestHelpers
   
   setup do
@@ -35,10 +36,9 @@ class EntriesControllerTest < ActionController::TestCase
     request.env['HTTP_ACCEPT'] = 'application/atom+xml'
     get :index, {record_id: @record.medical_record_number, section: 'results'}
     assert_response :success
-    assert_equal "application/atom+xml", response.content_type
-    rss = Feedzirra::Feed.parse(@response.body)
-    assert_not_nil(rss.entries)
-    assert_equal(1, rss.entries.size)
+    assert_atom_success
+    rss = atom_results
+    assert_atom_result_count rss, 1
     assert rss.entries[0].links[0].include? "/records/#{@record.medical_record_number}/results/#{@record.results.first.id}"
   end
   

@@ -1,6 +1,8 @@
 HdataServer::Application.routes.draw do
   
 
+  resources :notifications
+
   resources :notify_configs
 
   get "audit_review/index"
@@ -33,7 +35,8 @@ HdataServer::Application.routes.draw do
 
   #
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom
-  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method=> :get
+  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method => :get
+  match "records/:id" => "records#options", :as => :root_options, :method => :options
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :method => :post
@@ -87,5 +90,7 @@ HdataServer::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
    match ':controller(/:action(/:id(.:format)))'
+
+  match '/settings', :to => redirect('/public/settings.html')
 
 end

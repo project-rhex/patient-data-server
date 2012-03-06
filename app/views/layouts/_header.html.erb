@@ -10,9 +10,9 @@
 <div id="page_header">
   <% unless current_user.nil? || current_user.username.nil? %>
   <a href="/users/sign_out">Logout</a>
-  <a href="#">Settings</a>
+  <a href="/settings">Settings</a>
   <a href="/audit_logs">Audit Log</a>
-  <a href="#">Alerts [1]</a>
+  <a href="/notifications">Alerts</a>
   <% end %>
   <span id="logo">REST<span id="sublogo"><B>+</B> Pilot</span></span>
  <% unless current_user.nil? || current_user.username.nil? %>

@@ -24,6 +24,13 @@ class RecordsControllerTest < ActionController::TestCase
     assert response['Location'].include? "4f4e6eb7069d454d16000001" # ID for Henry declared in the C32
   end
 
+  test "options" do
+    process(:options, {:record_id => "4f4e6eb7069d454d16000001"}, nil, nil, 'OPTIONS')
+    assert_response :success
+    assert response.body.blank?
+    assert response['X-hdata-security'] = 'http://openid.net/connect/'
+  end
+
   test "breadcrumbs" do
     assert_equal([{ :title => "Home", :link => "/"}, { :title => 'Patient Index'}], @controller.breadcrumbs)
   end

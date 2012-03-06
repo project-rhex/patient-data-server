@@ -29,7 +29,10 @@ class RecordsController < ApplicationController
   def options
     sr = SectionRegistry.instance
     response['X-hdata-extensions'] = sr.extensions.map(&:extension_id).join(' ')
+    # TODO: Replace these with real values
     response['X-hdata-security'] = 'http://openid.net/connect/'
+    response['X-hdata-hcp'] = 'http://projecthdata.org/hcp/greenCDA-CoC'
+
     render :nothing => true
   end
 

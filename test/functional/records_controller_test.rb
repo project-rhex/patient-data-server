@@ -30,6 +30,7 @@ class RecordsControllerTest < ActionController::TestCase
     assert response.body.blank?
     assert response['X-hdata-security'] = 'http://openid.net/connect/'
     assert_equal SectionRegistry.instance.extensions.size, response['X-hdata-extensions'].split(' ').size
+    assert response['X-hdata-hcp'].present?
   end
 
   test "breadcrumbs" do

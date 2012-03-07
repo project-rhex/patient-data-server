@@ -1,0 +1,11 @@
+<% require "atom/h_atom_feed" %>
+<%=
+    HAtomFeed.generate(id: Time.now.to_i.to_s, title: "Records") do |xml|
+      xml.entries(@records) do |record|
+          xml.id record.medical_record_number
+          xml.title record.last + ', ' + record.first
+          xml.link url: root_feed_url(record.medical_record_number), type: Mime::XML, rel: "alternate"
+          xml.link url: root_feed_url(record.medical_record_number), type: Mime::Json, rel: "alternate"
+      end
+    end
+%>

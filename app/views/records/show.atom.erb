@@ -1,0 +1,15 @@
+<% require "atom/h_atom_feed" %>
+<%=
+    HAtomFeed.generate(id: @record.medical_record_number, title: "Root") do |xml|
+      xml.link(rel: "alternate", href: root_url(), type: "text/html")
+      xml.link(rel: "self", href: root_feed_url(@record.medical_record_number), type: Mime::Atom)
+      xml.entry {
+        xml.id "id:" + @record.medical_record_number + ":c32"
+        xml.title "c32"
+        xml.link(href: record_c32_index_url(@record.medical_record_number), rel: "alternate")
+      }
+      xml.entries(Record::Sections) do |section|
+        render partial: "shared/section", locals: {xml: xml, section: section}
+      end
+    end
+%>

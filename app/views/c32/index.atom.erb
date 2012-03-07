@@ -1,0 +1,13 @@
+<% require "atom/h_atom_feed" %>
+<%=
+    HAtomFeed.generate(id: Time.now.to_i.to_s, title: "C32") do |feed|
+      feed.title "C32"
+      feed.link(rel: "alternate", href: root_url(), type: "text/html")
+      feed.link(rel: "self", href: record_c32_index_url(@record.medical_record_number), type: Mime::Atom)
+      feed.entry {
+        feed.id @record.medical_record_number
+        feed.title @record.last + ', ' + @record.first
+        feed.link href: record_c32_url(@record.medical_record_number, @record.medical_record_number)
+      }
+    end
+%>

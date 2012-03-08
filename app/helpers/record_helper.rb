@@ -59,7 +59,7 @@ module RecordHelper
     oor = ""
     oor = " out-of-range-value" if n < low || n > high
     u = ""
-    u = "&nbps;(" + units + ")" if units
+    u = "&nbsp;(" + units + ")" if units
     return ("<span class='lab_value" + oor + "'>" + s + u + "</span>").html_safe
   end
 

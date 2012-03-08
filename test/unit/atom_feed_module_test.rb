@@ -1,5 +1,5 @@
 require "test_helper"
-require "atom/h_atom_feed"
+require "atom/feed"
 
 class AtomFeedModuleTest < ActiveSupport::TestCase
   test "Create Feed" do
@@ -11,7 +11,7 @@ class AtomFeedModuleTest < ActiveSupport::TestCase
     c = "Victor Hugo"
     time = Time.now
     i = 1
-    atom = HAtomFeed.generate(id: "aaabbbcccddede", title: "Test", updated: time,
+    atom = Atom::Feed.generate(id: "aaabbbcccddede", title: "Test", updated: time,
                               link: {href: "http://foo/bar"},
                               author: a, contributor: c) do |xml|
       xml.entries(entries) do |e|

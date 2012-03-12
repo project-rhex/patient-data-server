@@ -5,17 +5,29 @@ require 'section_registry'
 ############################################################## 
 sr = SectionRegistry.instance
 
-sr.add_section('allergies', 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 'Allergies')
-sr.add_section('care_goals', 'http://projecthdata.org/hdata/schemas/2009/06/care_goal', 'Care Goals')
-sr.add_section('conditions', 'http://projecthdata.org/hdata/schemas/2009/06/condition', 'Conditions')
-sr.add_section('encounters', 'http://projecthdata.org/hdata/schemas/2009/06/encounter', 'Encounters')
-sr.add_section('immunizations', 'http://projecthdata.org/hdata/schemas/2009/06/immunization', 'Immunizations')
-sr.add_section('medical_equipment', 'http://projecthdata.org/hdata/schemas/2009/06/medical_equipment', 'Medical Equipment')
-sr.add_section('medications', 'http://projecthdata.org/hdata/schemas/2009/06/medication', 'Medications')
-sr.add_section('procedures', 'http://projecthdata.org/hdata/schemas/2009/06/procedure', 'Procedures')
-sr.add_section('results', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Lab Results') do |importers, exporters|
+sr.add_section('allergies', 'http://projecthdata.org/extension/allergy', 'Allergies')
+sr.add_section('care_goals', 'http://projecthdata.org/extension/care-goal', 'Care Goals')
+sr.add_section('conditions', 'http://projecthdata.org/extension/condition', 'Conditions') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::ConditionImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:condition)
+end
+sr.add_section('encounters', 'http://projecthdata.org/extension/encounter', 'Encounters') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::EncounterImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:encounter)
+end
+sr.add_section('immunizations', 'http://projecthdata.org/extension/immunization', 'Immunizations')
+sr.add_section('medical_equipment', 'http://projecthdata.org/extension/medical-equipment', 'Medical Equipment')
+sr.add_section('medications', 'http://projecthdata.org/extension/medication', 'Medications')
+sr.add_section('procedures', 'http://projecthdata.org/extension/procedure', 'Procedures') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::ProcedureImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:procedure)
+end
+sr.add_section('results', 'http://projecthdata.org/extension/result', 'Lab Results') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ResultImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:result)
 end
-sr.add_section('social_history', 'http://projecthdata.org/hdata/schemas/2009/06/social_history', 'Social History')
-sr.add_section('vital_signs', 'http://projecthdata.org/hdata/schemas/2009/06/result', 'Vital Signs')
+sr.add_section('social_history', 'http://projecthdata.org/extension/social-history', 'Social History')
+sr.add_section('vital_signs', 'http://projecthdata.org/extension/vital-sign', 'Vital Signs') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::VitalSignImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:vital_sign)
+end

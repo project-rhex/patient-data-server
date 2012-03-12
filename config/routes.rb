@@ -1,5 +1,6 @@
 HdataServer::Application.routes.draw do
-  
+
+  devise_for :users, :controllers => {:registrations => 'registrations'}
 
   resources :users
 
@@ -12,7 +13,7 @@ HdataServer::Application.routes.draw do
   get "audit_review/show"
 
   match '/auth/:provider/callback' => 'authentications#create'
-  devise_for :users, :controllers => {:registrations => 'registrations'}
+
   mount Devise::Oauth2Providable::Engine => '/oauth2'
   resources :authentications
 

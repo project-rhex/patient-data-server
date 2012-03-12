@@ -1,6 +1,8 @@
 HdataServer::Application.routes.draw do
   
 
+  resources :users
+
   resources :notifications
 
   resources :notify_configs
@@ -43,6 +45,15 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :method => :put
 
   root :to =>  "records#index"
+
+
+  match "users/:id/make_admin"   => "users#make_admin",   :method => :get
+  match "users/:id/remove_admin" => "users#remove_admin", :method => :get
+  #map.connect 'users/:id/make_admin',
+  #:conditions => { :method =>:get },  :controller => "users",  :action => "make_admin"
+  #map.connect 'users/:id/remove_admin',
+  #:conditions => { :method =>:get },  :controller => "users",  :action => "remove_admin"
+
   
   #mount the oauth2 devise provider
 
@@ -89,8 +100,10 @@ HdataServer::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-   match ':controller(/:action(/:id(.:format)))'
+  match ':controller(/:action(/:id(.:format)))'
 
-  match '/settings', :to => redirect('/public/settings.html')
+  ## static content route
+  match ':action' => 'static#:action'
+
 
 end

@@ -1,0 +1,21 @@
+<h1>Editing user</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @user %>
+<% if  isAdmin? %>
+| <%= link_to 'Back', users_path %>
+<% end %>
+
+
+<p>
+<div class="field">
+<br/>
+<% if current_user == @user %>
+  <% if current_user.admin == :true %>
+     <a href="/users/<%= @user.id%>/remove_admin">Turn off Admin privs</a> 
+  <% else %>
+     <a href="/users/<%= @user.id%>/make_admin">Add Admin privs</a>
+  <% end %>   
+<% end %>   
+</div>

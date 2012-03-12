@@ -1,0 +1,73 @@
+
+
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <div class="field">
+<%= f.label "Name" %><br />
+<%= f.text_field :name %>
+</div>
+ <div class="field">
+<%= f.label "Username / email" %><br />
+<%= f.text_field :email %>
+</div>
+  <div class="field">
+ <%= f.label "Password" %><br />
+ <%= f.text_field :password %>
+</div>
+ <div class="field">
+   <%= f.label :street %><br />
+   <%= f.text_field :street %>
+ </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :zip %><br />
+    <%= f.text_field :zip %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br />
+    <%= f.text_field :country %>
+  </div>
+ <div class="field">
+   <%= f.label :role %><br />
+   <%= f.select :role, User.get_role_values, :prompt => 'Select...'  %>
+</div>
+<% if isAdmin? && current_user != @user %>
+   <div class="field">
+     <%= f.label :admin %><br />
+     <%= f.select :admin, User.get_admin_values, :prompt => 'Select...'  %>
+  </div>
+<% else %>
+  <p>
+   <div class="field">
+    <b>Admin:</b>
+    <%= @user.admin %>
+  </div>
+<% end %>
+
+<p>
+ <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<p>
+

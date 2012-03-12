@@ -39,7 +39,7 @@ class RecordHelperTest < ActionView::TestCase
     vs3 = FactoryGirl.create(:lab_result)
     rec.vital_signs.concat([ vs1, vs2, vs3 ])
     v = latest_matching_vital rec, 'ldl'
-    assert_equal "<span class='lab_value'>127&nbps;(mg/dL)</span>", v
+    assert_equal "<span class='lab_value'>127&nbsp;(mg/dL)</span>", v
 
     v = latest_matching_vital rec, 'xyz'
     assert_equal "", v
@@ -58,7 +58,7 @@ class RecordHelperTest < ActionView::TestCase
 
   test "format a value" do
     r = FactoryGirl.create(:lab_result)
-    assert_equal "<span class='lab_value'>127&nbps;(mg/dL)</span>", show_value(r.value)
+    assert_equal "<span class='lab_value'>127&nbsp;(mg/dL)</span>", show_value(r.value)
   end
 
   test "format a value 2" do

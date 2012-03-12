@@ -1,6 +1,6 @@
-<% require "atom/h_atom_feed" %>
+<% require "atom/feed" %>
 <%=
-    HAtomFeed.generate(id: Time.now.to_i.to_s, title: "Records") do |xml|
+    Atom::Feed.generate(id: Time.now.to_i.to_s, title: "Records") do |xml|
       xml.entries(@records) do |record|
           xml.id record.medical_record_number
           xml.title record.last + ', ' + record.first

@@ -1,3 +1,4 @@
+# This class is deprecated as it soon will be replaced by an implementation in health-data-standards
 class DocumentMetadata
   include Mongoid::Document
   

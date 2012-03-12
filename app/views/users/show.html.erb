@@ -1,0 +1,59 @@
+<h1>User Info</h1>
+
+<p id="notice"><%= notice %></p>
+
+
+
+<p>
+ <b>Name:</b>
+ <%= @user.name %>
+</p>
+
+<p>
+ <b>Username / email:</b>
+ <%= @user.email %>
+</p>
+
+<p>
+ <b>Street:</b>
+ <%= @user.street %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @user.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @user.state %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @user.zip %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @user.country %>
+</p>
+
+<p>
+  <b>Role:</b>
+  <%= @user.role %>
+</p>
+
+<p>
+  <b>Admin:</b>
+  <%= @user.admin %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> 
+<% if  isAdmin? %>
+ | <%= link_to 'Back', users_path %>
+<% end %>
+
+
+

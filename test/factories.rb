@@ -39,6 +39,13 @@ FactoryGirl.define do
     u.password 'password' 
     u.password_confirmation 'password'
     u.sequence(:name) { |n| "testuser#{n}"}
+    u.street '5 Bedford Rd'
+    u.city 'Bedford'
+    u.state 'Ma'
+    u.zip '01720'
+    u.country 'USA'
+    u.role :patient
+    u.admin :true
   end
   
   

@@ -1,0 +1,39 @@
+<h2>All System Users</h2>
+
+<table>
+  <tr>
+   <th>Name</th>
+   <th>username / email</th>
+   <th>Street</th>
+   <th>City</th>
+    <th>State</th>
+    <th>Zip</th>
+    <th>Country</th>
+    <th>Role</th>
+    <th>Admin</th>
+ </tr>
+
+
+<% @users.each do |user| %>
+ <tr>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.street %></td>
+    <td><%= user.city %></td>
+    <td><%= user.state %></td>
+    <td><%= user.zip %></td>
+    <td><%= user.country %></td>
+    <td><%= user.role %></td>
+    <td><%= user.admin %></td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if  isAdmin? %>
+  <%= link_to 'New User', new_user_path %>
+<% end %>

@@ -1,0 +1,25 @@
+<div class="breadcrumb">
+  <%= link_to "Home", root_path( :action => "index" ) %> |
+  Settings
+</div>
+
+<h1>Settings</h1>
+
+<table/>
+  <tr>
+    <td><%= link_to 'Notifications and Alerts', :controller =>  :notify_configs, :action => :index %></td> 
+  </tr>
+
+  <tr>
+    <td> <%= link_to 'My User Info', current_user %> </td>
+  </tr>
+
+ <% if  isAdmin? %>
+    <tr>
+      <td><%= link_to 'All Users', :controller =>  :users, :action => :index  %></td>
+   </tr>
+  <% end %>
+
+</table>
+
+<br />

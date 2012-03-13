@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-
+    add_breadcrumb("All Users")
+    
     @users = User.all
 
     respond_to do |format|
@@ -14,6 +15,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    add_breadcrumb("User Info")
+
     @user = User.find(params[:id])
 
     respond_to do |format|
@@ -25,6 +28,8 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.json
   def new
+    add_breadcrumb("New User")
+
     @user = User.new
 
     respond_to do |format|
@@ -35,6 +40,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    add_breadcrumb("Edit User")
+
     @user = User.find(params[:id])
   end
 

@@ -35,6 +35,7 @@ class RecordsControllerTest < AtomTest
   end
 
   test "breadcrumbs" do
+    @controller.set_breadcrumbs
     assert_equal([{ :title => "Home", :link => "/"}, { :title => 'Patient Index'}], @controller.breadcrumbs)
   end
   

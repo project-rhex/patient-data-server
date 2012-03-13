@@ -58,8 +58,9 @@ class AuditLogsController < ApplicationController
 
   ################
   ##
-  def breadcrumbs
-    super << breadcrumb('Audit Log' )
+  def set_breadcrumbs
+    super
+    add_breadcrumb('Audit Log')
   end
   
   private

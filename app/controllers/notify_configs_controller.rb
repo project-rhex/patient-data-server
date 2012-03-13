@@ -2,6 +2,8 @@ class NotifyConfigsController < ApplicationController
   # GET /notify_configs
   # GET /notify_configs.json
   def index
+    add_breadcrumb('Notification Configurations')
+
     #puts ".." + @current_user.email + ".."
     if !params[:all].nil?
       @title = "All Notification Settings"
@@ -10,7 +12,8 @@ class NotifyConfigsController < ApplicationController
       @title = "My Notification Settings"
       @notify_configs = NotifyConfig.all( conditions: { user: /#{@current_user.email}/i } ).to_a
     end
-    
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @notify_configs }
@@ -21,6 +24,8 @@ class NotifyConfigsController < ApplicationController
   # GET /notify_configs/1.json
   def show
     @notify_config = NotifyConfig.find(params[:id])
+
+    add_breadcrumb('Notification Configuration')
 
     respond_to do |format|
       format.html # show.html.erb
@@ -33,6 +38,8 @@ class NotifyConfigsController < ApplicationController
   def new
     @notify_config = NotifyConfig.new
 
+    add_breadcrumb('Create Notification Configuration')
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notify_config }
@@ -41,6 +48,8 @@ class NotifyConfigsController < ApplicationController
 
   # GET /notify_configs/1/edit
   def edit
+    add_breadcrumb('Edit Notification Configuration')
+
     @notify_config = NotifyConfig.find(params[:id])
   end
 

@@ -12,6 +12,8 @@ class NotificationsController < ApplicationController
       @notifications = Notification.all( conditions: { user: /#{@current_user.email}/i } ).to_a
     end
 
+    add_breadcrumb('Notifications List')
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @notifications }
@@ -22,6 +24,8 @@ class NotificationsController < ApplicationController
   # GET /notifications/1.json
   def show
     @notification = Notification.find(params[:id])
+
+    add_breadcrumb('Notification')
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,6 +38,8 @@ class NotificationsController < ApplicationController
   def new
     @notification = Notification.new
 
+    add_breadcrumb('New Notification')
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notification }
@@ -42,6 +48,8 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/1/edit
   def edit
+    add_breadcrumb('Edit Notification')
+
     @notification = Notification.find(params[:id])
   end
 

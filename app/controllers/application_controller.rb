@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
   before_filter :audit_log_all
+  before_filter :set_breadcrumbs
 
   rescue_from RequestError do |e|
     if e.message.nil?
@@ -18,15 +19,21 @@ class ApplicationController < ActionController::Base
   # any specific subclass to introduce sublinks into the breadcrumb path. A leaf path can then be introduced by
   # the local controller by convention using local code
   def breadcrumbs
-    [ breadcrumb("Home", root_path) ]
+    @breadcrumbs
   end
 
-  # Hold a single link's data in a hash
-  def breadcrumb title, link = nil
+  # Root breadcrumbs setup method. May be overridden or augmented by subclasses
+  def set_breadcrumbs
+    @breadcrumbs = []
+    add_breadcrumb "Home", root_path
+  end
+
+  # Add a single link's data in a hash
+  def add_breadcrumb title, link = nil
     if link.nil?
-      { :title => title }
+      @breadcrumbs << { :title => title }
     else
-      { :title => title, :link => link }
+      @breadcrumbs << { :title => title, :link => link }
     end
   end
 

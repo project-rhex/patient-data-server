@@ -44,8 +44,9 @@ class RecordsController < ApplicationController
     respond_to(:atom, :html)
   end
 
-  def breadcrumbs
-    super << breadcrumb('Patient Index')
+  def set_breadcrumbs
+    super
+    add_breadcrumb('Patient Index')
   end
 
  def audit_log(action, id)

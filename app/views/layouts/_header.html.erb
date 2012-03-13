@@ -1,6 +1,6 @@
 <%
    def breadcrumbs
-     if controller.respond_to?(:breadcrumbs)
+     if controller.respond_to?(:set_breadcrumbs)
        controller.breadcrumbs
      else
        []

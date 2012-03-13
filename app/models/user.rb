@@ -18,11 +18,39 @@ class User
 
   ## role, a user can be one of these roles at at time
   #  PATIENT, CLINICIAN, INSURER, RECORD_ADMIN
+
+
+=begin
+http://ushik.ahrq.gov/ViewItemDetails?system=mdr&itemKey=86829000
+
+Permissible Value	Domain Meaning Name	Domain Meaning Definition Text	Begin Date	End Date
+106289002	Dentist		2009-11-09	
+106290006	Veterinarian		2009-11-09	
+106292003	Professional nurse		2009-11-09	
+106311007	Minister of religion AND/OR related member of religious order		2009-11-09	
+106328005	Social worker		2009-11-09	
+106330007	Philologist, translator AND/OR interpreter		2009-11-09	
+112247003	Medical doctor		2009-11-09	
+116154003	Patient		2009-11-09	
+159026005	Speech therapist		2009-11-09	
+159033005	Dietitian		2009-11-09	
+159034004	Podiatrist		2009-11-09	
+159483005	clerical occupation		2009-11-09	
+224546007	Infection control nurse		2009-11-09	
+224570006	Clinical nurse specialist		2009-11-09	
+224571005	Nurse practitioner
+=end
+
   symbolize :role, :in => {
-    patient:       "Patient", 
-    clinician:     "Clinician", 
-    insurer:       "Insurer", 
-    record_admin:  "Record Admin"}, :default => :patient, :scopes => true
+    patient:            "Patient", 
+    pro_nurse:          "Professional Nurse", 
+    med_doctor:         "Medical Doctor", 
+    clinical_nurse:     "Clinical Nurse Specialist", 
+    nurse_practitioner: "Nurse Pracitioner", 
+    soc_worker:         "Social Worker", 
+    dentist:            "Dentist", 
+    insurer:            "Insurer", 
+    record_admin:       "Record Admin"}, :default => :patient, :scopes => true
 
   ## APP admin role
   symbolize :admin, :in => {

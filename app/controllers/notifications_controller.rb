@@ -1,8 +1,16 @@
 class NotificationsController < ApplicationController
+
   # GET /notifications
   # GET /notifications.json
   def index
-    @notifications = Notification.all( conditions: { user: /#{@current_user.email}/i } ).to_a
+
+    if !params[:all].nil?
+      @title = "All System Notifications"
+      @notifications = Notification.all().to_a
+    else
+      @title = "My Notifications"
+      @notifications = Notification.all( conditions: { user: /#{@current_user.email}/i } ).to_a
+    end
 
     respond_to do |format|
       format.html # index.html.erb

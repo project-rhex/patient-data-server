@@ -1,3 +1,16 @@
+
+
+<p>
+<%= link_to 'My Notification Settings', :controller =>  :notify_configs, :action => :index   %>
+<br />
+<%= link_to 'My Notifications', :controller =>  :notifications, :action => :index   %>
+<% if  isAdmin? %>
+<br />
+<%= link_to 'All Notifications Settings', notify_configs_all_path(:all => "all")   %>
+<br />
+<%= link_to 'All Notifications', notifications_all_path(:all => "all")   %>
+<% end %>
+
 <h1>User Info</h1>
 
 <p id="notice"><%= notice %></p>

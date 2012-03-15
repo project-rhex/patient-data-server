@@ -15,30 +15,35 @@ class User
   field :state, type: String
   field :zip, type: String
   field :country, type: String
+  field :dob, type: String
+  field :insurance, type: String
+
+  symbolize :gender, :in => {
+    male:           "Male", 
+    female:         "Female"}, :default => :male, :scopes => true
+
 
   ## role, a user can be one of these roles at at time
   #  PATIENT, CLINICIAN, INSURER, RECORD_ADMIN
-
-
 =begin
-http://ushik.ahrq.gov/ViewItemDetails?system=mdr&itemKey=86829000
+    http://ushik.ahrq.gov/ViewItemDetails?system=mdr&itemKey=86829000
 
-Permissible Value	Domain Meaning Name	Domain Meaning Definition Text	Begin Date	End Date
-106289002	Dentist		2009-11-09	
-106290006	Veterinarian		2009-11-09	
-106292003	Professional nurse		2009-11-09	
-106311007	Minister of religion AND/OR related member of religious order		2009-11-09	
-106328005	Social worker		2009-11-09	
-106330007	Philologist, translator AND/OR interpreter		2009-11-09	
-112247003	Medical doctor		2009-11-09	
-116154003	Patient		2009-11-09	
-159026005	Speech therapist		2009-11-09	
-159033005	Dietitian		2009-11-09	
-159034004	Podiatrist		2009-11-09	
-159483005	clerical occupation		2009-11-09	
-224546007	Infection control nurse		2009-11-09	
-224570006	Clinical nurse specialist		2009-11-09	
-224571005	Nurse practitioner
+    Permissible Value	Domain Meaning Name	Domain Meaning Definition Text	Begin Date	End Date
+    106289002	Dentist		2009-11-09	
+    106290006	Veterinarian		2009-11-09	
+    106292003	Professional nurse		2009-11-09	
+    106311007	Minister of religion AND/OR related member of religious order		2009-11-09	
+    106328005	Social worker		2009-11-09	
+    106330007	Philologist, translator AND/OR interpreter		2009-11-09	
+    112247003	Medical doctor		2009-11-09	
+    116154003	Patient		2009-11-09	
+    159026005	Speech therapist		2009-11-09	
+    159033005	Dietitian		2009-11-09	
+    159034004	Podiatrist		2009-11-09	
+    159483005	clerical occupation		2009-11-09	
+    224546007	Infection control nurse		2009-11-09	
+    224570006	Clinical nurse specialist		2009-11-09	
+    224571005	Nurse practitioner
 =end
 
   symbolize :role, :in => {
@@ -57,7 +62,7 @@ Permissible Value	Domain Meaning Name	Domain Meaning Definition Text	Begin Date	
     true:    "True", 
     false:   "False"}, :default => :false, :scopes => true
 
-  attr_accessible :admin, :role, :street, :city, :state, :zip, :country
+  attr_accessible :admin, :role, :street, :city, :state, :zip, :country, :dob, :insurance, :gender
 
   ## need to define name here, odd since defined below in attr_accessible
   field :name

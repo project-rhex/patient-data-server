@@ -4,12 +4,15 @@
   <tr>
    <th>Name</th>
    <th>username / email</th>
+   <th>Gender</th>
+   <th>DOB</th>
    <th>Street</th>
-   <th>City</th>
+  <th>City</th>
     <th>State</th>
     <th>Zip</th>
     <th>Country</th>
-    <th>Role</th>
+    <th>Insurance</th>
+   <th>Role</th>
     <th>Admin</th>
  </tr>
 
@@ -18,12 +21,15 @@
  <tr>
     <td><%= user.name %></td>
     <td><%= user.email %></td>
+    <td><%= userGenderValue(user.gender) %></td>
+    <td><%= user.dob %></td>
     <td><%= user.street %></td>
     <td><%= user.city %></td>
     <td><%= user.state %></td>
     <td><%= user.zip %></td>
     <td><%= user.country %></td>
-    <td><%= user.role %></td>
+   <td><%= user.insurance %></td>
+  <td><%=  userRoleValue(user.role) %></td>
     <td><%= user.admin %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>

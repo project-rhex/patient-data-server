@@ -21,11 +21,7 @@
 <%= f.label "Username / email" %><br />
 <%= f.text_field :email %>
 </div>
-  <div class="field">
- <%= f.label "Password" %><br />
- <%= f.text_field :password %>
-</div>
- <div class="field">
+<div class="field">
    <%= f.label :street %><br />
    <%= f.text_field :street %>
  </div>
@@ -42,10 +38,22 @@
     <%= f.text_field :zip %>
   </div>
   <div class="field">
-    <%= f.label :country %><br />
-    <%= f.text_field :country %>
-  </div>
+   <%= f.label :country %><br />
+   <%= f.text_field :country %>
+ </div>
+  <div class="field">
+   <%= f.label :insurance %><br />
+   <%= f.text_field :insurance %>
+ </div>
+  <div class="field">
+  <%= f.label :gender %><br />
+  <%= f.select :gender, User.get_gender_values, :prompt => 'Select...'  %>
+</div>
  <div class="field">
+  <%= f.label :dob %><br />
+  <%= f.text_field :dob %>
+</div>
+<div class="field">
    <%= f.label :role %><br />
    <%= f.select :role, User.get_role_values, :prompt => 'Select...'  %>
 </div>

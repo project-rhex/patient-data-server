@@ -48,13 +48,28 @@
 </p>
 
 <p>
-  <b>Country:</b>
-  <%= @user.country %>
+ <b>Country:</b>
+ <%= @user.country %>
+</p>
+
+<p>
+ <b>Date of Birth:</b>
+ <%= @user.dob %>
+</p>
+
+<p>
+ <b>Insurance:</b>
+ <%= @user.insurance %>
+</p>
+
+<p>
+ <b>Gender:</b>
+ <%= userGenderValue(@user.gender) %>
 </p>
 
 <p>
   <b>Role:</b>
-  <%= @user.role %>
+  <%= userRoleValue(@user.role) %>
 </p>
 
 <p>

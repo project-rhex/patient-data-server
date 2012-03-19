@@ -1,7 +1,7 @@
 class RecordsController < ApplicationController
   #before_filter :authenticate_user!
   before_filter :default_format_to_atom, only: [:show]
-  before_filter :find_record, only: ["root.xml", :show]
+  before_filter :find_record, only: [:root, :show]
 
   def index
     @records = Record.all
@@ -47,6 +47,10 @@ class RecordsController < ApplicationController
   def set_breadcrumbs
     super
     add_breadcrumb('Patient Index')
+  end
+  
+  def root
+    # handled by the find_record before filter
   end
 
  def audit_log(action, id)

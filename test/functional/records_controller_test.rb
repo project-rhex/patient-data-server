@@ -41,19 +41,16 @@ class RecordsControllerTest < AtomTest
   
   test "should generate a root.xml document based off the section mappings " do 
     @record = Factory.create(:record)
-    get "root.xml", {record_id: @record.medical_record_number, id: @record.medical_record_number}
+    get :root, {id: @record.medical_record_number, format: :xml}
     assert_response :success
     
     doc = Nokogiri::XML::Document.parse(response.body)
-    
-
     
     xsd = Nokogiri::XML::Schema(open(ROOT_SCHEMA))
     assert_equal [], xsd.validate(doc)
     
     doc.root.add_namespace_definition('hrf', 'http://projecthdata.org/hdata/schemas/2009/06/core')
     
-
     root = doc.root
     assert_equal "root", root.name
     
@@ -96,7 +93,7 @@ class RecordsControllerTest < AtomTest
   end
 
   test "check for 404 on non-existent record on root.xml" do
-    get "root.xml", :record_id => "BBBB"
+    get :root, {record_id: "BBBB", format: :xml}
     assert_response :missing
   end
 

@@ -13,6 +13,7 @@ HdataServer::Application.routes.draw do
   get "audit_review/show"
 
   match '/auth/:provider/callback' => 'authentications#create'
+  match '/auth/failure' => 'authentications#failure'
 
   mount Devise::Oauth2Providable::Engine => '/oauth2'
   resources :authentications

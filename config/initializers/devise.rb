@@ -3,6 +3,9 @@
 require 'devise/orm/mongoid'
 require 'omniauth-openid'
 require 'openid/store/filesystem'
+
+Devise.apply_schema = false
+
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

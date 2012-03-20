@@ -9,14 +9,33 @@ class User
          :oauth2_providable, :oauth2_password_grantable, :oauth2_refresh_token_grantable, 
          :oauth2_authorization_code_grantable
          
+  ## Database authenticatable
+  field :email,              type: String, null: false
+  field :encrypted_password, type: String, null: false
+
+  ## Recoverable
+  field :reset_password_token,   type: String
+  field :reset_password_sent_at, type: Time
+
+  ## Rememberable
+  field :remember_created_at, :type => Time
+
+  ## Trackable
+  field :sign_in_count,      type: Integer
+  field :current_sign_in_at, type: Time
+  field :last_sign_in_at,    type: Time
+  field :current_sign_in_ip, type: String
+  field :last_sign_in_ip,    type: String
+
   ## contact information
-  field :street, type: String
-  field :city, type: String
-  field :state, type: String
-  field :zip, type: String
-  field :country, type: String
-  field :dob, type: String
-  field :insurance, type: String
+  field :name,               type: String
+  field :street,             type: String
+  field :city,               type: String
+  field :state,              type: String
+  field :zip,                type: String
+  field :country,            type: String
+  field :dob,                type: String
+  field :insurance,          type: String
 
   symbolize :gender, :in => {
     male:           "Male", 
@@ -62,29 +81,24 @@ class User
     true:    "True", 
     false:   "False"}, :default => :false, :scopes => true
 
-  attr_accessible :admin, :role, :street, :city, :state, :zip, :country, :dob, :insurance, :gender
 
-  ## need to define name here, odd since defined below in attr_accessible
-  field :name
+  attr_accessible :admin, :role # TODO: This is here only for the form. Needs to be removed later
+  attr_accessible :street, :city, :state, :zip, :country, :dob, :insurance, :gender, :name, 
+                  :email, :password, :password_confirmation, :remember_me
 
-  # validates_presence_of :name
-   validates_uniqueness_of  :email, :case_sensitive => false
-   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
-   has_many :authentications
+  validates_uniqueness_of  :email, :case_sensitive => false
+  has_many :authentications
    
-   def apply_omniauth(omniauth)
-     self.email = omniauth['info']['email'] if email.blank?
-     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-   end
+  def apply_omniauth(omniauth)
+    self.email = omniauth['info']['email'] if email.blank?
+    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+  end
 
-   def password_required?
-     (authentications.empty? || !password.blank?) && super
-   end
-   
-   
-   def username
-     email
-   end
-   
-   
+  def password_required?
+    (authentications.empty? || !password.blank?) && super
+  end
+
+  def username
+   email
+  end
 end

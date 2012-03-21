@@ -1,0 +1,27 @@
+<h1>Authorized OAuth2 Clients</h1>
+
+<table>
+  <tr>
+   <th>Name</th>
+   <th>redirect_uri</th>
+   <th>Website</th>
+   <th>Client Identifier</th>
+   <th>Client Secret</th>
+   <th></th>
+ </tr>
+<% @clients.each do |client| %>
+ <tr>
+    <td><%= client.name %></td>
+    <td><%= client.redirect_uri %></td>
+    <td><%= client.website %></td>
+    <td><%= client.cidentifier %></td>
+    <td><%= client.secret %></td>
+    <td><%= link_to 'Show', client %> | <%= link_to 'Edit', edit_client_path(client) %> | <%= link_to 'Destroy', client, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Client', new_client_path %>
+

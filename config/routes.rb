@@ -1,5 +1,7 @@
 HdataServer::Application.routes.draw do
 
+  resources :clients
+
   devise_for :users, :controllers => {:registrations => 'registrations'}
 
   resources :users

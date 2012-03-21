@@ -1,0 +1,33 @@
+<h1>Client</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+ <b>Name:</b>
+ <%= @client.name %>
+</p>
+
+<p>
+ <b>redirect_uri:</b>
+ <%= @client.redirect_uri %>
+</p>
+
+<p>
+ <b>Website:</b>
+ <%= @client.website %>
+</p>
+
+<p>
+  <b>Client Identifier:</b>
+  <%= @client.cidentifier %>
+</p>
+
+<p>
+  <b>Client Secret:</b>
+  <%= @client.secret %>
+</p>
+
+<p>
+  <%= link_to 'Edit', edit_client_path(@client) %> | <%= link_to 'Back', clients_path %>
+</p>
+

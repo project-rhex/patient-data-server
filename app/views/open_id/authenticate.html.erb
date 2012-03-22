@@ -1,0 +1,19 @@
+<%= stylesheet_link_tag :login %>
+<div class="login">
+<h2>Authenticate for OpenID</h2>
+
+<div id="userpass">
+  <h3>Enter your user credentials</h3>
+<form action="/open_id/validate">
+  <div><label for="email">Email:</label></label><br />
+<input id="email" name="email" type="email" value="<%= credentials[:email] %>"></div>
+  <div><label for="password">Password:</label><br />
+<input id="password" name="password" type="password"></div>
+  <div><input type="submit" name="Login" value="Login"></div>
+  <% if credentials[:error_message] %>
+      <blockquote><%= credentials[:error_message] %></blockquote>
+  <% end %>
+  <input type="hidden" id="client_id" name="client_id" value="<%= client_id %>">
+</form>
+</div>
+</div>

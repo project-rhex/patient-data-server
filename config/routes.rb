@@ -55,7 +55,6 @@ HdataServer::Application.routes.draw do
   match "users/:id/remove_admin" => "users#remove_admin", :method => :get
   match "notify_configs_all/:all" => "notify_configs#index", :method => :get, :as => :notify_configs_all
   match "notifications_all/:all"  => "notifications#index", :method => :get, :as => :notifications_all
-
   
   #mount the oauth2 devise provider
 

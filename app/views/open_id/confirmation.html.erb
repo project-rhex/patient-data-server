@@ -1,0 +1,20 @@
+<div>
+  <h3>Allow access to the website <%= client.name %> at url <%= client.website %></h3>
+  <form action="/open_id/confirm">
+  <label for="permit">Permit access</label><input name="permit" id="permit" type="checkbox"><br>
+  <% if scopes.index('profile') %>
+  <label for="profile">The website may have access to my profile information</label>
+  <input id="profile" name="profile" type="checkbox"><br>
+  <% end %>
+  <% if scopes.index('address') %>
+  <label for="address">The website may have access to my address information</label>
+  <input id="address" name="address" type="checkbox"><br>  
+  <% end %>
+  <% if scopes.index('email') %>
+  <label for="email">The website may have access to my email information</label>
+  <input id="email" name="email" type="checkbox"><br>
+  <% end %>
+  <input name="client_id" type="hidden" value="<%= client_id %>" >
+  <input name="Submit" type="submit" value="Submit">
+  </form>
+</div>

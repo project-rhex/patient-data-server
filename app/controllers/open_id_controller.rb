@@ -1,8 +1,16 @@
-# http://localhost:3000/open_id/authorize?response_type=code&client_id=1&scope=openid&redirect_uri=https://handshake.mitre.org&nonce=12141512544124
+require "open_id/authentication_exception"
+
+# http://localhost:3000/open_id/authorize?response_type=code&client_id=1&scope=openid profile email&redirect_uri=https://handshake.mitre.org&nonce=12141512544124
 class OpenIdController < ActionController::Base
   layout "application"
 
   OII = "OpenIDInfo_"
+
+  rescue_from OpenId::AuthenticationException do |e|
+    # Create denial response
+    tail = "?error=#{e.value}&error_description=#{e.description}&state=#{e.state}"
+    redirect_to e.redirect_uri + tail
+  end
 
   ############################################
   # Handle an authorization request
@@ -22,28 +30,28 @@ class OpenIdController < ActionController::Base
   def authorize
     response_type = params[:response_type]
     unless response_type && response_type == 'code'
-      render :text => "Authorization Endpoint Error (invalid_request_response_type)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     client_id = params[:client_id]
     unless client_id
-      render :text => "Authorization Endpoint Error (invalid_request_client_id)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     scope = params[:scope]
     unless scope && scope.index("openid")
-      render :text => "Authorization Endpoint Error (invalid_request_scope)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     redirect_uri = params[:redirect_uri]
     unless redirect_uri
-      render :text => "Authorization Endpoint Error (invalid_request_redirect_uri)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     nonce = params[:nonce]
     unless nonce
-      render :text => "Authorization Endpoint Error (invalid_request_nonce)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     prompt = params[:prompt] || "login"
     state = params[:state]
@@ -54,8 +62,8 @@ class OpenIdController < ActionController::Base
     begin
       client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
     rescue
-      render :text => "Authorization Endpoint Error (unknown_client)", :status => 400
-      return
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
 
     # Save connection information in the session
@@ -84,7 +92,8 @@ class OpenIdController < ActionController::Base
     client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
 
     unless client
-      render :text => "Missing required field data client", :status => 400
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
 
     error = false
@@ -104,6 +113,46 @@ class OpenIdController < ActionController::Base
     end
 
     # Go on to confirmation and scopes
+    session_data = session[OII + client_id]
+    scope = session_data[:scope] # Array of scopes, the user must pick out the ones to be used
+    render 'open_id/confirmation', locals: {scopes: scope, client: client, client_id: client_id }
   end
 
+  ############################################
+  # The user confirms (or denies) access to the RP, allowing zero or more of the requested
+  # scopes
+  def confirm
+    permitted = params[:permit]
+    email = params[:email]
+    profile = params[:profile]
+    address = params[:address]
+    client_id = params[:client_id]
+
+    session_data = session[OII + client_id]
+    redirect_uri = session_data[:redirect]
+    state = session_data[:state]
+
+    unless permitted
+      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+    end
+
+    client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
+
+    # Create and store the code in the client along with the scopes the user has enabled
+    code = SecureRandom.uuid
+    authorization_code = Devise::Oauth2Providable::AuthorizationCode.new
+    authorization_code[:code] = code
+    authorization_code[:scopes] = []
+    authorization_code[:scopes] << "email" if email
+    authorization_code[:scopes] << "profile" if profile
+    authorization_code[:scopes] << "address" if address
+    client.authorization_codes << authorization_code
+    client.save
+
+    # Return query string
+    q = "?code=#{code}"
+    q += "&state=#{state}" if state
+    redirect_to redirect_uri + q, status: 302
+  end
 end

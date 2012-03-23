@@ -58,7 +58,7 @@ HdataServer::Application.routes.draw do
   
   #mount the oauth2 devise provider
 
-  
+  match "open_id/:action" => "open_id#:action"
   
   # Sample resource route with options:
   #   resources :products do

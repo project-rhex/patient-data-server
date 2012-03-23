@@ -1,10 +1,17 @@
-require "open_id/authentication_exception"
+require 'open_id/authentication_exception'
+require 'open_id/error_codes'
 
+###############################################
+# To test you can use this url, but handshake won't know what to do with the redirect
 # http://localhost:3000/open_id/authorize?response_type=code&client_id=1&scope=openid profile email&redirect_uri=https://handshake.mitre.org&nonce=12141512544124
 class OpenIdController < ActionController::Base
   layout "application"
 
   OII = "OpenIDInfo_"
+
+  rescue_from Exception do |e|
+    render text: "Bad request", status: 400
+  end
 
   rescue_from OpenId::AuthenticationException do |e|
     # Create denial response
@@ -28,33 +35,30 @@ class OpenIdController < ActionController::Base
   #       to indicate how to show the screen to the user
   # state, an opaque value to track state between the request and response for the requester.
   def authorize
+    redirect_uri = params[:redirect_uri]
+    state = params[:state]
+    raise Exception.new("Bad request") unless redirect_uri
     response_type = params[:response_type]
     unless response_type && response_type == 'code'
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
         description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     client_id = params[:client_id]
     unless client_id
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
         description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     scope = params[:scope]
     unless scope && scope.index("openid")
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
-        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
-    end
-    redirect_uri = params[:redirect_uri]
-    unless redirect_uri
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
         description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     nonce = params[:nonce]
     unless nonce
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
         description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
     prompt = params[:prompt] || "login"
-    state = params[:state]
 
     scope = scope.split(/\s/)
 
@@ -62,8 +66,12 @@ class OpenIdController < ActionController::Base
     begin
       client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
     rescue
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
-        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+      #
+    end
+
+    unless client
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
+              description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
     end
 
     # Save connection information in the session
@@ -82,18 +90,22 @@ class OpenIdController < ActionController::Base
   # Validate the email and password against the user database
   def validate
     credentials = {
-        password: params["password"],
-        email: params["email"],
+        password: params[:password],
+        email: params[:email],
     }
 
-    client_id = params["client_id"]
+    client_id = params[:client_id]
+    unless client_id
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
+        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+    end
+
     # Find client and user
     user = User.first(conditions: {email: credentials[:email]})
     client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
 
     unless client
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
-        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+      raise Exception.new("Missing required parameter")
     end
 
     error = false
@@ -110,6 +122,7 @@ class OpenIdController < ActionController::Base
       credentials[:error_message] = "Bad user credentials"
       render 'open_id/authenticate', locals: {credentials: credentials, client_id: client_id},
              :status => 400
+      return
     end
 
     # Go on to confirmation and scopes
@@ -127,14 +140,18 @@ class OpenIdController < ActionController::Base
     profile = params[:profile]
     address = params[:address]
     client_id = params[:client_id]
+    unless client_id
+      raise Exception.new("Missing required parameter")
+    end
 
     session_data = session[OII + client_id]
     redirect_uri = session_data[:redirect]
     state = session_data[:state]
+    nonce = session_data[:nonce]
 
     unless permitted
-      throw OpenId::AuthenticationException(value: OpenId::Codes::INVALID_REQUEST,
-        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::ACCESS_DENIED,
+        description: "The user denied access to the website", redirect_uri: redirect_uri, state: state)
     end
 
     client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
@@ -147,6 +164,7 @@ class OpenIdController < ActionController::Base
     authorization_code[:scopes] << "email" if email
     authorization_code[:scopes] << "profile" if profile
     authorization_code[:scopes] << "address" if address
+    authorization_code[:nonce] = nonce
     client.authorization_codes << authorization_code
     client.save
 

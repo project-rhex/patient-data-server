@@ -19,6 +19,7 @@ class OpenIdController < ActionController::Base
     redirect_to e.redirect_uri + tail
   end
 
+
   ############################################
   # Handle an authorization request
   #
@@ -96,8 +97,7 @@ class OpenIdController < ActionController::Base
 
     client_id = params[:client_id]
     unless client_id
-      raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
-        description: "Invalid or malformed request", redirect_uri: redirect_uri, state: state)
+      raise Exception.new("Missing client id")
     end
 
     # Find client and user
@@ -105,7 +105,7 @@ class OpenIdController < ActionController::Base
     client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
 
     unless client
-      raise Exception.new("Missing required parameter")
+      raise Exception.new("Client is missing from the database")
     end
 
     error = false

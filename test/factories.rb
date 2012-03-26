@@ -50,9 +50,10 @@ FactoryGirl.define do
   
   
   factory :client, :class => 'Devise::Oauth2Providable::Client' do |f|
-    f.name 'test'
-    f.website 'http://localhost'
-    f.redirect_uri 'http://localhost:3000'
+    f.name 'test-handshake'
+    f.cidentifier '1570981427089'
+    f.website 'http://handshake.mitre.org'
+    f.redirect_uri 'http://handshake.mitre.org'
   end
 
   factory :notify_config do

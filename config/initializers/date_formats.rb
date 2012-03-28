@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:xsd] = "%Y-%m-%dT%H:%M:%S
+Time::DATE_FORMATS[:xsd] = "%Y-%m-%dT%H:%M:%S"

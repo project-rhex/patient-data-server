@@ -28,8 +28,8 @@
   </xs:element>
   <xs:element name="id" type="xs:string"/>
   <xs:element name="version" type="xs:string"/>
-  <xs:element name="created" type="xs:date"/>
-  <xs:element name="lastModified" type="xs:date"/>
+  <xs:element name="created" type="xs:dateTime"/>
+  <xs:element name="lastModified" type="xs:dateTime"/>
   <xs:element name="extensions">
     <xs:complexType>
       <xs:sequence>

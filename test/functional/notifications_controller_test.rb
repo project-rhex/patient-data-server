@@ -22,15 +22,15 @@ class NotificationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-=begin
   test "should create notification" do
+    n = Factory.attributes_for(:notification)
+    
     assert_difference('Notification.count') do
-      post :create, notification: @notification.attributes
+      post :create, notification: n
     end
 
     assert_redirected_to notification_path(assigns(:notification))
   end
-=end
 
   test "should show notification" do
     get :show, id: @notification

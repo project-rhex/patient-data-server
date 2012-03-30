@@ -21,15 +21,16 @@ class NotifyConfigsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-=begin
   test "should create notify_config" do
+    n = Factory.attributes_for(:notify_config)
+
     assert_difference('NotifyConfig.count') do
-      post :create, notify_config: @notify_config.attributes
+      post :create, notify_config: n
     end
 
     assert_redirected_to notify_config_path(assigns(:notify_config))
   end
-=end
+
 
   test "should show notify_config" do
     get :show, id: @notify_config

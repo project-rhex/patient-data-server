@@ -1,0 +1,2 @@
+module RefConsultSummariesHelper
+end

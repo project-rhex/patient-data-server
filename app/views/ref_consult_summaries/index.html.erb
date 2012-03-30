@@ -1,0 +1,31 @@
+<h1>Listing ref_consult_summaries</h1>
+
+<table>
+  <tr>
+    <th>Refdate</th>
+    <th>Refnumber</th>
+    <th>Consultationtreatmentsummary</th>
+    <th>Recommendedplanofcareid</th>
+    <th>Sendrequestproviderid</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ref_consult_summaries.each do |ref_consult_summary| %>
+  <tr>
+    <td><%= ref_consult_summary.refDate %></td>
+    <td><%= ref_consult_summary.refNumber %></td>
+    <td><%= ref_consult_summary.consultationTreatmentSummary %></td>
+    <td><%= ref_consult_summary.recommendedPlanOfCareId %></td>
+    <td><%= ref_consult_summary.sendRequestProviderId %></td>
+    <td><%= link_to 'Show', ref_consult_summary %></td>
+    <td><%= link_to 'Edit', edit_ref_consult_summary_path(ref_consult_summary) %></td>
+    <td><%= link_to 'Destroy', ref_consult_summary, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ref consult summary', new_ref_consult_summary_path %>

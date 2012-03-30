@@ -3,3 +3,7 @@
   <%= yield x %>
 <% end %>
 <div class='history_link'><%= link_to ('<<&nbsp;Past ' + I18n.t("section." + section.to_s)).html_safe, (record_path(record.medical_record_number) + "/" + section.to_s) %></div>
+<% if section.to_s == "encounters" %>
+  <%= link_to '   Create Consult',    new_ref_consult_request_patient_path(@record._id)  %> 
+<% end %>
+

@@ -5,6 +5,10 @@ module UsersHelper
     false
   end
 
+  def isUserRole?(role_symbol)
+    current_user.role == role_symbol
+  end
+
   def userRoleValue(role_symbol)
     User.get_role_values.each do |r|
       if r[1] == role_symbol

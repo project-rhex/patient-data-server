@@ -1,4 +1,10 @@
 <%= stylesheet_link_tag :record %>
+
+<% if  isUserRole?(:med_doctor) %>
+  <h3>Consultations</h3>
+  <%= link_to 'My Consultations', ref_consult_requests_path %> 
+<% end %>
+
 <h3>Patient Records</h3>
 <% @records.each do |record| %>
     <div class="record"><%= record.medical_record_number %>. <%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_url(record.medical_record_number)) %></div>

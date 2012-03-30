@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  refDate: 2012-03-28
+  disposition: MyString
+  refNumber: 1
+  priority: MyString
+  reasonConditionId: 1
+  status: MyString
+  refType: MyString
+  procedureId: 1
+  reasonDescription: MyString
+  category: MyString
+  requestedNumTreatments: 1
+  requestProviderId: 1
+  comment: MyString
+  requestedConsultingProviderId: 1
+  reasonText: MyString
+
+two:
+  refDate: 2012-03-28
+  disposition: MyString
+  refNumber: 1
+  priority: MyString
+  reasonConditionId: 1
+  status: MyString
+  refType: MyString
+  procedureId: 1
+  reasonDescription: MyString
+  category: MyString
+  requestedNumTreatments: 1
+  requestProviderId: 1
+  comment: MyString
+  requestedConsultingProviderId: 1
+  reasonText: MyString

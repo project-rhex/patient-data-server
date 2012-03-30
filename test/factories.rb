@@ -72,4 +72,32 @@ FactoryGirl.define do
     status :unread
   end
 
+
+  factory :ref_consult_request do
+    refDate  "2012-03-28"
+    disposition  "MyString"
+    refNumber  1
+    priority  :urgent
+    reasonConditionId  1
+    status  :pending
+    refType  "MyString"
+    requestedSpecialty :anesthesia
+    procedureId  1
+    reasonDescription  "MyString"
+    category  "MyString"
+    requestedNumTreatments  1
+    requestProviderId  1
+    comment  "MyString"
+    requestedConsultingProviderId  1
+    reasonText  "MyString"
+  end
+
+  factory :ref_consult_summary do
+    refDate  "2012-03-28"
+    refNumber  1
+    consultationTreatmentSummary  "MyString"
+    recommendedPlanOfCareId  1
+    sendRequestProviderId  1
+  end
+
 end

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Refdate:</b>
+  <%= @ref_consult_summary.refDate %>
+</p>
+
+<p>
+  <b>Refnumber:</b>
+  <%= @ref_consult_summary.refNumber %>
+</p>
+
+<p>
+  <b>Consultationtreatmentsummary:</b>
+  <%= @ref_consult_summary.consultationTreatmentSummary %>
+</p>
+
+<p>
+  <b>Recommendedplanofcareid:</b>
+  <%= @ref_consult_summary.recommendedPlanOfCareId %>
+</p>
+
+<p>
+  <b>Sendrequestproviderid:</b>
+  <%= @ref_consult_summary.sendRequestProviderId %>
+</p>
+
+
+<%= link_to 'Edit', edit_ref_consult_summary_path(@ref_consult_summary) %> |
+<%= link_to 'Back', ref_consult_summaries_path %>

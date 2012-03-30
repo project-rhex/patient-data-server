@@ -1,0 +1,145 @@
+<%= form_for(@ref_consult_request) do |f| %>
+  <% if @ref_consult_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ref_consult_request.errors.count, "error") %> prohibited this ref_consult_request from being saved:</h2>
+
+      <ul>
+      <% @ref_consult_request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<table>
+  <tr>
+    <div class="field">
+      <td><%= f.label :Date %> </td>
+      <td><%= @ref_consult_request.refDate %> </td>
+      <%= f.hidden_field :refDate, :value => @ref_consult_request.refDate %>
+
+    </div>
+    <div class="field">
+      <td><%= f.label "Status:" %> </td>
+      <td><%= @ref_consult_request.status %> </td>
+    </div> 
+  </tr> 
+
+<!--   <tr><div class="field">
+    <td><%= f.label :disposition %> </td>
+    <td><%= f.text_field :disposition %> </td>
+  </div> --> 
+</tr>
+  <tr><div class="field">
+    <td><%= f.label :refNumber %> </td>
+    <td><%= @ref_consult_request.refNumber %> </td>
+    <%= f.hidden_field :refNumber, :value => @ref_consult_request.refNumber %>
+  </div> 
+</tr>
+
+  <tr><div class="field">
+    <td><%= f.label :priority %> </td>
+    <td><%= f.select :priority, RefConsultRequest.get_priority_values,   :prompt => 'Select...' %> </td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+   <td><%= f.label "Reason" %> </td> 
+   <td><%= f.text_field :reasonText %> </td>
+ </div> 
+</tr>
+
+
+  <%= f.hidden_field :patientRecordId, :value => @ref_consult_request.patientRecordId %>
+  <tr><div class="field">
+    <td>Patient Name: &nbsp; &nbsp; &nbsp;</td>
+   <td><%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe  if @record %></td>
+  </div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Insurance:</td>
+ <td></td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Gender:</td>
+ <td><%= (@record.gender).html_safe   if @record %></td>
+
+</div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Age:</td>
+<td><%= getAgeText(@record.birthdate).html_safe if @record %> </td>
+</div> 
+</tr>
+
+ <tr><div class="field">
+    <td><%= f.label "Conditions:" %> </td>
+    <td><%= f.select :reasonConditionId, [ "DJD/Osteoarthritis, spine", "Diabetes Mellitus, Non-Insulin Dependent"],   :prompt => 'Select...' %> </td>
+</div> 
+</tr>
+
+ <tr><div class="field">
+  <td><%= f.label "Specialty:" %> </td>
+  <td><%= f.select :requestedSpecialty,  RefConsultRequest.get_requestedSpecialty_values,   :prompt => 'Select Specialty...' %> </td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+  <td><%= f.label "Specialist:" %> </td>
+  <td><%= f.select :requestedConsultingProviderId, [ "Dr. Bill Schwartz", "Dr. Tom Jones"],   :prompt => 'Select...' %> </td>
+</div> 
+</tr>
+
+<!--  <tr><div class="field">
+    <td><%= f.label :refType %> </td>
+    <td><%= f.text_field :refType %> </td>
+  </div> 
+</tr>
+  <tr><div class="field">
+    <td><%= f.label :procedureId %> </td>
+    <td><%= f.number_field :procedureId %> </td>
+  </div> 
+</tr>
+-->
+  <tr><div class="field">
+    <td><%= f.label :Description %> </td>
+    <td><%= f.text_area :reasonDescription, :size => "10x5", :style=>"width:150%"  %></td>
+ </div> 
+
+<!-- </tr>
+  <tr><div class="field">
+    <td><%= f.label :category %> </td>
+    <td><%= f.text_field :category %> </td>
+  </div> 
+</tr>
+  <tr><div class="field">
+    <td><%= f.label :requestedNumTreatments %> </td>
+    <td><%= f.number_field :requestedNumTreatments %> </td>
+  </div> 
+</tr>
+  <tr><div class="field">
+    <td><%= f.label :requestProviderId %> </td>
+    <td><%= f.number_field :requestProviderId %> </td>
+  </div> 
+</tr>
+  <tr><div class="field">
+    <td><%= f.label :comment %> </td>
+    <td><%= f.text_field :comment %> </td>
+  </div> 
+</tr> -->
+
+<tr>
+  <div class="actions">
+    <td></td>
+   <td><%= f.submit 'Submit', :disable_with => "creating now..." %>
+   <%= link_to 'Cancel', ref_consult_requests_path %>  </td>
+</div>
+</tr>
+
+</table>
+
+<% end %> 

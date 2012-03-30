@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  refDate: 2012-03-28
+  refNumber: 1
+  consultationTreatmentSummary: MyString
+  recommendedPlanOfCareId: 1
+  sendRequestProviderId: 1
+
+two:
+  refDate: 2012-03-28
+  refNumber: 1
+  consultationTreatmentSummary: MyString
+  recommendedPlanOfCareId: 1
+  sendRequestProviderId: 1

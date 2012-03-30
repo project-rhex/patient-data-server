@@ -9,9 +9,8 @@
       <td>
           <h2>Demographic Information</h2>
           <%= sex(@record) %><br>
-          <% bdate = Time.at(@record.birthdate) if @record.birthdate.class == Fixnum  %>
-          <%= (date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)").html_safe %><br>
-          <b>....</b>
+         <%= getAgeText(@record.birthdate).html_safe %> <br>
+         <b>....</b>
           <%= render :layout => "section", :locals => {:record => @record, :section => :immunizations, :earliest => earliest} do |x| %>
             <% refused = x['refusalInd'] ? 'Refused ' : '' %>
             <%= labeled_field refused + x['description'], date(x['time']) %>
@@ -40,8 +39,8 @@
     </tr>
     <tr>
       <td>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :encounters, :earliest => earliest} do |x| %>
-          <%= labeled_field x['description'], date(x['time']) %>
+       <%= render :layout => "section", :locals => {:record => @record, :section => :encounters, :earliest => earliest} do |x| %>
+        <%= labeled_field x['description'], date(x['time']) %>
         <% end %>
       </td>
       <td>

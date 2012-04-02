@@ -17,7 +17,10 @@ sr.add_section('encounters', 'http://projecthdata.org/extension/encounter', 'Enc
 end
 sr.add_section('immunizations', 'http://projecthdata.org/extension/immunization', 'Immunizations')
 sr.add_section('medical_equipment', 'http://projecthdata.org/extension/medical-equipment', 'Medical Equipment')
-sr.add_section('medications', 'http://projecthdata.org/extension/medication', 'Medications')
+sr.add_section('medications', 'http://projecthdata.org/extension/medication', 'Medications') do |importers, exporters|
+  importers['application/xml'] = HealthDataStandards::Import::GreenC32::MedicationImporter.instance
+  exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:medication)
+end
 sr.add_section('procedures', 'http://projecthdata.org/extension/procedure', 'Procedures') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ProcedureImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:procedure)

@@ -1,4 +1,5 @@
 class RefConsultRequestsController < ApplicationController
+
   # GET /ref_consult_requests
   # GET /ref_consult_requests.json
   def index
@@ -7,19 +8,31 @@ class RefConsultRequestsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @ref_consult_requests }
+      format.xml  { render xml:  @ref_consult_requests.to_xml }
     end
   end
 
   # GET /ref_consult_requests/1
   # GET /ref_consult_requests/1.json
   def show
-    @ref_consult_request = RefConsultRequest.find(params[:id])
-    @record = Record.find( @ref_consult_request.patientRecordId ) if @ref_consult_request.patientRecordId
+    #binding.pry
+    ref_consult_requests = RefConsultRequest.find( params[:id] )
+    if ref_consult_requests.class.to_s == "Array"
+      @ref_consult_request = ref_consult_requests[0]
+    else
+      @ref_consult_request = ref_consult_requests
+    end
 
+    if @ref_consult_request.nil? 
+      render text: 'Referral Consult Not Found', status: 404
+      return
+    end
+    @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ref_consult_request }
+      format.xml  { render xml:  @ref_consult_request.to_xml }
     end
   end
 
@@ -32,7 +45,6 @@ class RefConsultRequestsController < ApplicationController
 
     ## patient record ID passed in
     if params[:id]
-      puts "GREGG !!! "
       @ref_consult_request.patientRecordId = params[:id]
       @record = Record.find( @ref_consult_request.patientRecordId ) 
     end

@@ -33,6 +33,7 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
   end
 
   test "should show ref_consult_request" do
+    #binding.pry
     get :show, id: @ref_consult_request
     assert_response :success
   end
@@ -54,4 +55,25 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
 
     assert_redirected_to ref_consult_requests_path
   end
+
+   test "get a result as xml" do
+    request.env['HTTP_ACCEPT'] = Mime::XML
+
+    get :index
+    doc = Nokogiri::XML::Document.parse(response.body)
+    assert_response :success, "Referral Consult list is empty!"
+
+    #binding.pry
+    ## search for id
+    items = doc.xpath("//_id").inspect
+    id = items.split[3].scan(/(\w+)/)
+    #STDOUT << "\n=====\n"
+    #STDOUT << id[0]
+
+    get :show, id: id[0]
+    doc = Nokogiri::XML::Document.parse(response.body)
+    assert_response :success, "Cannot find referral with id:#{id}"
+    #assert_equal "result", doc.children.first.name
+  end
+
 end

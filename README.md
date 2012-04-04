@@ -1,7 +1,7 @@
 Patient Data Server
 =========
 
-This project provides a reference server for the REST+. It will allow for the creation of patients using HITSP C32
+This project provides a reference server for the RHEx. It will allow for the creation of patients using HITSP C32
 documents and then expose the data in a granular fashion. Clients will be able to retrieve data in HTML, XML and JSON
 formats. Finally, this server will restrict access using OAuth and OpenID.
 

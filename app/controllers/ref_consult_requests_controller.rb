@@ -15,13 +15,7 @@ class RefConsultRequestsController < ApplicationController
   # GET /ref_consult_requests/1
   # GET /ref_consult_requests/1.json
   def show
-    #binding.pry
-    ref_consult_requests = RefConsultRequest.find( params[:id] )
-    if ref_consult_requests.class.to_s == "Array"
-      @ref_consult_request = ref_consult_requests[0]
-    else
-      @ref_consult_request = ref_consult_requests
-    end
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
 
     if @ref_consult_request.nil? 
       render text: 'Referral Consult Not Found', status: 404

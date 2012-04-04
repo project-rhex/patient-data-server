@@ -1,5 +1,6 @@
 HdataServer::Application.routes.draw do
 
+  ##
   resources :ref_consult_requests
   match "ref_consult_requests/new/:id" => "ref_consult_requests#new", :as => :new_ref_consult_request_patient, :method => :get
 

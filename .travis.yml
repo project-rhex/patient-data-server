@@ -8,5 +8,5 @@ branches:
 notifications:
   email:
     recipients:
-      - andy@mitre.org
+      - healthcare-ci@googlegroups.com
     on_failure: change

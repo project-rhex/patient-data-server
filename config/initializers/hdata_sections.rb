@@ -18,7 +18,7 @@ sr.add_section('encounters', 'http://projecthdata.org/extension/encounter', 'Enc
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::EncounterImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:encounter)
 end
-sr.add_section('immunizations', 'http://projecthdata.org/extension/immunization', 'Immunizations') do
+sr.add_section('immunizations', 'http://projecthdata.org/extension/immunization', 'Immunizations') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ImmunizationImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:immunization)
 end
@@ -35,7 +35,7 @@ sr.add_section('results', 'http://projecthdata.org/extension/result', 'Lab Resul
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::ResultImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:result)
 end
-sr.add_section('social_history', 'http://projecthdata.org/extension/social-history', 'Social History') do
+sr.add_section('social_history', 'http://projecthdata.org/extension/social-history', 'Social History') do |importers, exporters|
   importers['application/xml'] = HealthDataStandards::Import::GreenC32::SocialHistoryImporter.instance
   exporters['application/xml'] = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:social_history)
 end

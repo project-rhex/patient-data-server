@@ -45,13 +45,13 @@ HdataServer::Application.routes.draw do
   end
 
   #
-  match "records/:id" => "records#show", :as => "root_feed", :format => :atom
+  match "records/:id" => "records#show", :as => "root_feed", :format => :atom, :via=> :get
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method => :get
-  match "records/:id" => "records#options", :as => :root_options, :method => :options
-  match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :method => :get
-  match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :method => :get
-  match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :method => :post
-  match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :method => :put
+  match "records/:id" => "records#options", :as => :root_options, :via => :options
+  match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :via => :get
+  match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
+  match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
+  match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put
 
   root :to =>  "records#index"
 

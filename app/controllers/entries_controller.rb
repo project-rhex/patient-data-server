@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   before_filter :set_up_section
   before_filter :find_record, only: [:show, :update, :delete, :index, :create]
   before_filter :find_entry, only: [:show, :update, :delete]
-
+  skip_before_filter :verify_authenticity_token
   def index
     audit_log "event_index"
 

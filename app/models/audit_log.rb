@@ -49,7 +49,7 @@ class AuditLog
       if obj_id.class.to_s != "String"
         id = obj_id.to_s
       end
-
+      
       ## convert obj_name to a string for lookup
       if obj_name.class.to_s == "Class"
         # case where record.class is passed in
@@ -72,9 +72,6 @@ class AuditLog
       ## catch a NoMethodError for the case where the wrong class (e.g. Array) is passed in
       ## catch a wrong constant name error for the case where the garbage class (e.g. "foo") is passed in
       ## catch undefined method `[]' for nil:NilClass 
-      puts "\n**** AUDIT_LOG Review doc snapshot"     
-      #puts e.message  
-      #puts e.backtrace.inspect 
       return nil
     end
     ## return the latest med_record if the version is 1 greater than the array size
@@ -98,15 +95,14 @@ class AuditLog
   ## obj = Record, or Results etc
   ## obj_id - is _id from mongo
   def self.doc(requester_info, event, description, obj, vers)
-    #puts "======"
+
     ## to_yaml ... sometime bombs out with -  can't dump anonymous class Class, replace with inspect
-    #serialized = med_record.to_yaml
     serialized = obj.inspect
-    #puts serialized.inspect
+
 
     sig = ""
     sig = Digest::SHA1.hexdigest serialized
-    ##puts "GG" + sig.inspect
+
     AuditLog.create(requester_info: requester_info, 
                     event:          event, 
                     description:    description, 

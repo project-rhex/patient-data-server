@@ -13,12 +13,10 @@ class AuditReviewController < ApplicationController
 
   
   def show
-    puts params.inspect
-    
+
     # assume this is the medical_records_number
     mrn = params[:id]
     @audit_docs = AuditLog.review_doc( mrn )
-    puts @audit_docs.inspect
 
     respond_to do |format|
       format.html

@@ -22,8 +22,6 @@ class AtomFeedModuleTest < ActiveSupport::TestCase
       end
     end
 
-    # puts atom
-
     feed = Feedzirra::Feed.parse(atom)
     assert_equal 'Test', feed.title
     assert_not_nil(feed.entries)

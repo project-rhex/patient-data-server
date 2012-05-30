@@ -1,3 +1,6 @@
+<%= stylesheet_link_tag :common %>
+<p id="notice"><%= notice %></p>
+
 <h1>Consults You've Initiated</h1>
 
 To initiate a consult, search for a patient and then press the
@@ -29,7 +32,8 @@ Or, you can click create consult request and then select the patient from the Pa
    <td><%= link_to 'Show', ref_consult_request %></td>
     <td><%= link_to 'Edit', edit_ref_consult_request_path(ref_consult_request) %></td>
     <td><%= link_to 'Destroy', ref_consult_request, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <td><%= link_to 'Email Request w/Direct', email_ref_consult_request_path(ref_consult_request) %></td>
+ </tr>
 <% end %>
 </table>
 

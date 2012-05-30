@@ -14,6 +14,32 @@ class RefConsultRequestsController < ApplicationController
 
   # GET /ref_consult_requests/1
   # GET /ref_consult_requests/1.json
+  def email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+
+  end
+
+
+  # GET /ref_consult_requests/email/1
+  def email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+
+  end
+
+  # GET /ref_consult_requests/sendemail/1
+  def send_email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+    @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
+
+    PdsMail.consult(@ref_consult_request, @record).deliver ##
+    respond_to do |format|
+      format.html { redirect_to ref_consult_requests_url, notice: 'PDS Direct Email sent!' }
+    end
+  end
+
+
+  # GET /ref_consult_requests/1
+  # GET /ref_consult_requests/1.json
   def show
     @ref_consult_request = RefConsultRequest.find( params[:id] )
 

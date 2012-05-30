@@ -1,0 +1,100 @@
+<%= stylesheet_link_tag :common %>
+<p id="notice"><%= notice %></p>
+
+
+<table>
+<tr>
+<h2>  <td><%= @ref_consult_request.reasonConditionId %> </td>
+  <td><%= @ref_consult_request.refNumber %> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
+  <td>Status:</td>
+  <td> <%= @ref_consult_request.status %> </td> </h2>
+</table>
+<p>
+Email this consult ?
+<p>
+
+
+<table>
+  <tr>
+    <div class="field">
+      <td>Date:</td>
+      <td><%= @ref_consult_request.refDate %> </td>
+    </div>
+ </tr> 
+
+ <tr><div class="field">
+    <td>Priority: </td>
+    <td><%= @ref_consult_request.priority  %> </td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+   <td>Reason:</td> 
+   <td><%= @ref_consult_request.reasonText %> </td>
+ </div> 
+</tr>
+
+
+
+<tr><div class="field">
+    <td>Patient Name:  &nbsp;&nbsp;&nbsp; </td>
+   <td><%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe   if @record %></td>
+  </div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Insurance:</td>
+ <td></td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Gender: </td>
+ <td><%= (@record.gender).html_safe  if @record %></td>
+
+</div> 
+</tr>
+
+  <tr><div class="field">
+ <td>Age:</td>
+<td><%= getAgeText(@record.birthdate).html_safe   if @record %></td>
+</div> 
+</tr>
+
+
+<tr><div class="field">
+   <td>Conditions: </td>
+   <td><%= @ref_consult_request.reasonConditionId %> </td>
+</div> 
+</tr>
+
+ <tr><div class="field">
+  <td>Specialty: </td>
+  <td><%= @ref_consult_request.requestedSpecialty %> </td>
+</div> 
+</tr>
+
+  <tr><div class="field">
+  <td>Specialist: </td>
+  <td><%= @ref_consult_request.requestedConsultingProviderId %> </td>
+</div> 
+</tr>
+
+ <tr><div class="field">
+    <td>Description:</td>
+    <td><%= @ref_consult_request.reasonDescription %></td>
+ </div> 
+</tr>
+
+<tr></tr>
+
+  <div class="actions">
+    <td></td>
+    <td><%= link_to 'Send Email', send_email_ref_consult_request_path(@ref_consult_request) %>
+       <%= link_to 'Back', ref_consult_requests_path %>  </td>
+ </div>
+</tr>
+
+</table>
+
+

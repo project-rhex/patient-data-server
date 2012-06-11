@@ -4,7 +4,6 @@ class NotifyConfigsController < ApplicationController
   def index
     add_breadcrumb('Notification Configurations')
 
-    #puts ".." + @current_user.email + ".."
     if !params[:all].nil?
       @title = "All Notification Settings"
       @notify_configs = NotifyConfig.all().to_a

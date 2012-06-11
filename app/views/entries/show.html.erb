@@ -1,0 +1,16 @@
+<dl>
+<% @entry.attributes.each_pair do |attribute, value| %>
+  <% unless attribute.starts_with?("_") %>
+    <dt><%= attribute.titleize %>:</dt>
+    <% if value.respond_to?(:empty?) && value.empty? %>
+     <dd />
+    <% elsif value.is_a?(Array) %>
+      <% value.each do |v| %>
+      <dd><%= v %></dd>
+      <% end %>
+    <% else %>
+      <dd><%= value %></dd>
+    <% end %>
+  <% end %>
+<% end %>
+</dl>

@@ -9,7 +9,7 @@ class AuthenticationsController < ActionController::Base
 
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.first(conditions: { provider: omniauth['provider'], uid: omniauth['uid']})
-    #binding.pry
+    
     if authentication
       AuditLog.create(requester_info: authentication.user, event: "user_auth", description: "successful sign in")
       flash[:notice] = "Signed in successfully."

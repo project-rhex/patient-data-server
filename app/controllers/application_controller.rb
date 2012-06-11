@@ -50,8 +50,6 @@ class ApplicationController < ActionController::Base
   ##
   ## Track each controller and method (action) call
   def audit_log_all
-    ##
-    #puts current_user.inspect
 
     if  params[:controller] && params[:action]
       desc = params[:controller] + "|" + params[:action]

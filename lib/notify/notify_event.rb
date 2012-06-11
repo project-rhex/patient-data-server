@@ -5,8 +5,6 @@ class NotifyEvent
     # lookup user and action in notify_config
     notify_configs = NotifyConfig.all( conditions: { user: /#{user}/i, action: action } ).to_a
 
-    puts notify_configs.inspect
-
     # for each entry, insert a document into notification table
     notify_configs.each do |nconfig|
       n = Notification.new

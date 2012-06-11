@@ -11,6 +11,7 @@ class EntriesController < ApplicationController
     @entries = @record.send(@section_name)
     respond_to do |wants|
       wants.atom {}
+      wants.html {}
     end
   end
   
@@ -24,6 +25,7 @@ class EntriesController < ApplicationController
         exporter = @extension.exporters['application/xml']
         render :xml => exporter.export(@entry)
       end
+      wants.html { }
     end
   end
   

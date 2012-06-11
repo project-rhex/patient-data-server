@@ -50,6 +50,7 @@ HdataServer::Application.routes.draw do
   match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method => :get
   match "records/:id" => "records#options", :as => :root_options, :via => :options
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :via => :get
+  match "records/:record_id/:section" => "entries#index", :as => :section, :via => :get
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put

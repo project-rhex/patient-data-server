@@ -14,7 +14,6 @@ class RefNumber
     end
     curr_num = r.num
 
-    #puts "$$$" + r.inspect
     r.num += 1
     r.save!
 

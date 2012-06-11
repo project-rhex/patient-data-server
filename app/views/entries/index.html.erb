@@ -1,0 +1,5 @@
+<ul>
+<% @entries.each do |e| %>
+  <li><%= link_to((e.description || "Entry"), section_document_path(@record.medical_record_number, @section_name, e.id)) %></li>
+<% end %>
+</ul>

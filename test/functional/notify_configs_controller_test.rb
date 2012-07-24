@@ -54,4 +54,12 @@ class NotifyConfigsControllerTest < ActionController::TestCase
 
     assert_redirected_to notify_configs_path
   end
+
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @notify_config
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @notify_config
+    assert_response 304, @response.body
+  end
 end

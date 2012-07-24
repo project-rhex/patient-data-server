@@ -6,10 +6,12 @@ class UsersController < ApplicationController
     
     @users = User.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
+#    if stale?(:last_modified => @users.last_sign_in_at.utc, :etag => @users)
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @users }
+      end
+#    end
   end
 
   # GET /users/1

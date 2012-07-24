@@ -15,9 +15,11 @@ class RefConsultSummariesController < ApplicationController
   def show
     @ref_consult_summary = RefConsultSummary.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ref_consult_summary }
+    if stale?(:last_modified => @ref_consult_summary.updated_at.utc, :etag => @ref_consult_summary)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @ref_consult_summary }
+      end
     end
   end
 

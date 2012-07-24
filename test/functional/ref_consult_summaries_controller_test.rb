@@ -54,4 +54,12 @@ class RefConsultSummariesControllerTest < ActionController::TestCase
 
     assert_redirected_to ref_consult_summaries_path
   end
+
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @ref_consult_summary
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @ref_consult_summary
+    assert_response 304, @response.body
+  end
 end

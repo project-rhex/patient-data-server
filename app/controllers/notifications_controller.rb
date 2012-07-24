@@ -27,9 +27,11 @@ class NotificationsController < ApplicationController
 
     add_breadcrumb('Notification')
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @notification }
+    if stale?(:last_modified => @notification.updated_at.utc, :etag => @notification)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @notification }
+      end
     end
   end
 

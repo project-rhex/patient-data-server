@@ -78,7 +78,7 @@ class EntriesControllerTest < AtomTest
   test "get a document that doesn't exist" do
     request.env['HTTP_ACCEPT'] = Mime::XML
     get :show, {record_id: @record.medical_record_number, section: 'results', id: 'bacon'}
-    assert_response 400
+    assert_response 404
     
     get :show, {record_id: @record.medical_record_number, section: 'results', id: ('0' * 24)}
     assert_response :missing
@@ -103,4 +103,6 @@ class EntriesControllerTest < AtomTest
     get :delete, :record_id => "AAAA"
     assert_response :missing
   end
+  
+
 end

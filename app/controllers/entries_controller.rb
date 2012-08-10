@@ -85,7 +85,7 @@ class EntriesController < ApplicationController
       @entry = @record.send(@section_name).find(:first, conditions: {id: params[:id]})
       raise RequestError.new(404, 'Entry Not Found') unless @entry
     else
-      raise RequestError.new(400, 'Not a valid identifier for a section document')
+      raise RequestError.new(404, 'Not Found')
     end
   end
 

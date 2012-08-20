@@ -1,5 +1,0 @@
-<%=
-    xml.id "id:" + @record.medical_record_number + ":" + section.to_s
-    xml.link(href: section_feed_url(@record.medical_record_number, section), type: Mime::XML, rel: "alternate")
-    xml.link(href: section_feed_url(@record.medical_record_number, section), type: Mime::Json, rel: "alternate")
-%>

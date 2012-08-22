@@ -75,17 +75,21 @@ class RefConsultRequestsController < ApplicationController
       return
     end
     @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
-    @conditions  = @record.conditions.map {|x| x.description }
-    @medications = @record.medications.map {|x| x.description }
+    @medications = @record.medications.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/medications/#{x._id}" }
+    @conditions  = @record.conditions.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/conditions/#{x._id}" }
+    @vital_signs = @record.vital_signs.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/vital_signs/#{x._id}" }
+    # @conditions  = @record.conditions.map {|x| x.description }
+    # @medications = @record.medications.map {|x| x.description }
     @vitals      = @record.vital_signs.sort { |a,b| b.time <=> a.time }
     @vitals.map! {|y| [ Time.at(y.time).strftime("%Y-%m-%d"), y.description.split(" ")[0], y.value['scalar']] }
+    
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: { :ref_consult_requests => @ref_consult_request,
                                    :conditions => @conditions,
-                                   :medicaitons => @medications,
-                                   :vitals => @vitals }
+                                   :medications => @medications,
+                                   :vital_signs => @vital_signs }
       } 
       format.xml  { render xml:  @ref_consult_request.to_xml }
     end
@@ -110,11 +114,7 @@ class RefConsultRequestsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: { :ref_consult_requests => @ref_consult_request,
-                                   :conditions => @conditions,
-                                   :medicaitons => @medications,
-                                   :vitals => @vitals }
-      } 
+      format.json { render json: { :ref_consult_requests => @ref_consult_request }   } 
     end
   end
 

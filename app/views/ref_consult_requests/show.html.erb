@@ -48,6 +48,26 @@ Your consult request has been submitted for authorization by the insurance provi
 </div> 
 </tr>
 
+<tr><div class="field">
+    <td>Medications:</td>
+    <td><%= @medications.inspect %> </td>
+</div> 
+</tr>
+
+ <tr><div class="field">
+    <td>Recent Vitals:</td>
+</tr>
+ 
+    <%  cnt = 0  
+           @vitals.each do |x|  %>
+          <tr><td></td><td> <%= x.inspect %> </td>
+           <%  break if cnt > 4
+                  cnt += 1
+            end %>
+           </tr>
+</div> 
+
+
   <tr><div class="field">
  <td>Gender: </td>
  <td><%= (@record.gender).html_safe  if @record %></td>

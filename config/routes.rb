@@ -1,8 +1,13 @@
 HdataServer::Application.routes.draw do
 
   ##
+  resources :records do
+    resources :ref_consult_requests
+  end
   resources :ref_consult_requests
   match "ref_consult_requests/new/:id" => "ref_consult_requests#new", :as => :new_ref_consult_request_patient, :method => :get
+  match "ref_consult_requests/email/:id" => "ref_consult_requests#email", :as => :email_ref_consult_request, :method => :get
+  match "ref_consult_requests/send_email/:id" => "ref_consult_requests#send_email", :as => :send_email_ref_consult_request, :method => :get
 
   resources :ref_consult_summaries
 

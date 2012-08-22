@@ -78,19 +78,32 @@
 
  <tr><div class="field">
     <td><%= f.label "Conditions:" %> </td>
-    <td><%= f.select :reasonConditionId, [ "DJD/Osteoarthritis, spine", "Diabetes Mellitus, Non-Insulin Dependent"],   :prompt => 'Select...' %> </td>
+    <td><%= f.select :reasonConditionId, @conditions,   :prompt => 'Select...' %> </td>
 </div> 
 </tr>
 
  <tr><div class="field">
-  <td><%= f.label "Specialty:" %> </td>
-  <td><%= f.select :requestedSpecialty,  RefConsultRequest.get_requestedSpecialty_values,   :prompt => 'Select Specialty...' %> </td>
+    <td><%= f.label "Medications:" %> </td>
+    <td><%= @medications.inspect %> </td>
 </div> 
 </tr>
 
-  <tr><div class="field">
-  <td><%= f.label "Specialist:" %> </td>
-  <td><%= f.select :requestedConsultingProviderId, [ "Dr. Bill Schwartz", "Dr. Tom Jones"],   :prompt => 'Select...' %> </td>
+ <tr><div class="field">
+    <td><%= f.label "Recent Vitals:" %> </td>
+</tr>
+ 
+    <%  cnt = 0  
+           @vitals.each do |x|  %>
+          <tr><td></td><td> <%= x.inspect %> </td>
+           <%  break if cnt > 4
+                  cnt += 1
+            end %>
+           </tr>
+</div> 
+<p>
+ <tr><div class="field">
+  <td><%= f.label "Specialty:" %> </td>
+  <td><%= f.select :requestedSpecialty,  RefConsultRequest.get_requestedSpecialty_values,   :prompt => 'Select Specialty...' %> </td>
 </div> 
 </tr>
 

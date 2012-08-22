@@ -1,0 +1,29 @@
+Dear <%= @ref_consult_request.requestedConsultingProviderId %>
+
+The following email is a request for consultation regarding the patient below.
+Please click on this link for more details:
+
+<a href=http://localhost:3000/ref_consult_requests/<%= @ref_consult_request.id %>>Consult REF#<%= @ref_consult_request.refNumber %> </a>
+
+Please checkout the following consult:
+
+
+Date:       <%= @ref_consult_request.refDate %> 
+
+Priority:   <%= @ref_consult_request.priority  %> 
+
+Reason:     <%= @ref_consult_request.reasonText %> 
+
+Patient Name:  <%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe   if @record %>
+Gender:        <%= (@record.gender).html_safe  if @record %>
+Age:           <%= getAgeText(@record.birthdate).html_safe   if @record %>
+
+Conditions:  <%= @ref_consult_request.reasonConditionId %> 
+
+Specialty:   <%= @ref_consult_request.requestedSpecialty %> 
+
+Specialist:  <%= @ref_consult_request.requestedConsultingProviderId %> 
+
+Description:  <%= @ref_consult_request.reasonDescription %>    
+
+

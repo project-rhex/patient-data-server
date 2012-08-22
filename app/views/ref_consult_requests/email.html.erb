@@ -10,7 +10,7 @@
   <td> <%= @ref_consult_request.status %> </td> </h2>
 </table>
 <p>
-Your consult request has been submitted for authorization by the insurance provider.  Once authorized, it will be sent to Dr. Mary Miller.  Jane Smith will be notified of the consult request as well.
+Email this consult ?
 <p>
 
 
@@ -48,26 +48,6 @@ Your consult request has been submitted for authorization by the insurance provi
 </div> 
 </tr>
 
-<tr><div class="field">
-    <td>Medications:</td>
-    <td><%= @medications.inspect %> </td>
-</div> 
-</tr>
-
- <tr><div class="field">
-    <td>Recent Vitals:</td>
-</tr>
- 
-    <%  cnt = 0  
-           @vitals.each do |x|  %>
-          <tr><td></td><td> <%= x.inspect %> </td>
-           <%  break if cnt > 4
-                  cnt += 1
-            end %>
-           </tr>
-</div> 
-
-
   <tr><div class="field">
  <td>Gender: </td>
  <td><%= (@record.gender).html_safe  if @record %></td>
@@ -94,6 +74,12 @@ Your consult request has been submitted for authorization by the insurance provi
 </div> 
 </tr>
 
+  <tr><div class="field">
+  <td>Specialist: </td>
+  <td><%= @ref_consult_request.requestedConsultingProviderId %> </td>
+</div> 
+</tr>
+
  <tr><div class="field">
     <td>Description:</td>
     <td><%= @ref_consult_request.reasonDescription %></td>
@@ -104,8 +90,8 @@ Your consult request has been submitted for authorization by the insurance provi
 
   <div class="actions">
     <td></td>
-    <td><%= link_to 'Edit', edit_ref_consult_request_path(@ref_consult_request) %>
-      <%= link_to 'Close', ref_consult_requests_path %>  </td>
+    <td><%= link_to 'Send Email', send_email_ref_consult_request_path(@ref_consult_request) %>
+       <%= link_to 'Back', ref_consult_requests_path %>  </td>
  </div>
 </tr>
 

@@ -3,7 +3,34 @@ class RefConsultRequestsController < ApplicationController
   # GET /ref_consult_requests
   # GET /ref_consult_requests.json
   def index
-    @ref_consult_requests = RefConsultRequest.all
+
+    if params[:record_id].nil?
+      ## list all patients
+      @ref_consult_requests = RefConsultRequest.all
+      @patient_names = Hash.new
+      @ref_consult_requests.each do |ref_consult_request|
+        if ref_consult_request.patientRecordId
+          record = Record.find( ref_consult_request.patientRecordId  ) 
+          next if record.nil?
+          @patient_names["#{ref_consult_request.patientRecordId}"] = record.last.upcase + ', ' + record.first
+        end
+      end
+
+    else
+      ## list refs for this patient only
+      @patient_names = Hash.new
+      @ref_consult_requests = []
+      ref_consults = RefConsultRequest.all().to_a
+      ref_consults.each do |ref_consult|
+        record = Record.find( ref_consult.patientRecordId  ) 
+        next if record.nil?
+        if record.medical_record_number == params[:record_id]
+          @ref_consult_requests << ref_consult
+          @patient_names["#{ref_consult.patientRecordId}"] = record.last.upcase + ', ' + record.first
+        end
+      end
+
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,24 +41,56 @@ class RefConsultRequestsController < ApplicationController
 
   # GET /ref_consult_requests/1
   # GET /ref_consult_requests/1.json
-  def show
-    #binding.pry
-    ref_consult_requests = RefConsultRequest.find( params[:id] )
-    if ref_consult_requests.class.to_s == "Array"
-      @ref_consult_request = ref_consult_requests[0]
-    else
-      @ref_consult_request = ref_consult_requests
+  def email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+
+  end
+
+
+  # GET /ref_consult_requests/email/1
+  def email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+
+  end
+
+  # GET /ref_consult_requests/sendemail/1
+  def send_email
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
+    @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
+
+    PdsMail.consult(@ref_consult_request, @record).deliver ##
+    respond_to do |format|
+      format.html { redirect_to ref_consult_requests_url, notice: 'PDS Direct Email sent!' }
     end
+  end
+
+
+  # GET /ref_consult_requests/1
+  # GET /ref_consult_requests/1.json
+  def show
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
 
     if @ref_consult_request.nil? 
       render text: 'Referral Consult Not Found', status: 404
       return
     end
     @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
+    @medications = @record.medications.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/medications/#{x._id}" }
+    @conditions  = @record.conditions.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/conditions/#{x._id}" }
+    @vital_signs = @record.vital_signs.map {|x| "http://direct.rhex.us:3000/records/#{@record.medical_record_number}/vital_signs/#{x._id}" }
+    # @conditions  = @record.conditions.map {|x| x.description }
+    # @medications = @record.medications.map {|x| x.description }
+    @vitals      = @record.vital_signs.sort { |a,b| b.time <=> a.time }
+    @vitals.map! {|y| [ Time.at(y.time).strftime("%Y-%m-%d"), y.description.split(" ")[0], y.value['scalar']] }
+    
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @ref_consult_request }
+      format.json { render json: { :ref_consult_requests => @ref_consult_request,
+                                   :conditions => @conditions,
+                                   :medications => @medications,
+                                   :vital_signs => @vital_signs }
+      } 
       format.xml  { render xml:  @ref_consult_request.to_xml }
     end
   end
@@ -47,11 +106,15 @@ class RefConsultRequestsController < ApplicationController
     if params[:id]
       @ref_consult_request.patientRecordId = params[:id]
       @record = Record.find( @ref_consult_request.patientRecordId ) 
+      @conditions  = @record.conditions.map {|x| x.description }
+      @medications = @record.medications.map {|x| x.description }
+      @vitals      = @record.vital_signs.sort { |a,b| b.time <=> a.time }
+      @vitals.map! {|y| [ Time.at(y.time).strftime("%Y-%m-%d"), y.description.split(" ")[0], y.value['scalar']] }
     end
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @ref_consult_request }
+      format.json { render json: { :ref_consult_requests => @ref_consult_request }   } 
     end
   end
 
@@ -59,6 +122,10 @@ class RefConsultRequestsController < ApplicationController
   def edit
     @ref_consult_request = RefConsultRequest.find(params[:id])
     @record = Record.find( @ref_consult_request.patientRecordId  ) if @ref_consult_request.patientRecordId
+    @conditions = @record.conditions.map {|x| x.description }
+    @medications = @record.medications.map {|x| x.description }
+    @vitals      = @record.vital_signs.sort { |a,b| b.time <=> a.time }
+    @vitals.map! {|y| [ Time.at(y.time).strftime("%Y-%m-%d"), y.description.split(" ")[0], y.value['scalar']] }
   end
 
   # POST /ref_consult_requests

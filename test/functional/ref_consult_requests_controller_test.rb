@@ -71,4 +71,11 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
     #assert_equal "result", doc.children.first.name
   end
 
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @ref_consult_request
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @ref_consult_request
+    assert_response 304, @response.body
+  end
 end

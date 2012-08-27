@@ -23,10 +23,12 @@ class RefConsultRequestsController < ApplicationController
     end
     @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ref_consult_request }
-      format.xml  { render xml:  @ref_consult_request.to_xml }
+    if stale?(:last_modified => @ref_consult_request.updated_at.utc, :etag => @ref_consult_request)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @ref_consult_request }
+        format.xml  { render xml:  @ref_consult_request.to_xml }
+      end
     end
   end
 

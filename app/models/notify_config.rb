@@ -3,6 +3,7 @@
 class NotifyConfig
   include Mongoid::Document
   include Mongoid::Symbolize
+  include Mongoid::Timestamps
 
   # email or username etc
   field :user, :type => String

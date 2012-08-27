@@ -23,7 +23,7 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
   end
 
   test "should create ref_consult_request" do
-    r = Factory.attributes_for(:ref_consult_request)
+    r = FactoryGirl.attributes_for(:ref_consult_request)
     
     assert_difference('RefConsultRequest.count') do
       post :create, ref_consult_request: r

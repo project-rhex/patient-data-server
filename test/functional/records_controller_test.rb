@@ -40,7 +40,7 @@ class RecordsControllerTest < AtomTest
   end
   
   test "should generate a root.xml document based off the section mappings " do 
-    @record = Factory.create(:record)
+    @record = FactoryGirl.create(:record)
     get :root, {id: @record.medical_record_number, format: :xml}
     assert_response :success
     

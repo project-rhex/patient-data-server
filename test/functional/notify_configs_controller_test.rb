@@ -22,7 +22,7 @@ class NotifyConfigsControllerTest < ActionController::TestCase
   end
 
   test "should create notify_config" do
-    n = Factory.attributes_for(:notify_config)
+    n = FactoryGirl.attributes_for(:notify_config)
 
     assert_difference('NotifyConfig.count') do
       post :create, notify_config: n

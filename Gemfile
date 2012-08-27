@@ -2,8 +2,7 @@ source 'http://rubygems.org'
 
 
 gem 'rails', '3.2.8'
-# gem "health-data-standards", :git => "http://github.com/projectcypress/health-data-standards.git", :branch => "develop"
-gem "health-data-standards", :git => "http://github.com/ssayer/health-data-standards.git", :branch => "develop"
+gem "health-data-standards", :git => "http://github.com/projectcypress/health-data-standards.git", :branch => "develop"
 gem 'ruby-openid', :git => 'https://github.com/rdingwell/ruby-openid.git',:branch => "master" 
 gem "mongoid"
 gem "bson_ext"

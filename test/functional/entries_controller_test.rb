@@ -53,7 +53,7 @@ class EntriesControllerTest < AtomTest
     @record.reload
     assert_equal 2, @record.results.count
     result = @record.results[1]
-    assert_equal 135, result.value['scalar']
+    assert_equal 135, result.values.first.scalar
   end
   
   test "update a lab result" do
@@ -64,7 +64,7 @@ class EntriesControllerTest < AtomTest
     put :update, {record_id: @record.medical_record_number, section: 'results', id: result.id}
     assert_response :success
     result.reload
-    assert_equal 135, result.value['scalar']
+    assert_equal 135, result.values.first.scalar
   end
 
   test "delete a result" do

@@ -23,7 +23,7 @@ module RecordHelper
     vitals = record.get_recent_vitals
     record.vital_signs.each do |result|
        if result.description.downcase.start_with?(name)
-         return show_value result.value
+         return show_value result.values.first
        end
     end
     ""
@@ -43,8 +43,8 @@ module RecordHelper
   # Takes the value portion of a record and formats it
   def show_value(value, low = -1E99, high = 1E99)
     return "" unless value
-    s = value['scalar']
-    units = value['units']
+    s = value.scalar
+    units = value.units
     if s.class == Fixnum || s.class == Float
       n = s;
       n = n.round(2) if n.class == Float

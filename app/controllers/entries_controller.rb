@@ -50,6 +50,11 @@ class EntriesController < ApplicationController
     content_type = request.content_type
     section_document = import_document(content_type)
     @entry.update_attributes!(section_document.attributes)
+    @entry.reflect_on_all_associations(:embeds_many).each do |relation|
+      @entry.send(relation.name).destroy_all
+      @entry.send("#{relation.name}=", section_document.send(relation.name))
+    end
+    
     render text: 'Document updated', status: 200
   end
 

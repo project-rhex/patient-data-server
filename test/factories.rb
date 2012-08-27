@@ -15,7 +15,7 @@ FactoryGirl.define do
     description 'LDL Cholesterol'
     time 1285387200
     codes({'CPT' => ['83721'], 'LOINC' => ['2089-1']})
-    value({'scalar' => 127, 'units' => 'mg/dL'})
+    values {[FactoryGirl.build(:physical_quantity_result_value)]}
     reference_range '70 mg/dL - 160 mg/dL'
   end
 
@@ -32,6 +32,10 @@ FactoryGirl.define do
     version 0
   end
 
+  factory :physical_quantity_result_value do |f|
+    f.scalar 127
+    f.units "mg/dL"
+  end
   
   
   factory :user do |u| 

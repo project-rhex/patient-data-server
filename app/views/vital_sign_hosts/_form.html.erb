@@ -1,0 +1,29 @@
+<%= form_for(@vital_sign_host) do |f| %>
+  <% if @vital_sign_host.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vital_sign_host.errors.count, "error") %> prohibited this vital_sign_host from being saved:</h2>
+
+      <ul>
+      <% @vital_sign_host.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :hostname %><br />
+    <%= f.text_field :hostname %>
+  </div>
+  <div class="field">
+    <%= f.label :client_id %><br />
+    <%= f.text_field :client_id %>
+  </div>
+  <div class="field">
+    <%= f.label :client_secret %><br />
+    <%= f.text_field :client_secret %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

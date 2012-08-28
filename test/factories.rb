@@ -105,4 +105,16 @@ FactoryGirl.define do
     sendRequestProviderId  1
   end
 
+  factory :vital_sign_host do
+    hostname 'foo.bar.com'
+    client_id '1234'
+    client_secret '5678'
+  end
+  
+  factory :vital_sign_feed do
+    url 'http://foo.bar.com/vs1'
+    vital_sign_host {FactoryGirl.build :vital_sign_host}
+    record {FactoryGirl.build :record}
+  end
+
 end

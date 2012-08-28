@@ -37,6 +37,9 @@ class User
   field :dob,                type: String
   field :insurance,          type: String
 
+  ## Information to make OAuth 2 requests for vital signs
+  embeds_many :vital_sign_auths
+
   symbolize :gender, :in => {
     male:           "Male", 
     female:         "Female"}, :default => :male, :scopes => true

@@ -1,0 +1,27 @@
+<h1>Listing vital_sign_hosts</h1>
+
+<table>
+  <tr>
+    <th>Hostname</th>
+    <th>Client</th>
+    <th>Client secret</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vital_sign_hosts.each do |vital_sign_host| %>
+  <tr>
+    <td><%= vital_sign_host.hostname %></td>
+    <td><%= vital_sign_host.client_id %></td>
+    <td><%= vital_sign_host.client_secret %></td>
+    <td><%= link_to 'Show', vital_sign_host %></td>
+    <td><%= link_to 'Edit', edit_vital_sign_host_path(vital_sign_host) %></td>
+    <td><%= link_to 'Destroy', vital_sign_host, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vital sign host', new_vital_sign_host_path %>

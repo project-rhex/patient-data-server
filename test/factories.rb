@@ -113,8 +113,8 @@ FactoryGirl.define do
   
   factory :vital_sign_feed do
     url 'http://foo.bar.com/vs1'
-    vital_sign_host {FactoryGirl.build :vital_sign_host}
-    record {FactoryGirl.build :record}
+    vital_sign_host
+    record
   end
 
 end

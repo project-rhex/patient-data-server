@@ -9,7 +9,9 @@ class VitalSignCallbackController < ApplicationController
     vsa = current_user.vital_sign_auths.where(access_token: nil).first
     access_token = vsa.vital_sign_feed.obtain_access_token(params[:code], url_for(controller: 'vital_sign_callback',
                                                                                   action: 'access_code'))
-    vsa.access_token = access_token.to_s
+
+    vsa.access_token = access_token.access_token
+    vsa.refresh_token = access_token.refresh_token
     vsa.save!
 
     #TODO: fetch the new vital signs

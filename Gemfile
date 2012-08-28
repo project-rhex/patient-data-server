@@ -39,5 +39,5 @@ group :test do
   gem 'feedzirra'
   gem 'cover_me'
   gem 'factory_girl_rails'
-  gem 'fakeweb'
+  gem 'webmock'
 end

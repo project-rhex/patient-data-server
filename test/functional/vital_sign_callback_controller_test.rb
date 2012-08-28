@@ -11,15 +11,15 @@ class VitalSignCallbackControllerTest < ActionController::TestCase
   
   test "should get access_code" do
     @user.vital_sign_auths << VitalSignAuth.new(vital_sign_feed: @vital_sign_feed)
-    FakeWeb.register_uri(:get, "http://#{@vital_sign_feed.vital_sign_host.hostname}/authorize",
-                         :body => '{
+    stub_request(:post, "https://#{@vital_sign_feed.vital_sign_host.hostname}/oauth2/token")
+                .to_return(:body => '{
                            "access_token":"2YotnFZFEjr1zCsicMWpAA",
-                           "token_type":"example",
+                           "token_type":"bearer",
                            "expires_in":3600,
                            "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
                            "example_parameter":"example_value"
-                         }')
-    get :access_code
+                         }', :status => 200)
+    get :access_code, code: 'sekret'
     assert_response :redirect
     @user.reload
     assert_equal "2YotnFZFEjr1zCsicMWpAA", @user.vital_sign_auths.first.access_token

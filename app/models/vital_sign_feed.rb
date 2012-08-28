@@ -8,7 +8,8 @@ class VitalSignFeed
 
   def fetch(vital_sign_auth)
     token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => vital_sign_auth.access_token)
-    token.get(url)
+    feed = token.get(url)
+    TATRC::VitalSignsImporter.instance.import(feed)
   end
 
   def obtain_access_token(authorization_code, redirect_uri)

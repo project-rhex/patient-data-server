@@ -9,6 +9,7 @@ module TATRC
       vital_signs_xml.map do |vs_el|
         vs = VitalSign.new
         code = extract_code(vs_el, './gc32:resultType')
+        vs.description = code['name']
         vs.add_code(code['code'], code['codeSystem'])
         set_interval(vs, vs_el)
         set_values(vs, vs_el)
@@ -21,7 +22,7 @@ module TATRC
       code_element = vs_element.at_xpath(xpath)
       return unless code_element
         {'code' => code_element['code'],
-         'codeSystemOid' => code_element['codeSystem'],
+         'name' => code_element['displayName'],
          'codeSystem' => HealthDataStandards::Util::CodeSystemHelper.code_system_for(code_element['codeSystem'])}
     end
 

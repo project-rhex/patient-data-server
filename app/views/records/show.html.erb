@@ -33,7 +33,7 @@
       </td>
       <td>
         <%= render :layout => "section", :locals => {:record => @record, :section => :results, :earliest => earliest} do |x| %>
-          <%= labeled_field(x['description'] + show_value(x['value']), date(x['time'])) %>
+          <%= labeled_field(x['description'] + show_values(x.values), date(x['time'])) %>
         <% end %>
       </td>
     </tr>
@@ -48,6 +48,15 @@
           <%= labeled_field x['description'], date(x['time']) %>
         <% end %>
       </td>
+      
+
+    </tr>
+    <tr>
+      <td>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :vital_signs, :earliest => earliest} do |x| %>
+          <%= labeled_field("#{x['description']}#{show_values(x.values)}", date(x['time'])) %>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <td>
@@ -59,10 +68,9 @@
         <div class='history_link'><%= link_to(('<<&nbsp;Past ' + I18n.t("section.vital_signs")).html_safe, record_path(@record.medical_record_number) + "/vital_signs") %></div>
       </td>
       <td>
-
       </td>
     </tr>
   </table>
 
-  <div class="footer">Last updated on 11/11/11 by <a href='link'>Dr Rick Jones</a></div>
+  <div class="footer">Last updated on <%= @record.updated_at.strftime("%m/%d/%Y") %> by <a href='link'>Dr Rick Jones</a> (<%=link_to "Refresh", record_path(@record.medical_record_number), method: :get %>)</div>
 </div>

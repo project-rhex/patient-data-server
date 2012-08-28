@@ -22,7 +22,7 @@ module RecordHelper
     name.downcase!
     vitals = record.get_recent_vitals
     record.vital_signs.each do |result|
-       if result.description.downcase.start_with?(name)
+       if result.description && result.description.downcase.start_with?(name)
          return show_value result.values.first
        end
     end
@@ -40,27 +40,17 @@ module RecordHelper
     end
   end
 
+  def show_values(values)
+    show_value(values.first)
+  end
+
   # Takes the value portion of a record and formats it
   def show_value(value, low = -1E99, high = 1E99)
-    return "" unless value
-    s = value.scalar
-    units = value.units
-    if s.class == Fixnum || s.class == Float
-      n = s;
-      n = n.round(2) if n.class == Float
-      s = n.to_s;
-    elsif s =~ /[+-]?[[:digit:]]+\.?[[:digit:]]*/
-      n = s.to_f.round(2)
-      s = n.to_s
-    else
-      n = 0
-    end
-    return "" unless s
-    oor = ""
-    oor = " out-of-range-value" if n < low || n > high
-    u = ""
-    u = "&nbsp;(" + units + ")" if units
-    return ("<span class='lab_value" + oor + "'>" + s + u + "</span>").html_safe
+    return "" unless value && value.scalar
+    scalar = value.scalar
+    output = scalar.is_a?(Integer) ? scalar.to_s : number_with_precision(scalar, precision: 2)
+    output << " (#{value.units})" if value.units
+    "<span class='lab_value'>#{output}</span>"
   end
 
 

@@ -8,7 +8,7 @@ class RecordHelperTest < ActionView::TestCase
     r2.time = Time.now.to_i
     rec.results << r2
     i = 0
-    section_enumerator(rec, :results, (Time.now - 3000000000)) do |x|
+    section_enumerator(rec, :results) do |x|
       i += 1
     end
     assert i > 0

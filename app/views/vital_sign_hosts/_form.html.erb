@@ -16,6 +16,10 @@
     <%= f.text_field :hostname %>
   </div>
   <div class="field">
+    <%= f.label :port %><br />
+    <%= f.text_field :port %>
+  </div>
+  <div class="field">
     <%= f.label :client_id %><br />
     <%= f.text_field :client_id %>
   </div>
@@ -23,6 +27,7 @@
     <%= f.label :client_secret %><br />
     <%= f.text_field :client_secret %>
   </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -6,8 +6,8 @@ module RecordHelper
   # @param section the name of the section
   # @param earliest the earliest time to render an entry
   # @param limit the maximum number of results to return
-  def section_enumerator(record, section, earliest, limit = 6)
-    record.find_sorted_entries_by_timelimit(section, earliest.to_i, limit).each do |e|
+  def section_enumerator(record, section)
+    record.send(section).each do |e|
       yield e
     end
   end

@@ -54,6 +54,7 @@ HdataServer::Application.routes.draw do
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put
+  match "records/:record_id/:section/:id" => "entries#delete", :as => :delete_section_document, :via => :delete
 
   root :to =>  "records#index"
 

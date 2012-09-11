@@ -9,6 +9,7 @@ class VitalSignsImporterTest < ActiveSupport::TestCase
     vs = vital_signs.first
     assert_equal "8480-6", vs.codes["LOINC"].first
     assert_equal "Systolic BP", vs.description
+    assert_equal 349904160, vs.time
     assert_equal 115.0, vs.values.first.scalar
     assert_equal "mm[Hg]", vs.values.first['units']
   end

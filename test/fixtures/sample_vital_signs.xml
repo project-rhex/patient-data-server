@@ -4,7 +4,7 @@
         <effectiveTime nullFlavor="NI"/>
         <vitalSign>
             <resultID nullFlavor="NI"/>
-            <resultDateTime nullFlavor="NI"/>
+            <resultDateTime value="19810201113600-0800"/>
             <resultType code="8480-6" codeSystem="2.16.840.1.113883.6.1"
                         displayName="Systolic BP"/>
             <resultStatus code="completed"/>

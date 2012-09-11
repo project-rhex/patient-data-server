@@ -41,7 +41,7 @@ module TATRC
     end
 
     def get_time(time_el)
-      time = time_el.get_attribute("value").try(:value)
+      time = time_el.get_attribute("value")
       return time ? Time.parse(time).to_i : nil
     end
 

@@ -7,7 +7,7 @@
       feed.entry {
         feed.id @record.medical_record_number
         feed.title @record.last + ', ' + @record.first
-        feed.link href: record_c32_url(@record.medical_record_number, @record.medical_record_number)
+        feed.link type: "application/xml", href: record_c32_url(@record.medical_record_number, @record.medical_record_number)
       }
     end
 %>

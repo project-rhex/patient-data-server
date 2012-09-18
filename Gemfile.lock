@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/projectcypress/health-data-standards.git
-  revision: 6ede32700d131e227187978817be2a5aa049f175
+  revision: e2a73f19322e6ef9115e932dbba9b11751afa745
   branch: develop
   specs:
     health-data-standards (1.0.1)
@@ -11,18 +11,8 @@ GIT
       uuid (~> 2.3.4)
 
 GIT
-  remote: https://github.com/project-rhex/omniauth_openid_connect.git
-  revision: b12d89d5744b0fcf766b6e12e1fc6c2b2c4382df
-  specs:
-    omniauth_openid_connect (0.2.0)
-      omniauth (~> 1.0)
-      openid_connect (= 0.2.0.alpha3)
-      rack-oauth2
-
-GIT
-  remote: https://github.com/rdingwell/devise_oauth2_providable.git
+  remote: http://github.com/rdingwell/devise_oauth2_providable.git
   revision: 99d0ca56786f86a8e28875d462c99f9e344ac2f9
-  branch: master
   specs:
     devise_oauth2_providable (1.0.5)
       devise (>= 1.4.3)
@@ -30,11 +20,19 @@ GIT
       rails (>= 3.1.0)
 
 GIT
-  remote: https://github.com/rdingwell/ruby-openid.git
+  remote: http://github.com/rdingwell/ruby-openid.git
   revision: cc6fa401242190344935fb12a824fa39043cffc7
-  branch: master
   specs:
     ruby-openid (2.1.9)
+
+GIT
+  remote: https://github.com/project-rhex/omniauth_openid_connect.git
+  revision: b12d89d5744b0fcf766b6e12e1fc6c2b2c4382df
+  specs:
+    omniauth_openid_connect (0.2.0)
+      omniauth (~> 1.0)
+      openid_connect (= 0.2.0.alpha3)
+      rack-oauth2
 
 GEM
   remote: http://rubygems.org/
@@ -75,7 +73,7 @@ GEM
     bson_ext (1.7.0)
       bson (~> 1.7.0)
     builder (3.0.3)
-    capistrano (2.13.3)
+    capistrano (2.13.4)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -107,10 +105,10 @@ GEM
     excon (0.16.2)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (4.0.0)
+    factory_girl (4.1.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.0.0)
-      factory_girl (~> 4.0.0)
+    factory_girl_rails (4.1.0)
+      factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
     feedzirra (0.0.24)
       activesupport (>= 2.3.8)
@@ -126,9 +124,9 @@ GEM
       netrc (~> 0.7.7)
       rest-client (~> 1.6.1)
       rubyzip
-    heroku-api (0.3.4)
+    heroku-api (0.3.5)
       excon (~> 0.16.1)
-    highline (1.6.14)
+    highline (1.6.15)
     hike (1.2.1)
     httpclient (2.2.7)
     i18n (0.6.1)
@@ -142,7 +140,7 @@ GEM
       i18n
       json (>= 1.4.3)
       url_safe_base64
-    kaminari (0.14.0)
+    kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     launchy (2.1.2)

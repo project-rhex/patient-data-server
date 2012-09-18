@@ -13,6 +13,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+
+
 module HdataServer
   class Application < Rails::Application
     

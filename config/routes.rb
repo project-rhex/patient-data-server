@@ -52,7 +52,8 @@ HdataServer::Application.routes.draw do
 
   #
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom, :via=> :get
-  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method => :get
+  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :via => :get
+  match "records/:id/root.xml" , :to => lambda { |env| [405, {}, ["Not Implemented"]] }
   match "records/:id" => "records#options", :as => :root_options, :via => :options
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :via => :get
   match "records/:record_id/:section" => "entries#index", :as => :section, :via => :get

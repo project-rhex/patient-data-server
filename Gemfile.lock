@@ -20,12 +20,6 @@ GIT
       rails (>= 3.1.0)
 
 GIT
-  remote: http://github.com/rdingwell/ruby-openid.git
-  revision: cc6fa401242190344935fb12a824fa39043cffc7
-  specs:
-    ruby-openid (2.1.9)
-
-GIT
   remote: https://github.com/project-rhex/omniauth_openid_connect.git
   revision: b12d89d5744b0fcf766b6e12e1fc6c2b2c4382df
   specs:
@@ -234,6 +228,7 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    ruby-openid (2.2.0)
     rubyzip (0.9.9)
     sass (3.2.1)
     sass-rails (3.2.5)
@@ -312,7 +307,7 @@ DEPENDENCIES
   pry
   pry-nav
   rails (= 3.2.8)
-  ruby-openid!
+  ruby-openid
   sass-rails (~> 3.2.3)
   symbolize
   therubyracer

@@ -37,12 +37,6 @@ class AuditReviewControllerTest < ActionController::TestCase
   test "audit_review_docs" do
     assert_not_nil @audit_log, "factory girl audit_log is nil"
 
-
-    
-    
-    
-    
-
     ## get test obj_id
     test_id = @audit_log.obj_id
 
@@ -50,8 +44,8 @@ class AuditReviewControllerTest < ActionController::TestCase
     review_docs = AuditLog.review_docs
     assert_not_nil review_docs, "review_docs query failed"
     
-    assert_equal review_docs.count, 3, "audit_log not populated correctly"
-    assert_equal review_docs[0].obj_id, test_id, "obj_id is not #{test_id} (1)"
+    assert_equal 3, review_docs.count, "audit_log not populated correctly"
+    assert_equal test_id, review_docs[0].obj_id, "obj_id is not #{test_id} (1)"
 
     ## get this specific doc
     review_docs = AuditLog.review_doc(test_id)
@@ -64,8 +58,6 @@ class AuditReviewControllerTest < ActionController::TestCase
     @record.first = "Gregg"
     @record.save
     AuditLog.doc("NONE", "c32_access", "test description", @record, @record.version)
-    #
-    #
     #
 
     review_docs = AuditLog.review_doc(@record._id)

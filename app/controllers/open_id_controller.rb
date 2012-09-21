@@ -63,12 +63,8 @@ class OpenIdController < ActionController::Base
 
     scope = scope.split(/\s/)
 
-    # Find or create a client that matches the given client id
-    begin
-      client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
-    rescue
-      #
-    end
+
+    client = Devise::Oauth2Providable::Client.where(cidentifier: client_id).first
 
     unless client
       raise OpenId::AuthenticationException.new(value: OpenId::ErrorCodes::INVALID_REQUEST,
@@ -101,8 +97,8 @@ class OpenIdController < ActionController::Base
     end
 
     # Find client and user
-    user = User.first(conditions: {email: credentials[:email]})
-    client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
+    user = User.find_by(email: credentials[:email])
+    client = Devise::Oauth2Providable::Client.where(cidentifier: client_id).first
 
     unless client
       raise Exception.new("Client is missing from the database")
@@ -154,7 +150,7 @@ class OpenIdController < ActionController::Base
         description: "The user denied access to the website", redirect_uri: redirect_uri, state: state)
     end
 
-    client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: client_id})
+    client = Devise::Oauth2Providable::Client.where(cidentifier: client_id).first
 
     # Create and store the code in the client along with the scopes the user has enabled
     code = SecureRandom.uuid

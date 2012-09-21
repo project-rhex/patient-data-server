@@ -19,7 +19,7 @@ class NotificationEventTest < ActionController::TestCase
     NotifyEvent.process("gganley@mitre.org", :record_update)
     notifications = Notification.all.to_a
     assert_not_nil notifications, "Notifications is null !"
-    assert_equal notifications.count, 1, "notifications not populated correctly"
+    assert_equal 1, notifications.count, "notifications not populated correctly"
   end
 
 

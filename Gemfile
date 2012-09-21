@@ -2,17 +2,15 @@ source 'http://rubygems.org'
 
 
 gem 'rails', '3.2.8'
-gem "health-data-standards", :git => "http://github.com/projectcypress/health-data-standards.git", :branch => "develop"
+gem "health-data-standards", :git => "https://github.com/eedrummer/health-data-standards.git", :branch => "develop"
 gem 'ruby-openid'
-gem "mongoid"
-gem "bson_ext"
+gem "mongoid", '~> 3.0.6'
 gem "pry"
 gem 'pry-nav'
 gem "capistrano"
-gem 'heroku'
-gem "nokogiri"
+gem "nokogiri", '~> 1.5.5'
 gem 'devise'
-gem 'devise_oauth2_providable', :git => 'http://github.com/rdingwell/devise_oauth2_providable.git' #,:branch => "master" 
+gem 'devise_oauth2_providable', :git => 'https://github.com/project-rhex/devise_oauth2_providable.git' #,:branch => "master" 
 gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
 
 gem 'omniauth'

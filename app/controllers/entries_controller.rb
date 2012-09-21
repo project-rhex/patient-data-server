@@ -86,8 +86,8 @@ class EntriesController < ApplicationController
   end
   
   def find_entry
-    if BSON::ObjectId.legal?(params[:id])
-      @entry = @record.send(@section_name).find(:first, conditions: {id: params[:id]})
+    if Moped::BSON::ObjectId.legal?(params[:id])
+      @entry = @record.send(@section_name).where(id: params[:id]).first
       raise RequestError.new(404, 'Entry Not Found') unless @entry
     else
       raise RequestError.new(400, 'Not a valid identifier for a section document')

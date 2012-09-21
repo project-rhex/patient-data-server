@@ -1,15 +1,20 @@
 development:
-  host: localhost
-  database: hdata_server_development
+  sessions:
+    default:
+      database: patient_data_server_development
+      hosts:
+        - localhost:27017
 
 test:
-  host: <%= ENV['TEST_DB_HOST'] || 'localhost' %>
-  database: hdata_server_test
-
-staging:
-  host: localhost
-  database: hdata_server_staging
+  sessions:
+    default:
+      database: patient_data_server_test
+      hosts:
+        - <%= ENV['TEST_DB_HOST'] || 'localhost' %>:27017
 
 production:
-  host: localhost
-  database: hdata_server_production
+  sessions:
+    default:
+      database: patient_data_server_production
+      hosts:
+        - localhost:27017

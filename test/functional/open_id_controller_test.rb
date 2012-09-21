@@ -6,7 +6,7 @@ class OpenIdControllerTest < ActionController::TestCase
   CLIENT_ID = '1570981427089'
 
   def setup
-    @client = Devise::Oauth2Providable::Client.first(conditions: {cidentifier: CLIENT_ID})
+    @client = Devise::Oauth2Providable::Client.find_by(cidentifier: CLIENT_ID)
     @client = FactoryGirl.create(:client) unless @client
     @user = FactoryGirl.create(:user)
     sign_in @user

@@ -10,8 +10,8 @@ class User
          :oauth2_authorization_code_grantable
          
   ## Database authenticatable
-  field :email,              type: String, null: false
-  field :encrypted_password, type: String, null: false
+  field :email,              type: String
+  field :encrypted_password, type: String
 
   ## Recoverable
   field :reset_password_token,   type: String

@@ -3,7 +3,7 @@ class NotifyEvent
   
   def self.process(user, action)
     # lookup user and action in notify_config
-    notify_configs = NotifyConfig.all( conditions: { user: /#{user}/i, action: action } ).to_a
+    notify_configs = NotifyConfig.where(user: /#{user}/i, action: action).to_a
 
     # for each entry, insert a document into notification table
     notify_configs.each do |nconfig|

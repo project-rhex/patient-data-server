@@ -28,14 +28,14 @@ class AuditLog
   ## get list of all audited docs
   def self.review_docs() 
     ## return all log events that end in _access
-    AuditLog.all( conditions: { event: /_access$/i } ).to_a
+    AuditLog.where(event: /_access$/i).to_a
   end
 
 
   ## get list of audited docs with this id
   def self.review_doc(id) 
     ## query and return array of data
-    AuditLog.all( conditions: { event: /_access$/i, obj_id: id } ).to_a
+    AuditLog.where(event: /_access$/i).where(obj_id: id).to_a
   end
 
 

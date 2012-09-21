@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   # parameter. Make sure to add exceptions for methods that don't.
   def find_record
     record_id = params[:record_id] || params[:id]
-    @record = Record.first(conditions: {medical_record_number: record_id})
+    @record = Record.where(medical_record_number: record_id).first
     raise RequestError.new(404) if @record.nil?
   end
 

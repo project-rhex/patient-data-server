@@ -21,9 +21,7 @@ namespace :hdata do
       @db   = @conn['hdata_server_production']
       @coll = @db['records']
     else
-      @conn = Mongo::Connection.new
-      #@db   = @conn['hds-atest']
-      @db   = @conn['hdata_server_development']
+      @db   = Moped::Session.new(["127.0.0.1:27017"]).use('hdata_server_development')
       @coll = @db['records']
     end
 
@@ -59,9 +57,7 @@ namespace :hdata do
       @db   = @conn['hdata_server_production']
       @coll = @db['records']
     else
-      @conn = Mongo::Connection.new
-      #@db   = @conn['hds-atest']
-      @db   = @conn['hdata_server_development']
+      @db   = Moped::Session.new(["127.0.0.1:27017"]).use('hdata_server_development')
       @coll = @db['records']
     end
 

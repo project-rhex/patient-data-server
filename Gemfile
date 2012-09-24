@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 gem 'rails', '3.2.8'
-gem "health-data-standards", :git => "https://github.com/eedrummer/health-data-standards.git", :branch => "develop"
+gem "health-data-standards", '~> 2.0.0'
 gem 'ruby-openid'
 gem "mongoid", '~> 3.0.6'
 gem "pry"

@@ -1,16 +1,4 @@
 GIT
-  remote: https://github.com/eedrummer/health-data-standards.git
-  revision: efd8445676b1ff0575f3c617cd54f4b6d791a7fc
-  branch: develop
-  specs:
-    health-data-standards (2.0.0)
-      builder (~> 3.0.0)
-      erubis (~> 2.7.0)
-      mongoid (~> 3.0.6)
-      nokogiri (~> 1.5.5)
-      uuid (~> 2.3.5)
-
-GIT
   remote: https://github.com/project-rhex/devise_oauth2_providable.git
   revision: 1e3b7f5553e0b5b957b876fa8e42a593c7ebaa32
   specs:
@@ -108,6 +96,12 @@ GEM
       nokogiri (> 0.0.0)
       sax-machine (>= 0.0.12)
     hashie (1.2.0)
+    health-data-standards (2.0.0)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      mongoid (~> 3.0.6)
+      nokogiri (~> 1.5.5)
+      uuid (~> 2.3.5)
     highline (1.6.15)
     hike (1.2.1)
     httpclient (2.2.7)
@@ -278,7 +272,7 @@ DEPENDENCIES
   devise_oauth2_providable!
   factory_girl_rails
   feedzirra
-  health-data-standards!
+  health-data-standards (~> 2.0.0)
   jquery-rails
   kaminari
   minitest

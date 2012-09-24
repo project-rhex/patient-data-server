@@ -1,9 +1,17 @@
 require 'test_helper'
 require 'atom_test'
+require 'section_registry'
 
 class EntriesControllerTest < AtomTest
   include Devise::TestHelpers
-  
+  sr = SectionRegistry.instance
+  vs_exporter = HealthDataStandards::Export::GreenC32::ExportGenerator.create_exporter_for(:vital_sign)
+
+  sr.add_section('vital_signs', 'http://projecthdata.org/extension/vital-sign', 'Vital Signs') do |importers, exporters|
+    importers['application/xml'] = HealthDataStandards::Import::GreenC32::VitalSignImporter.instance
+    exporters['application/xml'] = vs_exporter
+  end
+
   setup do
     @record = FactoryGirl.create(:record, :with_lab_results)
     @user = FactoryGirl.create(:user)
@@ -102,5 +110,26 @@ class EntriesControllerTest < AtomTest
   test "check for 404 on non-existent record on delete" do
     get :delete, :record_id => "AAAA"
     assert_response :missing
+  end
+
+  test "check add and delete a vital sign" do
+    doc = Nokogiri::XML(File.new('test/fixtures/Molly_Smith169.xml'))
+    doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
+    pi = HealthDataStandards::Import::C32::PatientImporter.instance
+    patient = pi.parse_c32(doc)
+
+    vital_sign = patient.vital_signs[0]
+    vs_data = vs_exporter.export(vital_sign)
+
+    request.env['RAW_POST_DATA'] = vs_data
+    request.env['CONTENT_TYPE'] = 'application/xml'
+    post :create, {record_id: @record.medical_record_number, section: 'vital_signs'}
+    assert_response 201
+
+    @record = Record.where(:medical_record_number => @record.medical_record_number).first
+    delete :delete, {record_id: @record.medical_record_number, section: 'vital_signs', id: @record.vital_signs.first.id}
+    assert_response 204
+    @record.reload
+    assert_equal 0, @record.vital_signs.count
   end
 end

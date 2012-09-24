@@ -37,10 +37,14 @@ class EntriesController < ApplicationController
     else
       audit_log "event_create"
 
-      section_document = import_document(content_type)
-      @record.send(@section_name).push(section_document)
-      response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
-      render text: 'Section document created', status: 201
+      begin
+        section_document = import_document(content_type)
+        @record.send(@section_name).push(section_document)
+        response['Location'] = section_document_url(record_id: @record, section: @section_name, id: section_document)
+        render text: 'Section document created', status: 201
+      rescue
+        render text: 'Could not create section document', status: 400
+      end
     end
   end
   

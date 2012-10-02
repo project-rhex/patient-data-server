@@ -1,5 +1,5 @@
-<h2><%= I18n.t("section." + section.to_s) %></h2>
-<% section_enumerator(record, section, earliest) do |x| %>
+<h2><%= link_to I18n.t("section." + section.to_s), section_path(@record.medical_record_number, section, format: 'html') %></h2>
+<% section_enumerator(record, section) do |x| %>
   <%= yield x %>
 <% end %>
 <div class='history_link'><%= link_to ('<<&nbsp;Past ' + I18n.t("section." + section.to_s)).html_safe, (record_path(record.medical_record_number) + "/" + section.to_s) %></div>

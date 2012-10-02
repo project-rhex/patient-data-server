@@ -1,6 +1,7 @@
 class RefConsultRequest
   include Mongoid::Document
   include Mongoid::Symbolize
+  include Mongoid::Timestamps
 
   field :refDate, :type => Date
   field :disposition, :type => String

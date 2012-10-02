@@ -23,7 +23,7 @@ class NotificationsControllerTest < ActionController::TestCase
   end
 
   test "should create notification" do
-    n = Factory.attributes_for(:notification)
+    n = FactoryGirl.attributes_for(:notification)
     
     assert_difference('Notification.count') do
       post :create, notification: n

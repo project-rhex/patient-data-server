@@ -1,5 +1,10 @@
 HdataServer::Application.routes.draw do
 
+  get "vital_sign_callback/access_code"
+
+  resources :vital_sign_hosts
+
+  ##
   resources :ref_consult_requests
   match "ref_consult_requests/new/:id" => "ref_consult_requests#new", :as => :new_ref_consult_request_patient, :method => :get
 
@@ -42,13 +47,17 @@ HdataServer::Application.routes.draw do
 
   resources :records do
     resources :c32
+    resources :vital_sign_feeds
   end
 
   #
   match "records/:id" => "records#show", :as => "root_feed", :format => :atom, :via=> :get
-  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :method => :get
+  match "records/:id/root.xml" => "records#root", :as => :root_document, :format => :xml, :via => :get
+  match "records/:id/root.xml" , :to => lambda { |env| [405, {}, ["Not Implemented"]] }
   match "records/:id" => "records#options", :as => :root_options, :via => :options
   match "records/:record_id/:section" => "entries#index", :as => :section_feed, :format => :atom, :via => :get
+  match "records/:record_id/:section" => "entries#index", :as => :section, :via => :get
+  match "records/:record_id/:section", :via => :put, :to => lambda { |env| [405, {}, "Not Supported!"] }
   match "records/:record_id/:section/:id" => "entries#show", :as => :section_document, :via => :get
   match "records/:record_id/:section" => "entries#create", :as => :new_section_document, :via => :post
   match "records/:record_id/:section/:id" => "entries#update", :as => :update_section_document, :via => :put

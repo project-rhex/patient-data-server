@@ -41,7 +41,9 @@ class RecordsController < ApplicationController
       AuditLog.doc(current_user.email, "record_access", desc, @record, @record.version)
     end
 
-    respond_to(:atom, :html)
+    if stale?(:last_modified => @record.updated_at.utc, :etag => @record)
+      respond_to(:atom, :html)
+    end
   end
 
   def set_breadcrumbs

@@ -23,7 +23,7 @@ class RefConsultSummariesControllerTest < ActionController::TestCase
   end
 
   test "should create ref_consult_summary" do
-    r = Factory.attributes_for(:ref_consult_summary)
+    r = FactoryGirl.attributes_for(:ref_consult_summary)
 
     assert_difference('RefConsultSummary.count') do
       post :create, ref_consult_summary: r
@@ -53,5 +53,13 @@ class RefConsultSummariesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to ref_consult_summaries_path
+  end
+
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @ref_consult_summary
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @ref_consult_summary
+    assert_response 304, @response.body
   end
 end

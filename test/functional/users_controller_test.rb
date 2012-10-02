@@ -23,7 +23,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
-    u = Factory.attributes_for(:user)
+    u = FactoryGirl.attributes_for(:user)
 
     assert_difference('User.count') do
       post :create, user: u

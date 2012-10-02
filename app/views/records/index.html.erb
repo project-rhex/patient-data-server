@@ -7,5 +7,5 @@
 
 <h3>Patient Records</h3>
 <% @records.each do |record| %>
-    <div class="record"><%= record.medical_record_number %>. <%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_url(record.medical_record_number)) %></div>
+    <div class="record"><%= record.medical_record_number %>. <%= link_to((record.first + '&nbsp;' + record.last).html_safe, root_feed_path(record.medical_record_number)) %></div>
 <% end %>

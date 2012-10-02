@@ -1,18 +1,17 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.2'
-gem "health-data-standards", :git => "http://github.com/projectcypress/health-data-standards.git", :branch => "develop" 
-gem 'ruby-openid', :git => 'https://github.com/rdingwell/ruby-openid.git',:branch => "master" 
-gem "mongoid"
-gem "bson_ext"
+gem 'rails', '3.2.8'
+gem "health-data-standards", '~> 2.0.0'
+gem 'ruby-openid'
+gem "mongoid", '~> 3.0.6'
 gem "pry"
 gem 'pry-nav'
 gem "capistrano"
-gem 'heroku'
-gem "nokogiri"
+gem "nokogiri", '~> 1.5.5'
 gem 'devise'
-gem 'devise_oauth2_providable', :git => 'https://github.com/rdingwell/devise_oauth2_providable.git',:branch => "master" 
+gem 'devise_oauth2_providable', :git => 'https://github.com/project-rhex/devise_oauth2_providable.git' #,:branch => "master" 
+gem 'omniauth_openid_connect', :git => "https://github.com/project-rhex/omniauth_openid_connect.git"
 
 gem 'omniauth'
 gem 'omniauth-openid'
@@ -39,4 +38,5 @@ group :test do
   gem 'feedzirra'
   gem 'cover_me'
   gem 'factory_girl_rails'
+  gem 'webmock'
 end

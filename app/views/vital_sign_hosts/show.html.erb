@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Hostname:</b>
+  <%= @vital_sign_host.hostname %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @vital_sign_host.client_id %>
+</p>
+
+<p>
+  <b>Client secret:</b>
+  <%= @vital_sign_host.client_secret %>
+</p>
+
+
+<%= link_to 'Edit', edit_vital_sign_host_path(@vital_sign_host) %> |
+<%= link_to 'Back', vital_sign_hosts_path %>

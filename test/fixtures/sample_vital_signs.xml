@@ -1,0 +1,72 @@
+<vitalSigns xmlns="urn:hl7-org:greencda:c32">
+    <vitalSignsOrganizer>
+        <code code="46680005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Vital Signs"/>
+        <effectiveTime nullFlavor="NI"/>
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime value="19810201113600-0800"/>
+            <resultType code="8480-6" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Systolic BP"/>
+            <resultStatus code="completed"/>
+                    <!--BAD VALUE-->
+            <resultValue>
+                <physicalQuantity value="115" unit="mm[Hg]"/>
+            </resultValue>
+        </vitalSign>
+
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime nullFlavor="NI"/>
+            <resultType code="8462-4" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Diastolic BP"/>
+            <resultStatus code="completed"/>
+            <resultValue>
+                <physicalQuantity value="70" unit="mm[Hg]"/>
+            </resultValue>
+        </vitalSign>
+
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime nullFlavor="NI"/>
+            <resultType code="8867-4" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Heart beat"/>
+            <resultStatus code="completed"/>
+            <resultValue>
+                <physicalQuantity value="50" unit="/min"/>
+            </resultValue>
+        </vitalSign>
+
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime nullFlavor="NI"/>
+            <resultType code="9279-1" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Respiration rate"/>
+            <resultStatus code="completed"/>
+            <resultValue>
+                <physicalQuantity value="14" unit="/min"/>
+            </resultValue>
+        </vitalSign>
+
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime nullFlavor="NI"/>
+            <resultType code="8302-2" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Body height (measured)"/>
+            <resultStatus code="completed"/>
+            <resultValue>
+                <physicalQuantity value="73" unit="[in_us]"/>
+            </resultValue>
+        </vitalSign>
+
+        <vitalSign>
+            <resultID nullFlavor="NI"/>
+            <resultDateTime nullFlavor="NI"/>
+            <resultType code="3141-9" codeSystem="2.16.840.1.113883.6.1"
+                        displayName="Body weight (measured)"/>
+            <resultStatus code="completed"/>
+            <resultValue>
+                <physicalQuantity value="170" unit="[lb_av]"/>
+            </resultValue>
+        </vitalSign>
+    </vitalSignsOrganizer>
+</vitalSigns>

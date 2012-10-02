@@ -8,7 +8,7 @@ formats. Finally, this server will restrict access using OAuth and OpenID.
 Environment
 -----------
 
-This project currently uses Ruby 1.9.2 and is built using [Bundler](http://gembundler.com/). To get all of the
+This project currently uses Ruby 1.9.3 and is built using [Bundler](http://gembundler.com/). To get all of the
 dependencies for the project, first install bundler:
 
     gem install bundler
@@ -17,7 +17,7 @@ Then run bundler to grab all of the necessary gems:
 
     bundle install
 
-The Quality Measure engine relies on a MongoDB [MongoDB](http://www.mongodb.org/) running a minimum of version 1.8.* or
+The Patient Data Server relies on a MongoDB [MongoDB](http://www.mongodb.org/) running a minimum of version 2.2.0 or
 higher. To get and install MongoDB refer to:
 
     http://www.mongodb.org/display/DOCS/Quickstart

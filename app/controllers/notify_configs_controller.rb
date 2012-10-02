@@ -4,7 +4,6 @@ class NotifyConfigsController < ApplicationController
   def index
     add_breadcrumb('Notification Configurations')
 
-    #puts ".." + @current_user.email + ".."
     if !params[:all].nil?
       @title = "All Notification Settings"
       @notify_configs = NotifyConfig.all().to_a
@@ -27,9 +26,11 @@ class NotifyConfigsController < ApplicationController
 
     add_breadcrumb('Notification Configuration')
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @notify_config }
+    if stale?(:last_modified => @notify_config.updated_at.utc, :etag => @notify_config)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @notify_config }
+      end
     end
   end
 

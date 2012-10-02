@@ -11,6 +11,7 @@ class EntriesController < ApplicationController
     @entries = @record.send(@section_name)
     respond_to do |wants|
       wants.atom {}
+      wants.html {}
     end
   end
   
@@ -24,6 +25,7 @@ class EntriesController < ApplicationController
         exporter = @extension.exporters['application/xml']
         render :xml => exporter.export(@entry)
       end
+      wants.html { }
     end
   end
   
@@ -48,6 +50,11 @@ class EntriesController < ApplicationController
     content_type = request.content_type
     section_document = import_document(content_type)
     @entry.update_attributes!(section_document.attributes)
+    @entry.reflect_on_all_associations(:embeds_many).each do |relation|
+      @entry.send(relation.name).destroy_all
+      @entry.send("#{relation.name}=", section_document.send(relation.name))
+    end
+    
     render text: 'Document updated', status: 200
   end
 
@@ -79,11 +86,11 @@ class EntriesController < ApplicationController
   end
   
   def find_entry
-    if BSON::ObjectId.legal?(params[:id])
-      @entry = @record.send(@section_name).find(:first, conditions: {id: params[:id]})
+    if Moped::BSON::ObjectId.legal?(params[:id])
+      @entry = @record.send(@section_name).where(id: params[:id]).first
       raise RequestError.new(404, 'Entry Not Found') unless @entry
     else
-      raise RequestError.new(400, 'Not a valid identifier for a section document')
+      raise RequestError.new(404, 'Not Found')
     end
   end
 

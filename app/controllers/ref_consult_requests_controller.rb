@@ -15,13 +15,7 @@ class RefConsultRequestsController < ApplicationController
   # GET /ref_consult_requests/1
   # GET /ref_consult_requests/1.json
   def show
-    #binding.pry
-    ref_consult_requests = RefConsultRequest.find( params[:id] )
-    if ref_consult_requests.class.to_s == "Array"
-      @ref_consult_request = ref_consult_requests[0]
-    else
-      @ref_consult_request = ref_consult_requests
-    end
+    @ref_consult_request = RefConsultRequest.find( params[:id] )
 
     if @ref_consult_request.nil? 
       render text: 'Referral Consult Not Found', status: 404
@@ -29,10 +23,12 @@ class RefConsultRequestsController < ApplicationController
     end
     @record = Record.find( @ref_consult_request.patientRecordId ) if !@ref_consult_request.patientRecordId.nil?
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ref_consult_request }
-      format.xml  { render xml:  @ref_consult_request.to_xml }
+    if stale?(:last_modified => @ref_consult_request.updated_at.utc, :etag => @ref_consult_request)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @ref_consult_request }
+        format.xml  { render xml:  @ref_consult_request.to_xml }
+      end
     end
   end
 

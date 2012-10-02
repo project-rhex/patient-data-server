@@ -22,7 +22,7 @@ class NotifyConfigsControllerTest < ActionController::TestCase
   end
 
   test "should create notify_config" do
-    n = Factory.attributes_for(:notify_config)
+    n = FactoryGirl.attributes_for(:notify_config)
 
     assert_difference('NotifyConfig.count') do
       post :create, notify_config: n
@@ -53,5 +53,13 @@ class NotifyConfigsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to notify_configs_path
+  end
+
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @notify_config
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @notify_config
+    assert_response 304, @response.body
   end
 end

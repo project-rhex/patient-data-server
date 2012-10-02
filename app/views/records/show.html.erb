@@ -1,51 +1,67 @@
 <%= stylesheet_link_tag :record %>
-<% earliest = 2.years.ago %>
 <div class="patient">
   <div class="labeled_field"><span class="label">Patient Name</span>
     <span id='patient_name'><%= (@record.last.upcase + ',&nbsp;' + @record.first).html_safe %></span>
   </div>
   <table class="record" border="0">
+    
     <tr>
       <td>
           <h2>Demographic Information</h2>
           <%= sex(@record) %><br>
          <%= getAgeText(@record.birthdate).html_safe %> <br>
          <b>....</b>
-          <%= render :layout => "section", :locals => {:record => @record, :section => :immunizations, :earliest => earliest} do |x| %>
+          <%= render :layout => "section", :locals => {:record => @record, :section => :immunizations} do |x| %>
             <% refused = x['refusalInd'] ? 'Refused ' : '' %>
             <%= labeled_field refused + x['description'], date(x['time']) %>
           <% end %>
       </td>
       <td>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :allergies, :earliest => earliest} do |x| %>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :allergies} do |x| %>
            <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present')  %>
         <% end %>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :medications, :earliest => earliest} do |x| %>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :medications} do |x| %>
            <%= labeled_field x['description'], date(x['start_time']) + '&nbsp;-&nbsp;' + date(x['end_time'],'present'), 'med_field'  %>
         <% end %>
       </td>
     </tr>
     <tr>
       <td>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :conditions, :earliest => earliest} do |x| %>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :conditions} do |x| %>
           <%= labeled_field x['description'], date(x['start_time']) %>
         <% end %>
       </td>
       <td>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :results, :earliest => earliest} do |x| %>
-          <%= labeled_field(x['description'] + show_value(x['value']), date(x['time'])) %>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :results} do |x| %>
+          <%= labeled_field(x['description'] + show_values(x.values), date(x['time'])) %>
         <% end %>
       </td>
     </tr>
     <tr>
       <td>
-       <%= render :layout => "section", :locals => {:record => @record, :section => :encounters, :earliest => earliest} do |x| %>
+       <%= render :layout => "section", :locals => {:record => @record, :section => :encounters} do |x| %>
         <%= labeled_field x['description'], date(x['time']) %>
         <% end %>
       </td>
       <td>
-        <%= render :layout => "section", :locals => {:record => @record, :section => :procedures, :earliest => earliest} do |x| %>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :procedures} do |x| %>
           <%= labeled_field x['description'], date(x['time']) %>
+        <% end %>
+      </td>
+      
+
+    </tr>
+    <tr>
+      <td>
+        <%= render :layout => "section", :locals => {:record => @record, :section => :vital_signs} do |x| %>
+          <%= labeled_field("#{x['description']}#{show_values(x.values)}", date(x['time'])) %>
+        <% end %>
+      </td>
+      <td>
+        <h2>Add Vital Sign Feed</h2>
+        <%= form_for :vital_sign_feed, url: record_vital_sign_feeds_path(@record.medical_record_number) do |f| %>
+          <%= f.text_field :url %>
+          <%= f.submit "Add" %>
         <% end %>
       </td>
     </tr>
@@ -59,10 +75,9 @@
         <div class='history_link'><%= link_to(('<<&nbsp;Past ' + I18n.t("section.vital_signs")).html_safe, record_path(@record.medical_record_number) + "/vital_signs") %></div>
       </td>
       <td>
-
       </td>
     </tr>
   </table>
 
-  <div class="footer">Last updated on 11/11/11 by <a href='link'>Dr Rick Jones</a></div>
+  <div class="footer">Last updated on <%= @record.updated_at.strftime("%m/%d/%Y") %> by <a href='link'>Dr Rick Jones</a> (<%=link_to "Refresh", record_path(@record.medical_record_number), method: :get %>)</div>
 </div>

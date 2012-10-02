@@ -10,8 +10,8 @@ class User
          :oauth2_authorization_code_grantable
          
   ## Database authenticatable
-  field :email,              type: String, null: false
-  field :encrypted_password, type: String, null: false
+  field :email,              type: String
+  field :encrypted_password, type: String
 
   ## Recoverable
   field :reset_password_token,   type: String
@@ -36,6 +36,9 @@ class User
   field :country,            type: String
   field :dob,                type: String
   field :insurance,          type: String
+
+  ## Information to make OAuth 2 requests for vital signs
+  embeds_many :vital_sign_auths, class_name: "VitalSignAuth"
 
   symbolize :gender, :in => {
     male:           "Male", 
@@ -93,7 +96,11 @@ class User
     self.email = omniauth['info']['email'] if email.blank?
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
-
+  
+  def auth_for_feed(vsf)
+    vital_sign_auths.detect { |auth| auth.vital_sign_feed.url.eql?(vsf.url) } || vital_sign_auths.create!(vital_sign_feed: vsf)
+  end
+  
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end

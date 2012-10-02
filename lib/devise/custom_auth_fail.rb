@@ -2,13 +2,8 @@ class CustomAuthFail < Devise::FailureApp
   def respond
     super 
 
-    ## Called when user authorization failure 
-    puts "*** Here in CustomAuthFail" 
-
     return if params.nil?
 
-    #puts "====="
-    #puts params.inspect
 
     login_email = ""
     user = params[:user]

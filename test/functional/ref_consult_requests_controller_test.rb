@@ -23,7 +23,7 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
   end
 
   test "should create ref_consult_request" do
-    r = Factory.attributes_for(:ref_consult_request)
+    r = FactoryGirl.attributes_for(:ref_consult_request)
     
     assert_difference('RefConsultRequest.count') do
       post :create, ref_consult_request: r
@@ -33,7 +33,6 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
   end
 
   test "should show ref_consult_request" do
-    #binding.pry
     get :show, id: @ref_consult_request
     assert_response :success
   end
@@ -63,17 +62,20 @@ class RefConsultRequestsControllerTest < ActionController::TestCase
     doc = Nokogiri::XML::Document.parse(response.body)
     assert_response :success, "Referral Consult list is empty!"
 
-    #binding.pry
     ## search for id
-    items = doc.xpath("//_id").inspect
-    id = items.split[3].scan(/(\w+)/)
-    #STDOUT << "\n=====\n"
-    #STDOUT << id[0]
+    id = doc.at_xpath("//_id").text
 
-    get :show, id: id[0]
+    get :show, id: id 
     doc = Nokogiri::XML::Document.parse(response.body)
     assert_response :success, "Cannot find referral with id:#{id}"
     #assert_equal "result", doc.children.first.name
   end
 
+  test "action_is_cached_with_not_modified" do
+    get :show, id: @ref_consult_request
+    assert_response :success, @response.inspect
+    @request.env["HTTP_IF_MODIFIED_SINCE"] = @response.headers['Last-Modified']
+    get :show, id: @ref_consult_request
+    assert_response 304, @response.body
+  end
 end

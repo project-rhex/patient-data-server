@@ -1,7 +1,7 @@
 require 'request_error'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+#  protect_from_forgery
 
   before_filter :authenticate_user!
   before_filter :audit_log_all
@@ -43,15 +43,13 @@ class ApplicationController < ActionController::Base
   # parameter. Make sure to add exceptions for methods that don't.
   def find_record
     record_id = params[:record_id] || params[:id]
-    @record = Record.first(conditions: {medical_record_number: record_id})
+    @record = Record.where(medical_record_number: record_id).first
     raise RequestError.new(404) if @record.nil?
   end
 
   ##
   ## Track each controller and method (action) call
   def audit_log_all
-    ##
-    #puts current_user.inspect
 
     if  params[:controller] && params[:action]
       desc = params[:controller] + "|" + params[:action]

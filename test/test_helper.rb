@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require 'cover_me'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'webmock/test_unit'
 
 class ActiveSupport::TestCase
   
@@ -16,7 +17,7 @@ end
 
 
 def dump_database
-   Mongoid::Config.master.collections.each do |collection|
+   Mongoid.session(:default).collections.each do |collection|
      collection.drop unless collection.name.include?('system.')
    end
 end

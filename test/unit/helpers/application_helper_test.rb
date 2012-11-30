@@ -13,6 +13,10 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal 'present', date(nil, 'present')
     # Check defaulting behavior with default value
     assert_equal 'never', date(nil)
+    # Check that we can handle dates represented by Fixnum
+    assert_equal "31-Dec-1969", date(42)
+    # Check that we can handle dates represented by Bignum
+    assert_equal "16-Nov-5138", date(99999999999)
   end
 
   test "breadcrumbs" do

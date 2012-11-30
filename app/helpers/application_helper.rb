@@ -28,7 +28,7 @@ module ApplicationHelper
   # Show the date, formatted
   def date(date_value, default = 'never')
     if date_value
-      date_value = Time.at(date_value) if date_value.class == Fixnum
+      date_value = Time.at(date_value) if date_value.class == Fixnum or date_value.class == Bignum
       date_value.strftime("%d-%b-%Y")
     else
       default

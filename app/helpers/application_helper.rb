@@ -19,9 +19,9 @@ module ApplicationHelper
   end
 
   def getAgeText(birthdate)
-      return "Forever Young"     if birthdate.nil?
-    
-    bdate = Time.at(birthdate) if (birthdate.class == Fixnum) 
+    return "Forever Young"     if birthdate.nil?
+    bdate = birthdate
+    bdate = Time.at(birthdate) if (birthdate.class == Fixnum) or (birthdate.class == Bignum)
     return date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)"
   end
 

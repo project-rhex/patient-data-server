@@ -6,6 +6,17 @@ class ApplicationHelperTest < ActionView::TestCase
                  labeled_field("foo", "bar")
   end
 
+  test "age_text_formatter" do
+    # Check defaulting behavior
+    assert_equal 'Forever Young', getAgeText(nil)
+    time = Time.new(2001, 1, 1)
+    assert_match "01-Jan-2001", getAgeText(time)
+    # Check that we can handle dates represented by Fixnum
+    assert_match "31-Dec-1969", getAgeText(42)
+    # Check that we can handle dates represented by Bignum
+    assert_match "16-Nov-5138", getAgeText(99999999999)
+  end
+
   test "date_formatter" do
     time = Time.new(2001, 1, 1)
     assert_equal "01-Jan-2001", date(time)

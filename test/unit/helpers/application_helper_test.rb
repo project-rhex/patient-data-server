@@ -21,13 +21,13 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test "age_text_formatter" do
     # Check defaulting behavior
-    assert_equal 'Forever Young', getAgeText(nil)
+    assert_equal 'Forever Young', age_text(nil)
     time = Time.new(2001, 1, 1)
-    assert_match "01-Jan-2001", getAgeText(time)
+    assert_match "01-Jan-2001", age_text(time)
     # Check that we can handle dates represented by Fixnum
-    assert_match "31-Dec-1969", getAgeText(42)
+    assert_match "31-Dec-1969", age_text(42)
     # Check that we can handle dates represented by Bignum
-    assert_match "16-Nov-5138", getAgeText(99999999999)
+    assert_match "16-Nov-5138", age_text(99999999999)
   end
 
   test "date_formatter" do

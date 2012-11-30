@@ -30,7 +30,7 @@ module ApplicationHelper
     end
   end
 
-  def getAgeText(birthdate)
+  def age_text(birthdate)
     safe_date(birthdate, "Forever Young") {|d| date(d) + "&nbsp;(" + time_ago_in_words(d) + " old)"}
   end
 

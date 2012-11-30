@@ -6,6 +6,19 @@ class ApplicationHelperTest < ActionView::TestCase
                  labeled_field("foo", "bar")
   end
 
+  test "safe_date" do
+    # Check that we can handle Times
+    time = Time.new(2001, 1, 1)
+    assert_equal time, safe_date(time) {|d| d}
+    # Check that we can handle dates represented by Fixnum
+    assert_equal Time.at(42), safe_date(42) {|d| d}
+    # Check that we can handle dates represented by Bignum
+    assert_equal Time.at(99999999999), safe_date(99999999999) {|d| d}
+    # Check defaulting behavior
+    assert_equal 'never', safe_date(nil)
+    assert_equal 'foobar', safe_date(nil, 'foobar')
+  end
+
   test "age_text_formatter" do
     # Check defaulting behavior
     assert_equal 'Forever Young', getAgeText(nil)

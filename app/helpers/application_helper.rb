@@ -18,20 +18,24 @@ module ApplicationHelper
     ("<div class='" + field_class + "'><span class='label'>#{label}</span><span class='value'>#{value}</span></div>").html_safe
   end
 
+  def safe_date(date_value, default = 'never')
+    if date_value
+      if date_value.class == Fixnum or date_value.class == Bignum
+        yield Time.at(date_value)
+      else
+        yield date_value
+      end
+    else
+      default
+    end
+  end
+
   def getAgeText(birthdate)
-    return "Forever Young"     if birthdate.nil?
-    bdate = birthdate
-    bdate = Time.at(birthdate) if (birthdate.class == Fixnum) or (birthdate.class == Bignum)
-    return date(bdate) + "&nbsp;(" + time_ago_in_words(bdate) + " old)"
+    safe_date(birthdate, "Forever Young") {|d| date(d) + "&nbsp;(" + time_ago_in_words(d) + " old)"}
   end
 
   # Show the date, formatted
   def date(date_value, default = 'never')
-    if date_value
-      date_value = Time.at(date_value) if date_value.class == Fixnum or date_value.class == Bignum
-      date_value.strftime("%d-%b-%Y")
-    else
-      default
-    end
+    safe_date(date_value, default) {|d| d.strftime("%d-%b-%Y")}
   end
 end

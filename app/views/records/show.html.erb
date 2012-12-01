@@ -9,7 +9,7 @@
       <td>
           <h2>Demographic Information</h2>
           <%= sex(@record) %><br>
-         <%= getAgeText(@record.birthdate).html_safe %> <br>
+         <%= age_text(@record.birthdate).html_safe %> <br>
          <b>....</b>
           <%= render :layout => "section", :locals => {:record => @record, :section => :immunizations} do |x| %>
             <% refused = x['refusalInd'] ? 'Refused ' : '' %>
